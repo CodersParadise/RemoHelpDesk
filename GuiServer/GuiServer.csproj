@@ -52,6 +52,9 @@
     <StartupObject>GuiServer.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MarrySocket">
+      <HintPath>..\Dependency\MarrySocket.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -138,10 +141,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MarrySocket\MarrySocket.csproj">
-      <Project>{8be22fd5-6d33-4a1f-a308-99be60d05ff9}</Project>
-      <Name>MarrySocket</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
       <Project>{1af0874e-f3a9-4382-919b-5d5878c1115c}</Project>
       <Name>NetworkObjects</Name>

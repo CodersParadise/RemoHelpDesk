@@ -48,6 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MarrySocket, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependency\MarrySocket.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -66,10 +70,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MarrySocket\MarrySocket.csproj">
-      <Project>{8be22fd5-6d33-4a1f-a308-99be60d05ff9}</Project>
-      <Name>MarrySocket</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
       <Project>{1af0874e-f3a9-4382-919b-5d5878c1115c}</Project>
       <Name>NetworkObjects</Name>
