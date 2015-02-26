@@ -9,6 +9,7 @@
     using System.Windows.Media.Imaging;
     using System.Windows.Threading;
     using System.Drawing;
+using System.Windows;
 
 
     public class HandlePacket
@@ -65,7 +66,24 @@
                 }));
 
             }
+               else if (packetId.Equals(1004))
+            {
+                   string obj = (String)receivedClass;
+                   string[] split = obj.Split('|');
+                   string outstring = split[0];
+                    string errstring = split[1];
+                   MessageBox.Show("Shell Output: "+ outstring);
+                    MessageBox.Show("Error Output: "+ errstring);
+
+
+
+                   
+               }
+
+
+               }
+            
         }
     }
-}
+
 

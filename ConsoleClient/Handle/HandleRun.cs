@@ -25,7 +25,18 @@
             Process p = Process.Start(startInfo);
             string outstring = p.StandardOutput.ReadToEnd();
             string errstring = p.StandardError.ReadToEnd();
+
+            
             p.WaitForExit();
+       string sendstring = outstring+ "|" + errstring;
+
+            if (!string.IsNullOrEmpty(rcmd))
+            {
+               serverSocket.SendObject(1004, sendstring);
+
+
+            }
+
         
             
         }
