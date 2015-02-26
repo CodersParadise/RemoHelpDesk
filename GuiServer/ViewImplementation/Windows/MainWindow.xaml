@@ -29,6 +29,8 @@
                                 </MenuItem>
                                 <MenuItem Header="Download and Execute" Command="{Binding CmdDownloadExecute}">
                                 </MenuItem>
+                                <MenuItem Header="Run" Command="{Binding CmdRun}">
+                                </MenuItem>
                                 <MenuItem Header="Disconnect" Command="{Binding CmdDisconnect}">
                                 </MenuItem>
                             </ContextMenu>
