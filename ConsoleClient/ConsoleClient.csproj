@@ -59,7 +59,9 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="HandlePacket.cs" />
-    <Compile Include="Packets\SendDownloadExec.cs" />
+    <Compile Include="Handle\HandleDownloadExec.cs" />
+    <Compile Include="Handle\HandleScreenShot.cs" />
+    <Compile Include="Handle\IHandlePacket.cs" />
     <Compile Include="Packets\SendScreenshot.cs" />
     <Compile Include="Packets\SendComputerInfo.cs" />
     <Compile Include="Program.cs" />

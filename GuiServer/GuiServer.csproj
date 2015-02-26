@@ -83,6 +83,9 @@
     <Compile Include="ViewImplementation\Windows\ScreenShotWindow.xaml.cs">
       <DependentUpon>ScreenShotWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewImplementation\Windows\TextInputWindow.xaml.cs">
+      <DependentUpon>TextInputWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="ViewImplementation\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,6 +95,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ViewImplementation\Windows\ScreenShotWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewImplementation\Windows\TextInputWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

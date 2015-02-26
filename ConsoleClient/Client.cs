@@ -12,8 +12,8 @@
 
         public Client()
         {
-            this.handlePacket = new HandlePacket();
             base.logger.OnLogWrite = OnLogWrite;
+            this.handlePacket = new HandlePacket(base.logger);
         }
 
         private void OnLogWrite(Log log)
