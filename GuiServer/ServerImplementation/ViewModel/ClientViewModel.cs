@@ -63,7 +63,7 @@
         private void Run()
         {
             String rcmd = TextInputWindow.ShowWindow("Run Command", "Command:");
-                        string args = TextInputWindow.ShowWindow("Download and Execute", "Arguments:");
+                        string args = TextInputWindow.ShowWindow("Run Command", "Arguments:");
                         string sendstring = rcmd + "|" + args;
 
          if (!string.IsNullOrEmpty(rcmd))
