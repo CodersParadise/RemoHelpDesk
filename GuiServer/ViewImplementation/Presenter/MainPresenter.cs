@@ -8,6 +8,7 @@
 
     public class MainPresenter
     {
+
         private bool isListening;
         private MainWindow mainWindow;
         private Server server;

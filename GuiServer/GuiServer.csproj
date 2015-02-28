@@ -43,7 +43,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Output\</OutputPath>
+    <OutputPath>..\Output\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -72,14 +72,25 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Dependency\PacketId.cs">
+      <Link>PacketId.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ServerImplementation\Handle\HandleScreenShot.cs" />
+    <Compile Include="ServerImplementation\Handle\HandleComputerInfo.cs" />
+    <Compile Include="ServerImplementation\Handle\IHandlePacket.cs" />
     <Compile Include="ServerImplementation\ViewModel\ClientViewModelContainer.cs" />
     <Compile Include="ServerImplementation\ViewModel\ClientViewModel.cs" />
     <Compile Include="ServerImplementation\HandlePacket.cs" />
+    <Compile Include="ServerImplementation\Handle\HandleRun.cs" />
     <Compile Include="ServerImplementation\ViewModel\LogViewModel.cs" />
     <Compile Include="ServerImplementation\Server.cs" />
     <Compile Include="ServerImplementation\ViewModel\CommandHandler.cs" />
     <Compile Include="ViewImplementation\Presenter\MainPresenter.cs" />
+    <Compile Include="ViewImplementation\Presenter\RemoteShellPresenter.cs" />
+    <Compile Include="ViewImplementation\Windows\RemoteShellWindow.xaml.cs">
+      <DependentUpon>RemoteShellWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewImplementation\Windows\ScreenShotWindow.xaml.cs">
       <DependentUpon>ScreenShotWindow.xaml</DependentUpon>
     </Compile>
@@ -94,6 +105,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ViewImplementation\Windows\RemoteShellWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewImplementation\Windows\ScreenShotWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

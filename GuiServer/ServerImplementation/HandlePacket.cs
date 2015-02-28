@@ -1,89 +1,50 @@
 ﻿namespace GuiServer.ServerImplementation
 {
+    using Global;
+    using GuiServer.Handle;
+    using GuiServer.ServerImplementation.Handle;
     using GuiServer.ServerImplementation.ViewModel;
-    using GuiServer.ViewImplementation.Windows;
-    using MarrySocket.MServer;
-    using NetworkObjects;
+    using MarrySocket.MExtra.Logging;
     using System;
-    using System.IO;
-    using System.Windows.Media.Imaging;
+    using System.Collections.Generic;
     using System.Windows.Threading;
-    using System.Drawing;
-using System.Windows;
-
 
     public class HandlePacket
     {
         private ClientViewModelContainer clientViewModelContainer;
         private Dispatcher dispatcher;
+        private Dictionary<int, IHandlePacket> clientPacketIds;
+        private Logger logger;
 
-        public HandlePacket(ClientViewModelContainer clientViewModelContainer, Dispatcher dispatcher)
+        public HandlePacket(ClientViewModelContainer clientViewModelContainer, Dispatcher dispatcher, Logger logger)
         {
             this.clientViewModelContainer = clientViewModelContainer;
             this.dispatcher = dispatcher;
+            this.clientPacketIds = new Dictionary<int, IHandlePacket>();
+            this.logger = logger;
+            this.InitPacketIds();
         }
 
-        public void Handle(int packetId, object receivedClass, ClientSocket clientSocket)
+        private void InitPacketIds()
         {
-            if (receivedClass is ComputerInfo)
-            {
-                ComputerInfo computerInfo = receivedClass as ComputerInfo;
-                ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(clientSocket);
-                if (clientViewModel != null)
-                {
-                    clientViewModel.ComputerInfo = computerInfo;
-                }
-            }
-            else if (receivedClass is ScreenShot)
-            {
-                ScreenShot screenShot = receivedClass as ScreenShot;
-                BitmapImage image = null;
-                try
-                {
-                    using (MemoryStream ms = new MemoryStream(screenShot.Screen))
-                    {
-                        image = new BitmapImage();
-
-                        image.BeginInit();
-                        image.CacheOption = BitmapCacheOption.OnLoad;
-                        image.StreamSource = ms;
-                        image.EndInit();
-                        image.Freeze();
-                    }
-                
-
-
-                }
-                catch (Exception ex)
-                {
-                    string message = ex.Message;
-                }
-
-                this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-                {
-                    ScreenShotWindow ssw = new ScreenShotWindow(image, "Client[" + clientSocket.Id.ToString() + "]" + DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss"));
-                    ssw.Show();
-                }));
-
-            }
-               else if (packetId.Equals(1004))
-            {
-                   string obj = (String)receivedClass;
-                   string[] split = obj.Split('|');
-                   string outstring = split[0];
-                    string errstring = split[1];
-                   MessageBox.Show("Shell Output: "+ outstring);
-                    MessageBox.Show("Error Output: "+ errstring);
-
-
-
-                   
-               }
-
-
-               }
-            
+            this.clientPacketIds.Add(PacketId.COMPUTER_INFO, new HandleComputerInfo());
+            this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenShot());
+            this.clientPacketIds.Add(PacketId.RUN, new HandleRun());
         }
+
+        public void Handle(int packetId, object receivedClass, ClientViewModel clientViewModel)
+        {
+            if (clientPacketIds.ContainsKey(packetId))
+            {
+                this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel);
+            }
+            else
+            {
+                logger.Write(String.Format("Could not handle packet: {0}", packetId), LogType.PACKET);
+            }
+        }
+
     }
+}
 
 

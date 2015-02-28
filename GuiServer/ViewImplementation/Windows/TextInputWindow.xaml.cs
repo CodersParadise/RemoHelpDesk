@@ -1,6 +1,7 @@
 ﻿namespace GuiServer.ViewImplementation.Windows
 {
     using System.Windows;
+    using System.Windows.Input;
 
     public partial class TextInputWindow : Window
     {
@@ -41,10 +42,25 @@
             this.textblockInfo.Text = text;
             this.buttonAccept.Click += buttonAccept_Click;
             this.buttonCancel.Click += buttonCancel_Click;
+            this.textboxInput.KeyDown += textboxInput_KeyDown;
+            this.textboxInput.Focus();
         }
 
         public string UserInput { get; private set; }
 
+        private void AcceptInput()
+        {
+            this.UserInput = textboxInput.Text;
+            this.DialogResult = true;
+        }
+
+        private void textboxInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                this.AcceptInput();
+            }
+        }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -53,8 +69,7 @@
 
         private void buttonAccept_Click(object sender, RoutedEventArgs e)
         {
-            this.UserInput = textboxInput.Text;
-            this.DialogResult = true;
+            this.AcceptInput();
         }
 
     }

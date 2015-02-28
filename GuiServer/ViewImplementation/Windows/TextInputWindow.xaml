@@ -1,14 +1,15 @@
 ﻿<Window x:Class="GuiServer.ViewImplementation.Windows.TextInputWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="TextInputWindow" Height="130" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+        Height="130"
+        Width="300"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow">
     <Grid>
         <StackPanel Orientation="Vertical">
-
             <TextBlock Name="textblockInfo" Margin="20,10,20,5"/>
             <TextBox Name="textboxInput" Margin="20,0,20,0"/>
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="buttonAccept" Content="Accept" Width="80" Margin="5"/>
                 <Button Name="buttonCancel" Content="Cancel" Width="80" Margin="5"/>
             </StackPanel>

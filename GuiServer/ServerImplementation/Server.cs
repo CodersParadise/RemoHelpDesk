@@ -6,7 +6,6 @@
     using MarrySocket.MServer;
     using System;
     using System.Collections.ObjectModel;
-    using System.Windows;
     using System.Windows.Threading;
 
     public class Server : ServerLayout
@@ -23,7 +22,7 @@
             this.logViewModels = logViewModels;
             this.serverConfig.BufferSize = 700000;
             this.dispatcher = dispatcher;
-            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher);
+            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, base.logger);
 
         }
 
@@ -34,7 +33,9 @@
                      this.addLog(new LogViewModel(new Log("Packet Arrived!")));
                  }));
 
-            this.handlePacket.Handle(packetId, receivedClass, clientSocket);
+            ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(clientSocket);
+
+            this.handlePacket.Handle(packetId, receivedClass, clientViewModel);
         }
 
         protected override void onClientConnected(MarrySocket.MServer.ClientSocket clientSocket)
@@ -62,7 +63,7 @@
         {
             this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
-              this.addLog(new LogViewModel(log));
+                this.addLog(new LogViewModel(log));
             }));
 
             base.OnLogWrite(log);

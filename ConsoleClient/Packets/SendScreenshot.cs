@@ -1,5 +1,6 @@
 ﻿namespace ConsoleClient.Packets
 {
+    using Global;
     using MarrySocket.MClient;
     using NetworkObjects;
     using System.Drawing;
@@ -47,7 +48,7 @@
 
             ScreenShot screenShot = new ScreenShot(screen);
 
-            serverSocket.SendObject(0, screenShot);
+            serverSocket.SendObject(PacketId.SCREEN_SHOT, screenShot);
         }
 
         private ImageCodecInfo GetEncoder(ImageFormat format)
