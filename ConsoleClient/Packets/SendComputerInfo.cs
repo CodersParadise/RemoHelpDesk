@@ -1,6 +1,6 @@
 ﻿namespace ConsoleClient.Packets
 {
-    using Global;
+    using GlobalShare;
     using MarrySocket.MClient;
     using NetworkObjects;
     using System;
@@ -14,7 +14,8 @@
             computerInfo.Device = Environment.OSVersion.ToString();
             computerInfo.LogonName = Environment.UserName.ToString();
 
-            serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
+            //serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
+            serverSocket.SendObject<ComputerInfo>(PacketId.COMPUTER_INFO, computerInfo);
         }
     }
 }

@@ -7,14 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiServer", "GuiServer\GuiS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{438DDF05-16E7-4335-B9EC-52C4C4E65C04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkObjects", "NetworkObjects\NetworkObjects.csproj", "{1AF0874E-F3A9-4382-919B-5D5878C1115C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAE11FB1-5F1E-4991-9F59-D43EB5CCC76C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24B6E6EC-357F-4645-9C50-1B02B1BC754A}"
 	ProjectSection(SolutionItems) = preProject
-		Dependency\MarrySocket.dll = Dependency\MarrySocket.dll
-		Dependency\MarrySocket.pdb = Dependency\MarrySocket.pdb
-		Dependency\PacketId.cs = Dependency\PacketId.cs
+		Solution Items\MarrySocket.dll = Solution Items\MarrySocket.dll
+		Solution Items\MarrySocket.pdb = Solution Items\MarrySocket.pdb
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FD7F2D6C-760A-4F84-A417-B4FC325FDA1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkObjects", "NetworkObjects\NetworkObjects.csproj", "{74CD888F-BB60-4A75-9C8D-F4473C54D2B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,12 +31,15 @@ Global
 		{438DDF05-16E7-4335-B9EC-52C4C4E65C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{438DDF05-16E7-4335-B9EC-52C4C4E65C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{438DDF05-16E7-4335-B9EC-52C4C4E65C04}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1AF0874E-F3A9-4382-919B-5D5878C1115C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AF0874E-F3A9-4382-919B-5D5878C1115C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AF0874E-F3A9-4382-919B-5D5878C1115C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AF0874E-F3A9-4382-919B-5D5878C1115C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FD7F2D6C-760A-4F84-A417-B4FC325FDA1F} = {24B6E6EC-357F-4645-9C50-1B02B1BC754A}
 	EndGlobalSection
 EndGlobal

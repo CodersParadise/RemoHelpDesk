@@ -2,7 +2,7 @@
 {
     using ConsoleClient.Handle;
     using ConsoleClient.Packets;
-    using Global;
+    using GlobalShare;
     using MarrySocket.MClient;
     using MarrySocket.MExtra.Logging;
     using NetworkObjects;

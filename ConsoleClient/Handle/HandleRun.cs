@@ -1,6 +1,6 @@
 ﻿namespace ConsoleClient.Handle
 {
-    using Global;
+    using GlobalShare;
     using MarrySocket.MClient;
     using System;
     using System.ComponentModel;

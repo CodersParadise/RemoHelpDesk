@@ -1,6 +1,6 @@
 ﻿namespace GuiServer.ViewImplementation.Presenter
 {
-    using Global;
+    using GlobalShare;
     using GuiServer.ServerImplementation.ViewModel;
     using GuiServer.ViewImplementation.Windows;
     using System;

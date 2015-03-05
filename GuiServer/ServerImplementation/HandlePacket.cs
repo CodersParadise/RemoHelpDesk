@@ -1,6 +1,6 @@
 ﻿namespace GuiServer.ServerImplementation
 {
-    using Global;
+    using GlobalShare;
     using GuiServer.Handle;
     using GuiServer.ServerImplementation.Handle;
     using GuiServer.ServerImplementation.ViewModel;

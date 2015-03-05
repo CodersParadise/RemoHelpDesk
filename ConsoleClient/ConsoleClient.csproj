@@ -48,19 +48,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MarrySocket, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependency\MarrySocket.dll</HintPath>
+    <Reference Include="MarrySocket">
+      <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Dependency\PacketId.cs">
-      <Link>PacketId.cs</Link>
-    </Compile>
-    <Compile Include="Client.cs" />
     <Compile Include="HandlePacket.cs" />
     <Compile Include="Handle\HandleDownloadExec.cs" />
     <Compile Include="Handle\HandleRun.cs" />
@@ -76,12 +71,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
-      <Project>{1af0874e-f3a9-4382-919b-5d5878c1115c}</Project>
-      <Name>NetworkObjects</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -92,6 +81,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
+      <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
+      <Name>NetworkObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

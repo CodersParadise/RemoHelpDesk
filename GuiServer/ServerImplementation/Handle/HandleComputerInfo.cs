@@ -8,7 +8,7 @@
 
         public void Handle(object receivedClass, ClientViewModel clientViewModel)
         {
-            ComputerInfo computerInfo = receivedClass as ComputerInfo;
+            ComputerInfo computerInfo = (ComputerInfo)receivedClass;
 
             if (clientViewModel != null)
             {

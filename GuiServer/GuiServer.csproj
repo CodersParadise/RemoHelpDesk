@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MarrySocket">
-      <HintPath>..\Dependency\MarrySocket.dll</HintPath>
+      <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,9 +72,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Dependency\PacketId.cs">
-      <Link>PacketId.cs</Link>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ServerImplementation\Handle\HandleScreenShot.cs" />
     <Compile Include="ServerImplementation\Handle\HandleComputerInfo.cs" />
@@ -164,9 +161,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
-      <Project>{1af0874e-f3a9-4382-919b-5d5878c1115c}</Project>
+      <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
       <Name>NetworkObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
