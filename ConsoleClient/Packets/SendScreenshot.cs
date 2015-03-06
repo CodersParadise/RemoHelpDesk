@@ -1,6 +1,6 @@
 ﻿namespace ConsoleClient.Packets
 {
-    using GlobalShare;
+    
     using MarrySocket.MClient;
     using NetworkObjects;
     using System.Drawing;

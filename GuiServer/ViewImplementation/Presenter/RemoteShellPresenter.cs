@@ -1,8 +1,9 @@
 ﻿namespace GuiServer.ViewImplementation.Presenter
 {
-    using GlobalShare;
+
     using GuiServer.ServerImplementation.ViewModel;
     using GuiServer.ViewImplementation.Windows;
+    using NetworkObjects;
     using System;
     using System.Windows.Controls;
     using System.Windows.Input;

@@ -1,10 +1,11 @@
 ﻿namespace GuiServer.ServerImplementation
 {
-    using GlobalShare;
+
     using GuiServer.Handle;
     using GuiServer.ServerImplementation.Handle;
     using GuiServer.ServerImplementation.ViewModel;
     using MarrySocket.MExtra.Logging;
+    using NetworkObjects;
     using System;
     using System.Collections.Generic;
     using System.Windows.Threading;

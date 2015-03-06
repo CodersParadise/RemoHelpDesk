@@ -1,4 +1,4 @@
-﻿namespace GlobalShare
+﻿namespace NetworkObjects
 {
     public class PacketId
     {

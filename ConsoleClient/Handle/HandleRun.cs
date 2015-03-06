@@ -1,7 +1,8 @@
 ﻿namespace ConsoleClient.Handle
 {
-    using GlobalShare;
+
     using MarrySocket.MClient;
+    using NetworkObjects;
     using System;
     using System.ComponentModel;
     using System.Diagnostics;

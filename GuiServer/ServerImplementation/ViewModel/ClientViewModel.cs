@@ -1,6 +1,6 @@
 ﻿namespace GuiServer.ServerImplementation.ViewModel
 {
-    using GlobalShare;
+ 
     using GuiServer.ViewImplementation.Presenter;
     using GuiServer.ViewImplementation.Windows;
     using MarrySocket.MServer;

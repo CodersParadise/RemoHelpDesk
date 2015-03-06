@@ -37,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +51,12 @@
   <ItemGroup>
     <Reference Include="MarrySocket">
       <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetworkObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Output\NetworkObjects.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -83,13 +90,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
-      <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
-      <Name>NetworkObjects</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
+      <Link>NetworkObjects.dll</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Shared\" />
+    <EmbeddedResource Include="..\Solution Items\MarrySocket.dll">
+      <Link>MarrySocket.dll</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Reference Include="MarrySocket">
       <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -163,10 +164,17 @@
     <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
       <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
       <Name>NetworkObjects</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Shared\" />
+    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
+      <Link>NetworkObjects.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Solution Items\MarrySocket.dll">
+      <Link>MarrySocket.dll</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

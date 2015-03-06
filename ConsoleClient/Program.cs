@@ -3,10 +3,11 @@
     using ConsoleClient.Packets;
     using MarrySocket.MClient;
     using MarrySocket.MExtra;
-    using MarrySocket.MExtra.Serialization;
     using System;
+    using System.IO;
     using System.Net;
     using System.Net.Sockets;
+    using System.Reflection;
     using System.Threading;
 
     public static class Program
@@ -16,8 +17,46 @@
         private const int RECONNECT_TIMEOUT_MS = 1000;
         private static HandlePacket handlePacket;
         private static MarryClient client;
+        private const string assemblyMarrySocket = "MarrySocket";
+        private const string assemblyNetworkObjects = "NetworkObjects";
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            Run();
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            Assembly assembly = null;
+            if (args.Name.Contains(assemblyMarrySocket))
+            {
+                assembly = LoadAssembly(assemblyMarrySocket);
+            }
+            else if (args.Name.Contains(assemblyNetworkObjects))
+            {
+                assembly = LoadAssembly(assemblyNetworkObjects);
+            }
+            else
+            {
+                Console.WriteLine("Missing Assembly:" + args.Name);
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            return assembly;
+        }
+
+        private static Assembly LoadAssembly(string name)
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ConsoleClient." + name + ".dll"))
+            {
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+                return Assembly.Load(assemblyData);
+            }
+        }
+
+        private static void Run()
         {
             ClientConfig config = new ClientConfig();
             client = new MarryClient(config);
@@ -46,22 +85,22 @@
             }
         }
 
-        static void client_Disconnected(object sender, DisconnectedEventArgs e)
+        private static void client_Disconnected(object sender, DisconnectedEventArgs e)
         {
 
         }
 
-        static void client_Connected(object sender, ConnectedEventArgs e)
+        private static void client_Connected(object sender, ConnectedEventArgs e)
         {
             handlePacket.Send(client.ServerSocket, new SendComputerInfo());
         }
 
-        static void Logger_LogWrite(object sender, MarrySocket.MExtra.Logging.LogWriteEventArgs e)
+        private static void Logger_LogWrite(object sender, MarrySocket.MExtra.Logging.LogWriteEventArgs e)
         {
             Console.WriteLine(e.Log.Text);
         }
 
-        static void client_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
+        private static void client_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
         {
             handlePacket.Handle(e.PacketId, e.MyObject, e.ServerSocket);
         }
