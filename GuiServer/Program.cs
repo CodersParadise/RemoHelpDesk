@@ -40,7 +40,7 @@
 
         private static Assembly LoadAssembly(string name)
         {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ConsoleClient." + name + ".dll"))
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GuiServer." + name + ".dll"))
             {
                 byte[] assemblyData = new byte[stream.Length];
                 stream.Read(assemblyData, 0, assemblyData.Length);
