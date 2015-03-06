@@ -126,47 +126,16 @@
 
             }
 
-
             private void ReadCompletedCallback(IAsyncResult ar)
             {
-                // get the original worker delegate and the AsyncOperation instance
-                ReadWorkerDelegate worker =
-                  (ReadWorkerDelegate)((AsyncResult)ar).AsyncDelegate;
-                AsyncOperation async = (AsyncOperation)ar.AsyncState;
-
-                // finish the asynchronous operation
+                ReadWorkerDelegate worker =(ReadWorkerDelegate)((AsyncResult)ar).AsyncDelegate;
                 worker.EndInvoke(ar);
-
-                // clear the running task flag
                 lock (myLock)
                 {
                     readIsRunning = false;
                 }
-
-                // raise the completed event
-                //AsyncCompletedEventArgs completedArgs = new ReadAsyncCompletedEventArgs(null,
-                //  false, null);
-
-
-
-                //async.PostOperationCompleted(
-                //  delegate(object e) { OnMyTaskCompleted((ReadAsyncCompletedEventArgs)e); },
-                //  completedArgs);
-
             }
-
-
-            //protected virtual void OnMyTaskCompleted(ReadAsyncCompletedEventArgs e)
-            //{
-            //    if (ReadCompleted != null)
-            //        ReadCompleted(this, e);
-            //}
-
         }
-
-
-
-
 
 
     }

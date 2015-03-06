@@ -3,6 +3,7 @@
     using ConsoleClient.Packets;
     using MarrySocket.MClient;
     using MarrySocket.MExtra;
+    using MarrySocket.MExtra.Serialization;
     using System;
     using System.Net;
     using System.Net.Sockets;

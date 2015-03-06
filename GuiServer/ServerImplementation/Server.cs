@@ -2,6 +2,7 @@
 {
     using GuiServer.ServerImplementation.ViewModel;
     using MarrySocket.MExtra.Logging;
+    using MarrySocket.MExtra.Serialization;
     using MarrySocket.MServer;
     using System;
     using System.Collections.ObjectModel;
@@ -67,12 +68,6 @@
 
         private void marryServer_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
         {
-
-            this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                this.addLog(new LogViewModel(new Log("Packet Arrived!")));
-            }));
-
             ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ServerSocket);
             this.handlePacket.Handle(e.PacketId, e.MyObject, clientViewModel);
         }

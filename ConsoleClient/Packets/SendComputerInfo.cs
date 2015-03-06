@@ -15,7 +15,7 @@
             computerInfo.LogonName = Environment.UserName.ToString();
 
             //serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
-            serverSocket.SendObject<ComputerInfo>(PacketId.COMPUTER_INFO, computerInfo);
+            serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
         }
     }
 }
