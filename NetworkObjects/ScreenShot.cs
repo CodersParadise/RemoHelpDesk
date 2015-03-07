@@ -1,11 +1,10 @@
-﻿using System;
-
-namespace NetworkObjects
+﻿namespace NetworkObjects
 {
+    using System;
     [Serializable]
-    public class ScreenShot
+    public class Screenshot
     {
-        public ScreenShot(byte[] screen)
+        public Screenshot(byte[] screen)
         {
             this.Screen = screen;
         }

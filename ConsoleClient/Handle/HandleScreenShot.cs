@@ -3,12 +3,12 @@
     using ConsoleClient.Packets;
     using MarrySocket.MClient;
 
-    public class HandleScreenShot : IHandlePacket
+    public class HandleScreenshot : IHandlePacket
     {
         public void Handle(object receivedClass, ServerSocket serverSocket)
         {
             long quality = (long)receivedClass;
-            SendScreenShot ss = new SendScreenShot(quality);
+            SendScreenshot ss = new SendScreenshot(quality);
             ss.Send(serverSocket);
         }
     }

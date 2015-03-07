@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace NetworkObjects
+﻿namespace NetworkObjects
 {
+    using System;
+
     [Serializable]
     public class DownloadExec
     {

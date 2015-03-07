@@ -80,12 +80,13 @@
     <Compile Include="ServerImplementation\ViewModel\ClientViewModelContainer.cs" />
     <Compile Include="ServerImplementation\ViewModel\ClientViewModel.cs" />
     <Compile Include="ServerImplementation\HandlePacket.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleRun.cs" />
+    <Compile Include="ServerImplementation\Handle\HandleRemoteShell.cs" />
     <Compile Include="ServerImplementation\ViewModel\LogViewModel.cs" />
     <Compile Include="ServerImplementation\Server.cs" />
     <Compile Include="ServerImplementation\ViewModel\CommandHandler.cs" />
     <Compile Include="ViewImplementation\Presenter\MainPresenter.cs" />
     <Compile Include="ViewImplementation\Presenter\RemoteShellPresenter.cs" />
+    <Compile Include="ViewImplementation\Presenter\ScreenShotPresenter.cs" />
     <Compile Include="ViewImplementation\Windows\RemoteShellWindow.xaml.cs">
       <DependentUpon>RemoteShellWindow.xaml</DependentUpon>
     </Compile>

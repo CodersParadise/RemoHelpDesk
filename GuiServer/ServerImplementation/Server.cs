@@ -20,7 +20,7 @@
         {
             this.dispatcher = dispatcher;
             ServerConfig config = new ServerConfig();
-            config.BufferSize = 700000;
+            config.BufferSize = 2 * 1024 * 1024;
             this.marryServer = new MarryServer(config);
             this.marryServer.ReceivedPacket += marryServer_ReceivedPacket;
             this.marryServer.ClientConnected += marryServer_ClientConnected;

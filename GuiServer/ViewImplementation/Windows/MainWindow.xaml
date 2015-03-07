@@ -25,13 +25,13 @@
                     <Setter Property="ContextMenu">
                         <Setter.Value>
                             <ContextMenu>
-                                <MenuItem Header="Screenshot" Command="{Binding CmdScreenshot}">
+                                <MenuItem Header="Screenshot" Command="{Binding CmdScreenshot}" IsEnabled="{Binding CanScreenshot}">
                                 </MenuItem>
-                                <MenuItem Header="Download and Execute" Command="{Binding CmdDownloadExecute}">
+                                <MenuItem Header="Download and Execute" Command="{Binding CmdDownloadExecute}" IsEnabled="{Binding CanDownloadExecute}" >
                                 </MenuItem>
-                                <MenuItem Header="Run" Command="{Binding CmdRun}">
+                                <MenuItem Header="Run" Command="{Binding CmdRemoteShell}"  IsEnabled="{Binding CanRemoteShell}" >
                                 </MenuItem>
-                                <MenuItem Header="Disconnect" Command="{Binding CmdDisconnect}">
+                                <MenuItem Header="Disconnect" Command="{Binding CmdDisconnect}"  IsEnabled="{Binding CanDisconnect}" >
                                 </MenuItem>
                             </ContextMenu>
                         </Setter.Value>

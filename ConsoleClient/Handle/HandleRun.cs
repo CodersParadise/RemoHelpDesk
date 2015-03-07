@@ -1,6 +1,5 @@
 ﻿namespace ConsoleClient.Handle
 {
-
     using MarrySocket.MClient;
     using NetworkObjects;
     using System;
@@ -9,11 +8,11 @@
     using System.IO;
     using System.Runtime.Remoting.Messaging;
     using System.Threading;
+
     public class HandleRun : IHandlePacket
     {
         private ServerSocket serverSocket;
         private Process shellProcess;
-
 
         public HandleRun()
         {

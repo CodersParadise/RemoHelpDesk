@@ -1,6 +1,5 @@
 ﻿namespace GuiServer.ServerImplementation
 {
-
     using GuiServer.Handle;
     using GuiServer.ServerImplementation.Handle;
     using GuiServer.ServerImplementation.ViewModel;
@@ -29,8 +28,8 @@
         private void InitPacketIds()
         {
             this.clientPacketIds.Add(PacketId.COMPUTER_INFO, new HandleComputerInfo());
-            this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenShot());
-            this.clientPacketIds.Add(PacketId.RUN, new HandleRun());
+            this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
+            this.clientPacketIds.Add(PacketId.RUN, new HandleRemoteShell());
         }
 
         public void Handle(int packetId, object receivedClass, ClientViewModel clientViewModel)

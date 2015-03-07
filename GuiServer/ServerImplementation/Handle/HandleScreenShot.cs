@@ -2,17 +2,18 @@
 {
     using GuiServer.Handle;
     using GuiServer.ServerImplementation.ViewModel;
+    using GuiServer.ViewImplementation.Presenter;
     using GuiServer.ViewImplementation.Windows;
     using NetworkObjects;
     using System;
     using System.IO;
     using System.Windows.Media.Imaging;
 
-    public class HandleScreenShot : IHandlePacket
+    public class HandleScreenshot : IHandlePacket
     {
         public void Handle(object receivedClass, ClientViewModel clientViewModel)
         {
-            ScreenShot screenShot = receivedClass as ScreenShot;
+            Screenshot screenShot = receivedClass as Screenshot;
             BitmapImage image = null;
             try
             {
@@ -25,6 +26,7 @@
                     image.StreamSource = ms;
                     image.EndInit();
                     image.Freeze();
+                   
                 }
             }
             catch (Exception ex)
@@ -32,11 +34,10 @@
                 string message = ex.Message;
             }
 
-            Program.DispatchIfNecessary(() =>
-                {
-                    ScreenShotWindow ssw = new ScreenShotWindow(image, "Client[" + clientViewModel.Id.ToString() + "]" + DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss"));
-                    ssw.Show();
-                });
+         
+            clientViewModel.UpdateScreenshotOutput(image);
+
+
         }
     }
 }

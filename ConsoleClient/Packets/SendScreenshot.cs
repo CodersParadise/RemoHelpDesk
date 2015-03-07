@@ -1,6 +1,5 @@
 ﻿namespace ConsoleClient.Packets
 {
-    
     using MarrySocket.MClient;
     using NetworkObjects;
     using System.Drawing;
@@ -8,11 +7,11 @@
     using System.IO;
     using System.Windows.Forms;
 
-    public class SendScreenShot : ISendPacket
+    public class SendScreenshot : ISendPacket
     {
         private long quality;
 
-        public SendScreenShot(long quality)
+        public SendScreenshot(long quality)
         {
             this.quality = quality;
         }
@@ -46,7 +45,7 @@
                 }
             }
 
-            ScreenShot screenShot = new ScreenShot(screen);
+            Screenshot screenShot = new Screenshot(screen);
 
             serverSocket.SendObject(PacketId.SCREEN_SHOT, screenShot);
         }

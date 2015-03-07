@@ -1,6 +1,7 @@
 ﻿namespace GuiServer.ServerImplementation.ViewModel
 {
     using System;
+    using System.Windows;
     using System.Windows.Input;
 
     public class CommandHandler : ICommand
@@ -20,6 +21,8 @@
         {
             return _canExecute;
         }
+
+
 
         public event EventHandler CanExecuteChanged;
 

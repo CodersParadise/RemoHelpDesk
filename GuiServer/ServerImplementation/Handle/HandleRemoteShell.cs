@@ -4,13 +4,13 @@
     using GuiServer.ServerImplementation.ViewModel;
     using System;
 
-    public class HandleRun : IHandlePacket
+    public class HandleRemoteShell : IHandlePacket
     {
 
         public void Handle(object receivedClass, ClientViewModel clientViewModel)
         {
-            string obj = (String)receivedClass;
-            clientViewModel.UpdateRemoteShellOutput(obj);
+            string command = (String)receivedClass;
+            clientViewModel.UpdateRemoteShellOutput(command);
         }
     }
 }
