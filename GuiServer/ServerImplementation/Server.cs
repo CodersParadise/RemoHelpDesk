@@ -2,7 +2,6 @@
 {
     using GuiServer.ServerImplementation.ViewModel;
     using MarrySocket.MExtra.Logging;
-    using MarrySocket.MExtra.Serialization;
     using MarrySocket.MServer;
     using System;
     using System.Collections.ObjectModel;
@@ -10,35 +9,36 @@
 
     public class Server
     {
-        private ObservableCollection<LogViewModel> logViewModels;
+        private LogViewModelContainer logViewModelContainer;
         private HandlePacket handlePacket;
         private ClientViewModelContainer clientViewModelContainer;
         private Dispatcher dispatcher;
-        private MarryServer marryServer;
 
-        public Server(ClientViewModelContainer clientViewModelContainer, ObservableCollection<LogViewModel> logViewModels, Dispatcher dispatcher)
+        public Server(ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
             ServerConfig config = new ServerConfig();
             config.BufferSize = 2 * 1024 * 1024;
-            this.marryServer = new MarryServer(config);
-            this.marryServer.ReceivedPacket += marryServer_ReceivedPacket;
-            this.marryServer.ClientConnected += marryServer_ClientConnected;
-            this.marryServer.ClientDisconnected += marryServer_ClientDisconnected;
-            this.marryServer.Logger.LogWrite += Logger_LogWrite;
+            this.MarryServer = new MarryServer(config);
+            this.MarryServer.ReceivedPacket += marryServer_ReceivedPacket;
+            this.MarryServer.ClientConnected += marryServer_ClientConnected;
+            this.MarryServer.ClientDisconnected += marryServer_ClientDisconnected;
+            this.MarryServer.Logger.LogWrite += Logger_LogWrite;
             this.clientViewModelContainer = clientViewModelContainer;
-            this.logViewModels = logViewModels;
-            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.marryServer.Logger);
+            this.logViewModelContainer = logViewModelContainer;
+            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.MarryServer.Logger);
         }
+
+        public MarryServer MarryServer;
 
         public void Start()
         {
-            this.marryServer.Start();
+            this.MarryServer.Start();
         }
 
         public void Stop()
         {
-            this.marryServer.Stop();
+            this.MarryServer.Stop();
         }
 
         private void Logger_LogWrite(object sender, LogWriteEventArgs e)
@@ -76,12 +76,12 @@
         {
             logViewModel.CmdClearLog = new CommandHandler(() => this.ClearLog(logViewModel), this.CanClearLog());
             logViewModel.CmdClearAllLog = new CommandHandler(() => this.ClearAllLog(), this.CanClearAllLog());
-            this.logViewModels.Add(logViewModel);
+            this.logViewModelContainer.Add(logViewModel);
         }
 
         private bool CanClearAllLog()
         {
-            if (this.marryServer.Logger.Count > 0)
+            if (this.MarryServer.Logger.Count > 0)
                 return true;
             else
                 return false;
@@ -89,8 +89,8 @@
 
         private void ClearAllLog()
         {
-            this.marryServer.Logger.Clear();
-            this.logViewModels.Clear();
+            this.MarryServer.Logger.Clear();
+            this.logViewModelContainer.Clear();
         }
 
         private bool CanClearLog()
@@ -102,8 +102,8 @@
         {
             if (logViewModel != null)
             {
-                this.marryServer.Logger.Remove(logViewModel.Id);
-                this.logViewModels.Remove(logViewModel);
+                this.MarryServer.Logger.Remove(logViewModel.Id);
+                this.logViewModelContainer.Remove(logViewModel);
             }
         }
 

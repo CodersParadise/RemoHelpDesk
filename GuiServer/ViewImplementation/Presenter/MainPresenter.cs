@@ -13,7 +13,7 @@
         private MainWindow mainWindow;
         private Server server;
         private ClientViewModelContainer clientViewModelContainer;
-        private ObservableCollection<LogViewModel> logViewModels;
+        private LogViewModelContainer logViewModelContainer;
         private Dispatcher dispatcher;
         private Button btnListen;
         private ListView lvClients;
@@ -45,9 +45,9 @@
 
         private void InitializeFields()
         {
-            this.logViewModels = new ObservableCollection<LogViewModel>();
-            this.clientViewModelContainer = new ClientViewModelContainer();
-            this.server = new Server(this.clientViewModelContainer, this.logViewModels, this.dispatcher);
+            this.logViewModelContainer = new LogViewModelContainer(this.lvLogs);
+            this.clientViewModelContainer = new ClientViewModelContainer(this.lvClients);
+            this.server = new Server(this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
             this.isListening = false;
         }
 
@@ -56,7 +56,7 @@
             this.mainWindow.DataContext = this;
             this.btnListen.Content = "Start Listening";
             this.lvClients.ItemsSource = this.clientViewModelContainer.ClientViewModels;
-            this.lvLogs.ItemsSource = this.logViewModels;
+            this.lvLogs.ItemsSource = this.logViewModelContainer.LogViewModels;
         }
 
         void mainWindow_Closed(object sender, System.EventArgs e)

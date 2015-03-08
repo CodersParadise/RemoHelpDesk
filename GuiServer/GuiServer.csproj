@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ServerImplementation\ViewModel\LogViewModelContainer.cs" />
     <Compile Include="ServerImplementation\Handle\HandleScreenShot.cs" />
     <Compile Include="ServerImplementation\Handle\HandleComputerInfo.cs" />
     <Compile Include="ServerImplementation\Handle\IHandlePacket.cs" />
