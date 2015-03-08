@@ -29,7 +29,7 @@
                                 </MenuItem>
                                 <MenuItem Header="Download and Execute" Command="{Binding CmdDownloadExecute}" IsEnabled="{Binding CanDownloadExecute}" >
                                 </MenuItem>
-                                <MenuItem Header="Run" Command="{Binding CmdRemoteShell}"  IsEnabled="{Binding CanRemoteShell}" >
+                                <MenuItem Header="Remote Shell" Command="{Binding CmdRemoteShell}"  IsEnabled="{Binding CanRemoteShell}" >
                                 </MenuItem>
                                 <MenuItem Header="Disconnect" Command="{Binding CmdDisconnect}"  IsEnabled="{Binding CanDisconnect}" >
                                 </MenuItem>
@@ -45,6 +45,8 @@
                     <GridViewColumn Header="Device" DisplayMemberBinding="{Binding ComputerInfo.Device}" Width="180"/>
                     <GridViewColumn Header="Host" DisplayMemberBinding="{Binding ComputerInfo.HostName}" Width="90"/>
                     <GridViewColumn Header="LogonName" DisplayMemberBinding="{Binding ComputerInfo.LogonName}" Width="90"/>
+                    <GridViewColumn Header="InTraffic" DisplayMemberBinding="{Binding InTraffic}" Width="90"/>
+                    <GridViewColumn Header="OutTraffic" DisplayMemberBinding="{Binding OutTraffic}" Width="90"/>
                 </GridView>
             </ListView.View>
         </ListView>

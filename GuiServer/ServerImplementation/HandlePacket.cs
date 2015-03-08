@@ -36,6 +36,7 @@
         {
             if (clientPacketIds.ContainsKey(packetId))
             {
+                clientViewModel.NotifyInTrafficChanged();
                 this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel);
             }
             else
