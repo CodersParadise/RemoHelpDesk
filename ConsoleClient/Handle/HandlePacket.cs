@@ -1,6 +1,5 @@
-﻿namespace ConsoleClient
+﻿namespace ConsoleClient.Handle
 {
-    using ConsoleClient.Handle;
     using ConsoleClient.Packets;
     using MarrySocket.MClient;
     using MarrySocket.MExtra.Logging;

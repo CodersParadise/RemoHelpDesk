@@ -21,7 +21,6 @@
             this.clientViewModel.CanRemoteShell = true;
         }
 
-
         public void SetRemoteShellWindow(RemoteShellWindow remoteShellWindow)
         {
             if (remoteShellWindow != null && this.clientViewModel.CanRemoteShell)
@@ -37,7 +36,6 @@
             }
 
         }
-
 
         private void textboxInput_KeyDown(object sender, KeyEventArgs e)
         {
@@ -80,6 +78,8 @@
                 this.textblockOutput.Text += output + Environment.NewLine;
                 this.scrollViewerOutput.ScrollToBottom();
             });
+
+
         }
 
     }

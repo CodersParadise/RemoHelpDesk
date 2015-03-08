@@ -20,11 +20,13 @@
         private int intervall;
         private Timer reloadTimer;
         private bool autoSave;
+        private bool mouseInput;
 
         public ScreenshotPresenter(ClientViewModel clientViewModel)
         {
             this.clientViewModel = clientViewModel;
             this.autoSave = false;
+            this.mouseInput = false;
             this.clientViewModel.CanScreenshot = true;
             this.quality = ScreenshotPresenter.DEFAULT_QUALITY;
             this.intervall = ScreenshotPresenter.MIN_INTERVALL;
@@ -60,7 +62,38 @@
                 this.screenShotWindow.checkboxAutoSave.Checked += checkboxAutoSave_Checked;
                 this.screenShotWindow.checkboxAutoSave.Unchecked += checkboxAutoSave_Checked;
 
+                this.screenShotWindow.checkboxMouseInput.IsChecked = this.mouseInput;
+                this.screenShotWindow.checkboxMouseInput.Checked += checkboxMouseInput_Checked;
+                this.screenShotWindow.checkboxMouseInput.Unchecked += checkboxMouseInput_Checked;
+
+                this.screenShotWindow.imageView.MouseDown += imageView_MouseDown;
             }
+        }
+
+        private void imageView_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (this.mouseInput)
+            {
+                System.Windows.Point position = e.GetPosition(this.screenShotWindow.imageView);
+                double imgW = this.screenShotWindow.imageView.ActualWidth;
+                double imgH = this.screenShotWindow.imageView.ActualHeight;
+
+                double norX = position.X / imgW;
+                double norY = position.Y / imgH;
+
+                double scrW = this.screenShotWindow.imageView.Source.Width;
+                double scrH = this.screenShotWindow.imageView.Source.Height;
+
+                double finX = norX * scrW;
+                double finY = norY * scrH;
+
+                this.clientViewModel.SendObject(PacketId.SCREEN_SHOT, new int[] { (int)finX, (int)finY });
+            }
+        }
+
+        private void checkboxMouseInput_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.mouseInput = this.screenShotWindow.checkboxMouseInput.IsChecked.Value;
         }
 
         public void Show()
