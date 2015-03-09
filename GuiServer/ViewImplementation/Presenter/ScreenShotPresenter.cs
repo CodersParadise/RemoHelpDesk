@@ -182,6 +182,8 @@
         private void screenShotWindow_Closed(object sender, System.EventArgs e)
         {
             this.clientViewModel.CanScreenshot = true;
+            this.reloadTimer.Enabled = false;
+
         }
 
     }
