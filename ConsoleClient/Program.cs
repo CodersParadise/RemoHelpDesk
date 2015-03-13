@@ -72,7 +72,7 @@
             {
                 if (!client.IsConnected)
                 {
-                    IPAddress ipAdress = Maid.IPAddressLookup(SERVER_HOST, AddressFamily.InterNetworkV6);
+                    IPAddress ipAdress = Maid.IPAddressLookup(SERVER_HOST);
 
                     if (ipAdress != null)
                     {
