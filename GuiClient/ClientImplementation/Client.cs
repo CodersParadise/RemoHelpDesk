@@ -1,10 +1,11 @@
-﻿
-using GuiClient.ClientImplementation;
+﻿namespace GuiClient.ClientImplementation
+{
+
 
 
 using MarrySocket.MClient;
 
-using System;
+
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -12,12 +13,12 @@ using System.Reflection;
 using System.Threading;
 
 using GuiClient.ClientImplementation.ViewModel;
+    using MarrySocket.MExtra;
+    using ConsoleClient.Handle;
+    using System;
+    using ConsoleClient.Packets;
 
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
-namespace GuiClient.ClientImplementation
-{
+
     class Client
     {
 
@@ -48,9 +49,9 @@ namespace GuiClient.ClientImplementation
             }
             else
             {
-                Console.WriteLine("Missing Assembly:" + args.Name);
-                Console.ReadKey();
-                Environment.Exit(0);
+         //       Console.WriteLine("Missing Assembly:" + args.Name);
+             //   Console.ReadKey();
+            //    Environment.Exit(0);
             }
             return assembly;
         }
