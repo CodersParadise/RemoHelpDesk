@@ -30,11 +30,11 @@ using GuiClient.ClientImplementation.ViewModel;
         private const string assemblyMarrySocket = "MarrySocket";
         private const string assemblyNetworkObjects = "NetworkObjects";
 
-        public static void Main(string[] args)
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            Run();
-        }
+     //   public static void Main(string[] args)
+       // {
+      //      AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+      //      Run();
+//}
 
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
