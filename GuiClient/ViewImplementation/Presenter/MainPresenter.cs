@@ -1,5 +1,6 @@
 ﻿using GuiClient.ClientImplementation;
 using GuiClient.ClientImplementation.ViewModel;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -89,14 +90,29 @@ namespace GuiClient.ViewImplementation.Presenter
 
         private void StartClient()
         {
-
+ 
+            try { 
             this.client.Run(txtIp.Text);
             this.isConnected = true;
+            }
+            catch(Exception ex)
+            {}
+
+
         }
 
         private void StopClient()
         {
-            this.isConnected = false;
+            try
+            {
+                this.isConnected = false;
+          
+                this.client.Disconnect("Stop Client");
+
+          
+            }
+            catch (Exception ex)
+            { }
 
         }
     }

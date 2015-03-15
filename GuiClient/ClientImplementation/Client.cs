@@ -61,6 +61,7 @@ using GuiClient.ClientImplementation.ViewModel;
                         config.ServerIP = ipAdress;
                         config.ServerPort = SERVER_PORT;
                         client.Connect();
+                     
                     }
 
                     Thread.Sleep(RECONNECT_TIMEOUT_MS);
@@ -68,6 +69,12 @@ using GuiClient.ClientImplementation.ViewModel;
             }
         }
 
+        public void Disconnect(String pReason)
+        {
+         
+            client.Disconnect(pReason);
+
+        }
         private static void client_Disconnected(object sender, DisconnectedEventArgs e)
         {
 
