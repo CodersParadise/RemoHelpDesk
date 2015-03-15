@@ -47,6 +47,8 @@ namespace GuiClient.ViewImplementation.Presenter
 
         private void InitializeFields()
         {
+            this.client = new Client();
+          
 
             //  this.server = new Server(this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
 
@@ -87,6 +89,8 @@ namespace GuiClient.ViewImplementation.Presenter
 
         private void StartClient()
         {
+
+            this.client.Run(txtIp.Text);
             this.isConnected = true;
         }
 

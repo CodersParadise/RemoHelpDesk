@@ -22,8 +22,8 @@ using GuiClient.ClientImplementation.ViewModel;
     class Client
     {
 
-         private const string SERVER_HOST = "localhost";
-        private const int SERVER_PORT = 2345;
+         private  string SERVER_HOST = "localhost";
+        private int SERVER_PORT = 2345;
         private const int RECONNECT_TIMEOUT_MS = 1000;
         private static HandlePacket handlePacket;
         private static MarryClient client;
@@ -36,38 +36,11 @@ using GuiClient.ClientImplementation.ViewModel;
       //      Run();
 //}
 
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            Assembly assembly = null;
-            if (args.Name.Contains(assemblyMarrySocket))
-            {
-                assembly = LoadAssembly(assemblyMarrySocket);
-            }
-            else if (args.Name.Contains(assemblyNetworkObjects))
-            {
-                assembly = LoadAssembly(assemblyNetworkObjects);
-            }
-            else
-            {
-         //       Console.WriteLine("Missing Assembly:" + args.Name);
-             //   Console.ReadKey();
-            //    Environment.Exit(0);
-            }
-            return assembly;
-        }
+     
 
-        private static Assembly LoadAssembly(string name)
+        public  void Run(String pHostIp)
         {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ConsoleClient." + name + ".dll"))
-            {
-                byte[] assemblyData = new byte[stream.Length];
-                stream.Read(assemblyData, 0, assemblyData.Length);
-                return Assembly.Load(assemblyData);
-            }
-        }
-
-        private static void Run()
-        {
+            SERVER_HOST = pHostIp;
             ClientConfig config = new ClientConfig();
             client = new MarryClient(config);
             handlePacket = new HandlePacket(client.Logger);
