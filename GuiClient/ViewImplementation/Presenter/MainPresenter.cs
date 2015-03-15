@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GuiClient.ClientImplementation;
+using GuiClient.ClientImplementation.ViewModel;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace GuiClient.ViewImplementation.Presenter
 {
-    using GuiClient.ClientImplementation;
-    using GuiClient.ClientImplementation.ViewModel;
-    using System.Collections.ObjectModel;
-    using System.Windows.Controls;
-    using System.Windows.Threading;
+
 
     public class MainPresenter
     {
