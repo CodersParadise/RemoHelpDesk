@@ -6,8 +6,7 @@ using System.Reflection;
 
 namespace GuiClient
 {
-    namespace GuiServer
-    {
+ 
 
         public static class Program
         {
@@ -85,4 +84,4 @@ namespace GuiClient
         }
     }
 
-}
+
