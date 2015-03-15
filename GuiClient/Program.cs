@@ -1,4 +1,6 @@
 ﻿using GuiClient.ViewImplementation;
+using GuiClient.ViewImplementation.Presenter;
+
 using System;
 using System.IO;
 using System.Reflection;
