@@ -20,6 +20,7 @@ namespace GuiClient.ViewImplementation.Presenter
         private Button btnConnect;
         private TextBox txtIp;
         private bool isConnected;
+        private Thread thread1;
 
 
         public MainPresenter(MainWindow mainWindow)
@@ -30,6 +31,10 @@ namespace GuiClient.ViewImplementation.Presenter
             this.InitializeViewEvents();
             this.InitializeFields();
             this.AssignView();
+
+          thread1  = new Thread(new ParameterizedThreadStart(StartClient));
+           
+              
         }
 
         private void AssignFields()
@@ -77,12 +82,14 @@ namespace GuiClient.ViewImplementation.Presenter
             if (isConnected)
             {
                  this.StopClient();
+                 isConnected = false;
+              
             }
             else
             {
        
-                Thread thread1 = new Thread(new ParameterizedThreadStart(this.StartClient));
-                thread1.Start(txtIp.Text); 
+               thread1.Start(txtIp.Text);
+               isConnected = true;
             }
         }
 
@@ -98,7 +105,7 @@ namespace GuiClient.ViewImplementation.Presenter
                 String dieIp = (String)pIPo;
 
             this.client.Run(dieIp);
-            this.isConnected = true;
+          
             }
             catch(Exception ex)
             {}
@@ -113,7 +120,9 @@ namespace GuiClient.ViewImplementation.Presenter
                 this.isConnected = false;
           
                 this.client.Disconnect("Stop Client");
+                this.thread1.Abort();
 
+            
           
             }
             catch (Exception ex)
