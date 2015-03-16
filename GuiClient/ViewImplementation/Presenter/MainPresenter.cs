@@ -2,6 +2,7 @@
 using GuiClient.ClientImplementation.ViewModel;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -79,7 +80,9 @@ namespace GuiClient.ViewImplementation.Presenter
             }
             else
             {
-                this.StartClient();
+       
+                Thread thread1 = new Thread(new ParameterizedThreadStart(this.StartClient));
+                thread1.Start(txtIp.Text); 
             }
         }
 
@@ -88,11 +91,13 @@ namespace GuiClient.ViewImplementation.Presenter
             this.mainWindow.ShowDialog();
         }
 
-        private void StartClient()
+        private void StartClient(object pIPo)
         {
  
-            try { 
-            this.client.Run(txtIp.Text);
+            try {
+                String dieIp = (String)pIPo;
+
+            this.client.Run(dieIp);
             this.isConnected = true;
             }
             catch(Exception ex)
