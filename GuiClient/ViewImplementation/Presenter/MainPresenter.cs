@@ -68,9 +68,7 @@ namespace GuiClient.ViewImplementation.Presenter
             this.mainWindow.DataContext = this;
             this.isConnected = false;
 
-            //    this.lvClients.ItemsSource = this.clientViewModelContainer.ClientViewModels;
-            //     this.lvLogs.ItemsSource = this.logViewModelContainer.LogViewModels;
-        }
+    }
 
         void mainWindow_Closed(object sender, System.EventArgs e)
         {
@@ -111,7 +109,9 @@ namespace GuiClient.ViewImplementation.Presenter
           
             }
             catch(Exception ex)
-            {}
+            {
+         
+            }
 
 
         }
