@@ -25,15 +25,17 @@ namespace GuiClient.ViewImplementation.Presenter
 
         public MainPresenter(MainWindow mainWindow)
         {
+
+
             this.mainWindow = mainWindow;
 
             this.AssignFields();
             this.InitializeViewEvents();
             this.InitializeFields();
             this.AssignView();
-
-          thread1  = new Thread(new ParameterizedThreadStart(StartClient));
+            thread1 = new Thread(new ParameterizedThreadStart(StartClient));
            
+       
               
         }
 
@@ -83,13 +85,14 @@ namespace GuiClient.ViewImplementation.Presenter
             {
                  this.StopClient();
                  isConnected = false;
-              
+                 this.btnConnect.Content = "Connect";
             }
             else
             {
        
                thread1.Start(txtIp.Text);
                isConnected = true;
+               this.btnConnect.Content = "Disconnect";
             }
         }
 
@@ -121,6 +124,8 @@ namespace GuiClient.ViewImplementation.Presenter
           
                 this.client.Disconnect("Stop Client");
                 this.thread1.Abort();
+                thread1 = new Thread(new ParameterizedThreadStart(StartClient));
+           
 
             
           
