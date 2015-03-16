@@ -59,8 +59,7 @@ namespace GuiClient.ViewImplementation.Presenter
             this.client = new Client();
           
 
-            //  this.server = new Server(this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
-
+        
         }
 
         private void AssignView()
