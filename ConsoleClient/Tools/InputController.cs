@@ -34,6 +34,7 @@ namespace ConsoleClient.Tools
 
         private struct MOUSEINPUT
         {
+
             public Int32 X;
             public Int32 Y;
             public UInt32 MouseData;
