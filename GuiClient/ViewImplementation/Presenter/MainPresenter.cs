@@ -15,7 +15,6 @@ namespace GuiClient.ViewImplementation.Presenter
 
         private MainWindow mainWindow;
         private Client client;
-
         private Dispatcher dispatcher;
         private Button btnConnect;
         private TextBox txtIp;
@@ -25,27 +24,19 @@ namespace GuiClient.ViewImplementation.Presenter
 
         public MainPresenter(MainWindow mainWindow)
         {
-
-
             this.mainWindow = mainWindow;
-
             this.AssignFields();
             this.InitializeViewEvents();
             this.InitializeFields();
             this.AssignView();
-            clientThread = new Thread(new ParameterizedThreadStart(StartClient));
-           
-       
-              
+            clientThread = new Thread(new ParameterizedThreadStart(StartClient));          
         }
 
         private void AssignFields()
         {
             this.dispatcher = this.mainWindow.Dispatcher;
             this.btnConnect = this.mainWindow.btnConnect;
-
             this.txtIp = this.mainWindow.txtIp;
-
         }
 
         private void InitializeViewEvents()
@@ -57,23 +48,18 @@ namespace GuiClient.ViewImplementation.Presenter
         private void InitializeFields()
         {
             this.client = new Client();
-          
-
-        
         }
 
         private void AssignView()
         {
             this.mainWindow.DataContext = this;
             this.isConnected = false;
-
-    }
+        }
 
         void mainWindow_Closed(object sender, System.EventArgs e)
         {
             this.StopClient();
             this.isConnected = false;
-
         }
 
         void btnConnect_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -109,7 +95,8 @@ namespace GuiClient.ViewImplementation.Presenter
             }
             catch(Exception ex)
             {
-         
+                isConnected = false;
+           
             }
 
 
