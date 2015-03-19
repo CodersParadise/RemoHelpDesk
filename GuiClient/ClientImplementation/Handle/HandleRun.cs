@@ -1,5 +1,6 @@
 ﻿namespace ConsoleClient.Handle
 {
+    using GuiClient.ClientImplementation.ViewModel;
     using MarrySocket.MClient;
     using NetworkObjects;
     using System;
@@ -11,17 +12,13 @@
 
     public class HandleRun : IHandlePacket
     {
-        private ServerSocket serverSocket;
+        private ServerSocketViewModel serverSocketViewModel;
         private Process shellProcess;
 
-        public HandleRun()
-        {
 
-        }
-
-        public void Handle(object receivedClass, ServerSocket serverSocket)
+        public void Handle(object receivedClass, ServerSocketViewModel serverSocketViewModel)
         {
-            this.serverSocket = serverSocket;
+            this.serverSocketViewModel = serverSocketViewModel;
             string cmd = receivedClass as string;
 
             if (!string.IsNullOrEmpty(cmd))
@@ -83,7 +80,7 @@
             string str = (string)e.UserState;
             if (!string.IsNullOrEmpty(str))
             {
-                serverSocket.SendObject(PacketId.RUN, str);
+                serverSocketViewModel.ServerSocket.SendObject(PacketId.RUN, str);
             }
         }
 
