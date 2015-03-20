@@ -1,6 +1,7 @@
 ﻿namespace ConsoleClient.Handle
 {
     using ConsoleClient.Packets;
+    using GuiClient.ClientImplementation.ViewModel;
     using MarrySocket.MClient;
     using MarrySocket.MExtra.Logging;
     using NetworkObjects;
@@ -25,13 +26,15 @@
             this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
             this.clientPacketIds.Add(PacketId.DOWNLOAD_AND_EXECUTE, new HandleDownloadExec());
             this.clientPacketIds.Add(PacketId.RUN, new HandleRun());
+            this.clientPacketIds.Add(PacketId.CHAT, new HandleChat());
+
         }
 
-        public void Handle(int packetId, object receivedClass, ServerSocket serverSocket)
+        public void Handle(int packetId, object receivedClass, ServerSocketViewModel clientViewModel)
         {
             if (clientPacketIds.ContainsKey(packetId))
             {
-                this.clientPacketIds[packetId].Handle(receivedClass, serverSocket);
+                this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel);
             }
             else
             {

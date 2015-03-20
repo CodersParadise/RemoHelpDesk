@@ -14,7 +14,6 @@
             computerInfo.Device = Environment.OSVersion.ToString();
             computerInfo.LogonName = Environment.UserName.ToString();
             computerInfo.OsVersion = (int)Maid.GetOperatingSystemVersion();
-            //serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
             serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
         }
     }

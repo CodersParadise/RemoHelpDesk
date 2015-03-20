@@ -1,5 +1,6 @@
 ﻿namespace ConsoleClient.Handle
 {
+    using GuiClient.ClientImplementation.ViewModel;
     using MarrySocket.MClient;
     using NetworkObjects;
     using System;
@@ -9,7 +10,7 @@
 
     public class HandleDownloadExec : IHandlePacket
     {
-        public void Handle(object receivedClass, ServerSocket serverSocket)
+        public void Handle(object receivedClass, ServerSocketViewModel clientViewModel)
         {
 
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

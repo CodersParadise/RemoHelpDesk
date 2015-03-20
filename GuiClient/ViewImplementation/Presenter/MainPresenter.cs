@@ -1,26 +1,29 @@
 ﻿using GuiClient.ClientImplementation;
 using GuiClient.ClientImplementation.ViewModel;
+using GuiClient.ViewImplementation.Windows;
+using MarrySocket.MClient;
+using MarrySocket.MExtra;
 using System;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace GuiClient.ViewImplementation.Presenter
 {
-
-
     public class MainPresenter
     {
-
         private MainWindow mainWindow;
+        private ChatPresenter chatPresenter;
         private Client client;
-        private Dispatcher dispatcher;
-        private Button btnConnect;
-        private TextBox txtIp;
-        private bool isConnected;
+        private ClientConfig clientConfig;
         private Thread clientThread;
-
+        private Button buttonConnect;
+        private Button buttonChat;
+        private TextBox textBoxIp;
+      
 
         public MainPresenter(MainWindow mainWindow)
         {
@@ -29,54 +32,50 @@ namespace GuiClient.ViewImplementation.Presenter
             this.InitializeViewEvents();
             this.InitializeFields();
             this.AssignView();
-            clientThread = new Thread(new ParameterizedThreadStart(StartClient));          
         }
 
         private void AssignFields()
         {
-            this.dispatcher = this.mainWindow.Dispatcher;
-            this.btnConnect = this.mainWindow.btnConnect;
-            this.txtIp = this.mainWindow.txtIp;
+            this.buttonConnect = this.mainWindow.btnConnect;
+            this.textBoxIp = this.mainWindow.txtIp;
+            this.buttonChat = this.mainWindow.btnChat;
         }
 
         private void InitializeViewEvents()
         {
             this.mainWindow.Closed += mainWindow_Closed;
-            this.btnConnect.Click += btnConnect_Click;
+            this.buttonConnect.Click += btnConnect_Click;
+            this.buttonChat.Click += btnChat_Click;
         }
 
         private void InitializeFields()
         {
-            this.client = new Client();
+            this.clientConfig = new ClientConfig();
+            this.client = new Client(this.clientConfig);
+        }
+
+        private void btnChat_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ChatWindow chatWindow = new ChatWindow();
+            chatPresenter = new ChatPresenter(chatWindow, this.client);
+            chatPresenter.Show();
         }
 
         private void AssignView()
         {
             this.mainWindow.DataContext = this;
-            this.isConnected = false;
         }
 
         void mainWindow_Closed(object sender, System.EventArgs e)
         {
             this.StopClient();
-            this.isConnected = false;
         }
 
         void btnConnect_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (isConnected)
-            {
-                 this.StopClient();
-                 isConnected = false;
-                 this.btnConnect.Content = "Connect";
-            }
-            else
-            {
 
-                clientThread.Start(txtIp.Text);
-               isConnected = true;
-               this.btnConnect.Content = "Disconnect";
-            }
+            if(this.client)
+            this.StartClient();
         }
 
         public void ShowWindow()
@@ -84,41 +83,43 @@ namespace GuiClient.ViewImplementation.Presenter
             this.mainWindow.ShowDialog();
         }
 
-        private void StartClient(object pIPo)
+        private void StartClient()
         {
- 
-            try {
-                String dieIp = (String)pIPo;
+            this.clientThread = new Thread(this.client.Run);
 
-            this.client.Run(dieIp);
-          
-            }
-            catch(Exception ex)
+
+            this.clientConfig.ServerIP = Maid.IPAddressLookup(this.textBoxIp.Text);
+
+            if (this.clientConfig.ServerPort != null)
             {
-                isConnected = false;
-           
+                this.buttonConnect.Content = "Disconnect";
+
+
+
+                this.clientConfig.ServerPort = 2345;
+                this.clientThread.Start();
             }
-
-
+            else
+            {
+                MessageBox.Show("Ip adresse ist nicht gültig.");
+            }
         }
 
         private void StopClient()
         {
+            //Muss aufjedenfall disconnected werden
             try
             {
-                this.isConnected = false;
-          
-                this.client.Disconnect("Stop Client");
-                this.clientThread.Abort();
-                clientThread = new Thread(new ParameterizedThreadStart(StartClient));
-           
-
-            
-          
+                this.clientThread.Join();
+                this.client.Disconnect("Client Stopped");
             }
-            catch (Exception ex)
-            { }
+            catch
+            {
+                this.clientThread.Abort();
+            }
 
+            this.buttonConnect.Content = "Connect";
         }
+
     }
 }
