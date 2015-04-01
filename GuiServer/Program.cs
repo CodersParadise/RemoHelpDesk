@@ -1,6 +1,6 @@
 ﻿namespace GuiServer
 {
-    using GuiServer.ViewImplementation;
+    using GuiServer.View;
     using System;
     using System.IO;
     using System.Reflection;

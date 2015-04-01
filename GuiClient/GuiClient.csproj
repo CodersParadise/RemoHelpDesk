@@ -52,9 +52,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MarrySocket">
-      <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -72,33 +69,22 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ViewImplementation\Windows\ChatWindow.xaml">
+    <Page Include="View\Windows\ChatWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewImplementation\Windows\MainWindow.xaml">
+    <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ClientImplementation\Client.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleChat.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleDownloadExec.cs" />
-    <Compile Include="ClientImplementation\Handle\HandlePacket.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleRun.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleScreenShot.cs" />
-    <Compile Include="ClientImplementation\Handle\IHandlePacket.cs" />
-    <Compile Include="ClientImplementation\Packets\ISendPacket.cs" />
-    <Compile Include="ClientImplementation\Packets\SendComputerInfo.cs" />
-    <Compile Include="ClientImplementation\Packets\SendScreenshot.cs" />
-    <Compile Include="ClientImplementation\Tools\InputController.cs" />
-    <Compile Include="ClientImplementation\ViewModel\ServerSocketViewModel.cs" />
+    <Compile Include="View\ViewModel\ClientViewModel.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ViewImplementation\Presenter\ChatPresenter.cs" />
-    <Compile Include="ViewImplementation\Presenter\MainPresenter.cs" />
-    <Compile Include="ViewImplementation\Windows\ChatWindow.xaml.cs">
+    <Compile Include="View\Presenter\ChatPresenter.cs" />
+    <Compile Include="View\Presenter\MainPresenter.cs" />
+    <Compile Include="View\Windows\ChatWindow.xaml.cs">
       <DependentUpon>ChatWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewImplementation\Windows\MainWindow.xaml.cs">
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -148,19 +134,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
-      <Link>NetworkObjects.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Solution Items\MarrySocket.dll">
-      <Link>MarrySocket.dll</Link>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
-      <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
-      <Name>NetworkObjects</Name>
+    <ProjectReference Include="..\ConsoleClient\ClientCore.csproj">
+      <Project>{438ddf05-16e7-4335-b9ec-52c4c4e65c04}</Project>
+      <Name>ClientCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

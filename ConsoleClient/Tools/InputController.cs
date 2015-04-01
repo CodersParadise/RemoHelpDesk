@@ -1,5 +1,5 @@
 ﻿
-namespace ConsoleClient.Tools
+namespace ClientCore.Tools
 {
     using System;
     using System.Drawing;
@@ -7,6 +7,7 @@ namespace ConsoleClient.Tools
 
     public static class InputController
     {
+
         [DllImport("user32.dll")]
         private static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
 
@@ -34,13 +35,14 @@ namespace ConsoleClient.Tools
 
         private struct MOUSEINPUT
         {
-
+            #pragma warning disable 649
             public Int32 X;
             public Int32 Y;
             public UInt32 MouseData;
             public MouseEventFlags Flags;
             public UInt32 Time;
             public IntPtr ExtraInfo;
+            #pragma warning restore 649
         }
 
         private enum SystemMetric

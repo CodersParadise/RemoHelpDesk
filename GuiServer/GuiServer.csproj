@@ -73,46 +73,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="ServerImplementation\ViewModel\LogViewModelContainer.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleScreenShot.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleComputerInfo.cs" />
-    <Compile Include="ServerImplementation\Handle\IHandlePacket.cs" />
-    <Compile Include="ServerImplementation\ViewModel\ClientViewModelContainer.cs" />
-    <Compile Include="ServerImplementation\ViewModel\ClientViewModel.cs" />
-    <Compile Include="ServerImplementation\HandlePacket.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleRemoteShell.cs" />
-    <Compile Include="ServerImplementation\ViewModel\LogViewModel.cs" />
-    <Compile Include="ServerImplementation\Server.cs" />
-    <Compile Include="ServerImplementation\ViewModel\CommandHandler.cs" />
-    <Compile Include="ViewImplementation\Presenter\MainPresenter.cs" />
-    <Compile Include="ViewImplementation\Presenter\RemoteShellPresenter.cs" />
-    <Compile Include="ViewImplementation\Presenter\ScreenShotPresenter.cs" />
-    <Compile Include="ViewImplementation\Windows\RemoteShellWindow.xaml.cs">
+    <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
+    <Compile Include="Server\Handle\HandleScreenShot.cs" />
+    <Compile Include="Server\Handle\HandleComputerInfo.cs" />
+    <Compile Include="Server\Handle\IHandlePacket.cs" />
+    <Compile Include="View\ViewModel\ClientViewModelContainer.cs" />
+    <Compile Include="View\ViewModel\ClientViewModel.cs" />
+    <Compile Include="Server\HandlePacket.cs" />
+    <Compile Include="Server\Handle\HandleRemoteShell.cs" />
+    <Compile Include="View\ViewModel\LogViewModel.cs" />
+    <Compile Include="Server\Server.cs" />
+    <Compile Include="View\ViewModel\CommandHandler.cs" />
+    <Compile Include="View\Presenter\MainPresenter.cs" />
+    <Compile Include="View\Presenter\RemoteShellPresenter.cs" />
+    <Compile Include="View\Presenter\ScreenShotPresenter.cs" />
+    <Compile Include="View\Windows\RemoteShellWindow.xaml.cs">
       <DependentUpon>RemoteShellWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewImplementation\Windows\ScreenShotWindow.xaml.cs">
+    <Compile Include="View\Windows\ScreenShotWindow.xaml.cs">
       <DependentUpon>ScreenShotWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewImplementation\Windows\TextInputWindow.xaml.cs">
+    <Compile Include="View\Windows\TextInputWindow.xaml.cs">
       <DependentUpon>TextInputWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="ViewImplementation\Windows\MainWindow.xaml">
+    <Page Include="View\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ViewImplementation\Windows\MainWindow.xaml.cs">
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ViewImplementation\Windows\RemoteShellWindow.xaml">
+    <Page Include="View\Windows\RemoteShellWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewImplementation\Windows\ScreenShotWindow.xaml">
+    <Page Include="View\Windows\ScreenShotWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewImplementation\Windows\TextInputWindow.xaml">
+    <Page Include="View\Windows\TextInputWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
