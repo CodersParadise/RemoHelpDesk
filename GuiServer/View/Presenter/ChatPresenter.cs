@@ -1,7 +1,8 @@
-﻿namespace GuiClient.View.Presenter
+﻿namespace GuiServer.View.Presenter
 {
-    using GuiClient.View.Windows;
-    using GuiClient.ViewModel;
+    using GuiServer.View.ViewModel;
+    using GuiServer.View.Windows;
+    using NetworkObjects;
     using System;
     using System.Collections.Generic;
     using System.Windows.Controls;
@@ -10,27 +11,33 @@
     public class ChatPresenter
     {
         private ChatWindow chatWindow;
-        private TextBlock textblockChat;
+        private ClientViewModel clientViewModel;
         private TextBox textboxInput;
+        private TextBlock textblockChat;
         private ScrollViewer scrollViewerOutput;
         private List<string> chatHistory;
-        private ClientViewModel clientViewModel;
 
-        public ChatPresenter()
-        {
-            this.chatHistory = new List<string>();
-        }
-        public void Show(ClientViewModel clientViewModel)
+        public ChatPresenter(ClientViewModel clientViewModel)
         {
             this.clientViewModel = clientViewModel;
-            this.PrepareChatWindow();
-            this.chatWindow.ShowDialog();
+            this.clientViewModel.CanChat = true;
+            this.chatHistory = new List<string>();
+        }
+
+        public void Show()
+        {
+            if (this.clientViewModel.CanRemoteShell)
+            {
+                this.clientViewModel.CanChat = false;
+                this.PrepareChatWindow();
+                this.chatWindow.Show();
+            }
         }
 
         private void PrepareChatWindow()
         {
             this.chatWindow = new ChatWindow();
-
+            this.chatWindow.Closed += chatWindow_Closed;
             this.textblockChat = this.chatWindow.textblockChat;
             this.textboxInput = this.chatWindow.textboxInput;
             this.textboxInput.KeyDown += textboxInput_KeyDown;
@@ -43,6 +50,20 @@
                     this.textblockChat.Text += chatLine + Environment.NewLine;
                 }
             });
+        }
+
+        public void Update(string message)
+        {
+            if (this.chatWindow != null)
+            {
+                Program.DispatchIfNecessary(() =>
+                     {
+                         this.textblockChat.Text += message + Environment.NewLine;
+                         this.scrollViewerOutput.ScrollToBottom();
+                     });
+            }
+
+            this.chatHistory.Add(message);
         }
 
         private void textboxInput_KeyDown(object sender, KeyEventArgs e)
@@ -58,28 +79,20 @@
             string input = this.textboxInput.Text;
             if (!string.IsNullOrEmpty(input) && input.Length > 0)
             {
+                this.clientViewModel.SendObject(PacketId.CHAT, input);
+
                 Program.DispatchIfNecessary(() =>
                 {
                     this.textboxInput.Text = string.Empty;
                 });
-
-                this.Update(input);
-                this.clientViewModel.SendChat(input);
             }
+
+            this.Update(input);
         }
 
-        public void Update(string message)
+        private void chatWindow_Closed(object sender, EventArgs e)
         {
-            if (this.chatWindow != null)
-            {
-                Program.DispatchIfNecessary(() =>
-                {
-                    this.textblockChat.Text += message + Environment.NewLine;
-                    this.scrollViewerOutput.ScrollToBottom();
-                });
-            }
-
-            this.chatHistory.Add(message);
+            this.clientViewModel.CanChat = true;
         }
 
     }

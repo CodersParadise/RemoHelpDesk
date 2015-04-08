@@ -73,6 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="Server\Handle\HandleChat.cs" />
+    <Compile Include="View\Presenter\ChatPresenter.cs" />
     <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
     <Compile Include="Server\Handle\HandleScreenShot.cs" />
     <Compile Include="Server\Handle\HandleComputerInfo.cs" />
@@ -87,6 +89,9 @@
     <Compile Include="View\Presenter\MainPresenter.cs" />
     <Compile Include="View\Presenter\RemoteShellPresenter.cs" />
     <Compile Include="View\Presenter\ScreenShotPresenter.cs" />
+    <Compile Include="View\Windows\ChatWindow.xaml.cs">
+      <DependentUpon>ChatWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\RemoteShellWindow.xaml.cs">
       <DependentUpon>RemoteShellWindow.xaml</DependentUpon>
     </Compile>
@@ -104,6 +109,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Windows\ChatWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Windows\RemoteShellWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

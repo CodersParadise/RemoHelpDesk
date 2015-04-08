@@ -39,7 +39,9 @@
 
         private void PrepareContent()
         {
+            this.chatPresenter = new ChatPresenter();
             this.clientViewModel = new ClientViewModel();
+            this.clientViewModel.SetChatPresenter(this.chatPresenter);
             this.mainWindow.DataContext = this;
             this.buttonConnectIsConnected = false;
             this.buttonConnect.Content = "Connect";
@@ -48,9 +50,7 @@
 
         private void btnChat_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ChatWindow chatWindow = new ChatWindow();
-            this.chatPresenter = new ChatPresenter(chatWindow);
-            this.chatPresenter.Show();
+            this.chatPresenter.Show(this.clientViewModel);
         }
 
         void mainWindow_Closed(object sender, System.EventArgs e)
@@ -80,11 +80,7 @@
             this.buttonConnect.Content = "Disconnect";
             this.buttonConnectIsConnected = true;
 
-            if (this.clientViewModel.IsConnected)
-            {
-                MessageBox.Show("Already Connected");
-            }
-            else
+            if (!this.clientViewModel.IsConnected)
             {
                 this.clientViewModel.SetHost(this.textBoxIp.Text, 2345);
                 this.clientViewModel.Connect();
@@ -100,11 +96,6 @@
             {
                 this.clientViewModel.Disconnect();
             }
-            else
-            {
-                MessageBox.Show("Already Disconnected");
-            }
-
         }
 
     }

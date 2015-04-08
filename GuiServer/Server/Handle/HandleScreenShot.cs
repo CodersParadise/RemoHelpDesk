@@ -13,11 +13,11 @@
     {
         public void Handle(object receivedClass, ClientViewModel clientViewModel)
         {
-            Screenshot screenShot = receivedClass as Screenshot;
+            byte[] screenShot = receivedClass as byte[];
             BitmapImage image = null;
             try
             {
-                using (MemoryStream ms = new MemoryStream(screenShot.Screen))
+                using (MemoryStream ms = new MemoryStream(screenShot))
                 {
                     image = new BitmapImage();
 

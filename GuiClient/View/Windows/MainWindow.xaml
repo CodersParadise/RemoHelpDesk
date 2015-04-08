@@ -1,11 +1,16 @@
 ﻿<Window x:Class="GuiClient.View.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RemoteControl Connector" Height="111" Width="352" ResizeMode="NoResize">
-    <Grid Margin="0,0,0,-28">
-
-        <Button Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Height="19" Margin="215,11,-219,-30" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="txtIp" HorizontalAlignment="Left" Height="19" Margin="11,11,-58,-30" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="127"/>
-        <Button Name="btnChat" Content="Open Chat" HorizontalAlignment="Left" Height="21" Margin="244,54,0,0" VerticalAlignment="Top" Width="91"/>
+        Title="RemoteControl Connector" 
+        Height="100" 
+        Width="300" 
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow">
+    <Grid>
+        <StackPanel Margin="5">
+            <TextBox Name="txtIp" Text="127.0.0.1" Width="120"/>
+            <Button Name="btnConnect" Content="Connect" Width="120"/>
+            <Button Name="btnChat" Content="Open Chat" Width="120"/>
+        </StackPanel>
     </Grid>
 </Window>

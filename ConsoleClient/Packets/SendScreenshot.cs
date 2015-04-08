@@ -19,7 +19,7 @@
 
         public void Send(ServerSocket serverSocket)
         {
-            byte[] screen = null;
+            byte[] screenShot = null;
 
             int screenLeft = SystemInformation.VirtualScreen.Left;
             int screenTop = SystemInformation.VirtualScreen.Top;
@@ -42,11 +42,11 @@
                 using (MemoryStream ms = new MemoryStream())
                 {
                     bmp.Save(ms, jgpEncoder, myEncoderParameters);
-                    screen = ms.ToArray();
+                    screenShot = ms.ToArray();
                 }
             }
 
-            Screenshot screenShot = new Screenshot(screen);
+   
 
             serverSocket.SendObject(PacketId.SCREEN_SHOT, screenShot);
         }

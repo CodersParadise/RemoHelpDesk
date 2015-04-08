@@ -4,6 +4,7 @@
     using ClientCore.Packets;
     using MarrySocket.MClient;
     using MarrySocket.MExtra;
+    using NetworkObjects;
     using System;
     using System.IO;
     using System.Net;
@@ -17,6 +18,9 @@
         private HandlePacket handlePacket;
         private MarryClient marryClient;
         private ClientConfig clientConfig;
+
+        public delegate void ReceivedChatEventHandler(string foo);
+        public event ReceivedChatEventHandler ReceivedChat;
 
 
         public CoreClient()
@@ -40,6 +44,14 @@
             this.handlePacket = new HandlePacket(this.marryClient.Logger);
         }
 
+        protected void OnReceivedChat(string message)
+        {
+            if (this.ReceivedChat != null)
+            {
+                this.ReceivedChat(message);
+            }
+        }
+
         public void SetHost(IPAddress ipAddress, int port)
         {
             this.clientConfig.ServerIP = ipAddress;
@@ -61,6 +73,11 @@
             this.marryClient.Disconnect();
         }
 
+        public void SendChat(string message)
+        {
+            this.marryClient.ServerSocket.SendObject(PacketId.CHAT, message);
+        }
+
         private void marryClient_Connected(object sender, ConnectedEventArgs e)
         {
             this.handlePacket.Send(this.marryClient.ServerSocket, new SendComputerInfo());
@@ -68,7 +85,21 @@
 
         private void client_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
         {
-            this.handlePacket.Handle(e.PacketId, e.MyObject, e.ServerSocket);
+            switch (e.PacketId)
+            {
+                case PacketId.CHAT:
+                    {
+                        string message = e.MyObject as string;
+                        this.OnReceivedChat(message);
+                        break;
+                    }
+                default:
+                    {
+                        this.handlePacket.Handle(e.PacketId, e.MyObject, e.ServerSocket);
+                        break;
+                    }
+            }
+
         }
 
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

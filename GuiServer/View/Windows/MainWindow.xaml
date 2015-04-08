@@ -31,6 +31,8 @@
                                 </MenuItem>
                                 <MenuItem Header="Remote Shell" Command="{Binding CmdRemoteShell}"  IsEnabled="{Binding CanRemoteShell}" >
                                 </MenuItem>
+                                <MenuItem Header="Chat" Command="{Binding CmdChat}"  IsEnabled="{Binding CanChat}" >
+                                </MenuItem>
                                 <MenuItem Header="Disconnect" Command="{Binding CmdDisconnect}"  IsEnabled="{Binding CanDisconnect}" >
                                 </MenuItem>
                             </ContextMenu>
@@ -72,9 +74,9 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Path=Id}" Width="40" />
-                    <GridViewColumn Header="Text" DisplayMemberBinding="{Binding Path=Text}" Width="260" />
-                    <GridViewColumn Header="LogType" DisplayMemberBinding="{Binding Path=LogType}" Width="100" />
-                    <GridViewColumn Header="DateTime" DisplayMemberBinding="{Binding Path=DateTime}" Width="140" />
+                    <GridViewColumn Header="Log" DisplayMemberBinding="{Binding Path=Text}" Width="260" />
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Path=LogType}" Width="100" />
+                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Path=DateTime}" Width="140" />
                 </GridView>
             </ListView.View>
         </ListView>

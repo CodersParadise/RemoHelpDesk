@@ -9,7 +9,7 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <ScrollViewer Name="scrollViewerOutput" Margin="5" Grid.Row="0">
-                <TextBlock Name="textblockChat" TextWrapping="Wrap" FontFamily="Lucida Console"/>
+                <TextBlock Name="textblockChat" TextWrapping="Wrap" FontFamily="Consolas"/>
             </ScrollViewer>
             <TextBox Name="textboxInput" Margin="5" Grid.Row="1"/>
         </Grid>
