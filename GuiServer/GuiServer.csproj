@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Server\Handle\HandleChat.cs" />
+    <Compile Include="Server\Handle\IHandlePackeg.cs" />
     <Compile Include="View\Presenter\ChatPresenter.cs" />
     <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
     <Compile Include="Server\Handle\HandleScreenShot.cs" />
