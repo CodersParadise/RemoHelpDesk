@@ -56,15 +56,28 @@
         private void AcceptInput()
         {
             string input = this.textboxInput.Text;
-            if (!string.IsNullOrEmpty(input) && input.Length > 0)
+
+            if (clientViewModel.IsConnected)
+            {
+
+                if (!string.IsNullOrEmpty(input) && input.Length > 0)
+                {
+                    Program.DispatchIfNecessary(() =>
+                    {
+                        this.textboxInput.Text = string.Empty;
+                    });
+
+                    this.Update(input);
+                    this.clientViewModel.SendChat(input);
+                }
+            }
+            else
             {
                 Program.DispatchIfNecessary(() =>
                 {
                     this.textboxInput.Text = string.Empty;
                 });
-
-                this.Update(input);
-                this.clientViewModel.SendChat(input);
+                this.Update("Sie müssen sich erst mit einem Supportmitarbeiter verbinden.");
             }
         }
 
