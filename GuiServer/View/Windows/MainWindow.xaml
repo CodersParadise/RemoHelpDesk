@@ -16,10 +16,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Horizontal">
-            <Button Name="btnListen" Height="20" Content="Listen"/>
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Name="btnListen" Height="20" Content="Listen" Background="#FFEF9999"/>
         </StackPanel>
 
-        <ListView Name="lvClients" Grid.Column="1" Grid.Row="1" Margin="0,4,0,1" Grid.RowSpan="2">
+        <ListView  Name="lvClients" Grid.Column="1" Grid.Row="1" Margin="0,4,0,1" Grid.RowSpan="2">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="ContextMenu">
