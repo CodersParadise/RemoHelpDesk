@@ -7,13 +7,17 @@
     using System.Reflection;
 
 
+
     public static class Program
     {
         private static MainWindow mainWindow;
 
+        private const string assemblyClientCore = "ClientCore";
+
         [STAThreadAttribute()]
         public static void Main()
         {
+               AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             Run();
         }
 
@@ -45,7 +49,37 @@
             return Path.GetDirectoryName(path);
         }
 
+        
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            Assembly assembly = null;
+            if (args.Name.Contains(assemblyClientCore))
+            {
+                assembly = LoadAssembly(assemblyClientCore);
+            }
+            else
+            {
+                Console.WriteLine("Missing Assembly:" + args.Name);
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            return assembly;
+        }
+
+        private static Assembly LoadAssembly(string name)
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ClientCore." + name + ".dll"))
+            {
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+                return Assembly.Load(assemblyData);
+            }
+        }
     }
-}
+
+
+
+    }
+
 
 
