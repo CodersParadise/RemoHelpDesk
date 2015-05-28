@@ -2,6 +2,7 @@
 {
     using GuiServer.View;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
 
@@ -31,9 +32,7 @@
             }
             else
             {
-                Console.WriteLine("Missing Assembly:" + args.Name);
-                Console.ReadKey();
-                Environment.Exit(0);
+                Debug.WriteLine("Missing Assembly:" + args.Name);
             }
             return assembly;
         }

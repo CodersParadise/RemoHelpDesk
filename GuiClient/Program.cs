@@ -3,21 +3,19 @@
     using GuiClient.View.Presenter;
     using GuiClient.View.Windows;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
-
-
 
     public static class Program
     {
         private static MainWindow mainWindow;
-
         private const string assemblyClientCore = "ClientCore";
 
         [STAThreadAttribute()]
         public static void Main()
         {
-               AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             Run();
         }
 
@@ -59,9 +57,7 @@
             }
             else
             {
-                Console.WriteLine("Missing Assembly:" + args.Name);
-                Console.ReadKey();
-                Environment.Exit(0);
+                Debug.WriteLine("Missing Assembly:" + args.Name);
             }
             return assembly;
         }
