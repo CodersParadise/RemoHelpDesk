@@ -1,11 +1,12 @@
 ﻿namespace GuiServer.Server
 {
-    using GuiServer.View.ViewModel;
-    using MarrySocket.MExtra.Logging;
-    using MarrySocket.MServer;
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Windows.Threading;
+    using GuiServer.Server.Events;
+using GuiServer.View.ViewModel;
+using MarrySocket.MExtra.Logging;
+using MarrySocket.MServer;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
     public class Server
     {
@@ -13,6 +14,7 @@
         private HandlePacket handlePacket;
         private ClientViewModelContainer clientViewModelContainer;
         private Dispatcher dispatcher;
+        public EventHandler<DisplayTrayBalloonEventArgs> DisplayTrayBalloon;
 
         public Server(ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
         {
@@ -26,7 +28,7 @@
             this.MarryServer.Logger.LogWrite += Logger_LogWrite;
             this.clientViewModelContainer = clientViewModelContainer;
             this.logViewModelContainer = logViewModelContainer;
-            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.MarryServer.Logger);
+            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.MarryServer.Logger, this);
         }
 
         public MarryServer MarryServer;
@@ -70,6 +72,7 @@
         {
             ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ServerSocket);
             this.handlePacket.Handle(e.PacketId, e.MyObject, clientViewModel);
+       
         }
 
         private void addLog(LogViewModel logViewModel)
@@ -104,6 +107,14 @@
             {
                 this.MarryServer.Logger.Remove(logViewModel.Id);
                 this.logViewModelContainer.Remove(logViewModel);
+            }
+        }
+
+        public void RaiseDisplayTrayBalloon(string title, string text)
+        {
+            if(this.DisplayTrayBalloon != null)
+            {
+                this.DisplayTrayBalloon(this, new DisplayTrayBalloonEventArgs(title, text));
             }
         }
 

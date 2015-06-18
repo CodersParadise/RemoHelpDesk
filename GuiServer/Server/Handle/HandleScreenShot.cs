@@ -11,7 +11,7 @@
 
     public class HandleScreenshot : IHandlePacket
     {
-        public void Handle(object receivedClass, ClientViewModel clientViewModel)
+        public void Handle(object receivedClass, ClientViewModel clientViewModel, Server server)
         {
             byte[] screenShot = receivedClass as byte[];
             BitmapImage image = null;

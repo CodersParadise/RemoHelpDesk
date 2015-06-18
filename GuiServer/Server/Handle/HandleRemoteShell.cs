@@ -7,7 +7,7 @@
     public class HandleRemoteShell : IHandlePacket
     {
 
-        public void Handle(object receivedClass, ClientViewModel clientViewModel)
+        public void Handle(object receivedClass, ClientViewModel clientViewModel, Server server)
         {
             string command = (String)receivedClass;
             clientViewModel.UpdateRemoteShellOutput(command);

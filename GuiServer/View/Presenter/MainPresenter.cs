@@ -1,14 +1,18 @@
 ﻿namespace GuiServer.View
 {
     using GuiServer.Server;
+    using GuiServer.Server.Events;
     using GuiServer.View.ViewModel;
+    using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Threading;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Threading;
 
     public class MainPresenter
     {
-
         private bool isListening;
         private MainWindow mainWindow;
         private Server server;
@@ -22,11 +26,13 @@
         public MainPresenter(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
+            this.mainWindow.Title = Program.PROGRAMM_NAME;
 
             this.AssignFields();
             this.InitializeViewEvents();
             this.InitializeFields();
             this.AssignView();
+            this.InitTrayIcon();
         }
 
         private void AssignFields()
@@ -41,6 +47,7 @@
         {
             this.mainWindow.Closed += mainWindow_Closed;
             this.btnListen.Click += btnListen_Click;
+            this.mainWindow.StateChanged += mainWindow_StateChanged;
         }
 
         private void InitializeFields()
@@ -48,7 +55,13 @@
             this.logViewModelContainer = new LogViewModelContainer(this.lvLogs);
             this.clientViewModelContainer = new ClientViewModelContainer(this.lvClients);
             this.server = new Server(this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
+            this.server.DisplayTrayBalloon += server_displayTrayBalloon;
             this.isListening = false;
+        }
+
+        private void server_displayTrayBalloon(object sender, DisplayTrayBalloonEventArgs e)
+        {
+            this.SetTrayIcon(e.Title, e.Text);
         }
 
         private void AssignView()
@@ -57,11 +70,6 @@
             this.btnListen.Content = "Start Listening";
             this.lvClients.ItemsSource = this.clientViewModelContainer.ClientViewModels;
             this.lvLogs.ItemsSource = this.logViewModelContainer.LogViewModels;
-        }
-
-        void mainWindow_Closed(object sender, System.EventArgs e)
-        {
-            this.StopServer();
         }
 
         void btnListen_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -81,6 +89,44 @@
             this.mainWindow.ShowDialog();
         }
 
+        private void ToggleTray(bool showTray)
+        {
+            if (showTray)
+            {
+                this.trayIcon.Visible = true;
+                this.mainWindow.ShowInTaskbar = false;
+            }
+            else
+            {
+                this.trayIcon.Visible = false;
+                this.mainWindow.ShowInTaskbar = true;
+                this.mainWindow.WindowState = WindowState.Normal;
+            }
+        }
+
+        private void trayIcon_Click(object sender, EventArgs e)
+        {
+            this.ToggleTray(false);
+        }
+
+        private void mainWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (this.mainWindow.WindowState == WindowState.Minimized)
+            {
+                this.ToggleTray(true);
+            }
+            else
+            {
+                this.ToggleTray(false);
+            }
+        }
+
+        private void mainWindow_Closed(object sender, System.EventArgs e)
+        {
+            this.StopServer();
+            this.DisposeTrayIcon();
+        }
+
         private void StartServer()
         {
             this.server.Start();
@@ -95,6 +141,32 @@
             this.isListening = false;
             this.clientViewModelContainer.Clear();
         }
+
+        #region tray
+
+        private System.Windows.Forms.NotifyIcon trayIcon;
+
+        private void InitTrayIcon()
+        {
+            this.trayIcon = new System.Windows.Forms.NotifyIcon();
+            this.trayIcon.Text = Program.PROGRAMM_NAME;
+            this.trayIcon.Icon = GuiServer.Properties.Resources.icon;
+            this.trayIcon.Click += new EventHandler(trayIcon_Click);
+        }
+
+        private void SetTrayIcon(string balloonTitle, string balloonText)
+        {
+            this.trayIcon.BalloonTipTitle = balloonTitle;
+            this.trayIcon.BalloonTipText = balloonText;
+            this.trayIcon.ShowBalloonTip(500);
+        }
+
+        private void DisposeTrayIcon()
+        {
+            trayIcon.Dispose();
+            trayIcon = null;
+        }
+        #endregion tray
 
     }
 }

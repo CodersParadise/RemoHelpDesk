@@ -11,6 +11,7 @@
         private static MainWindow mainWindow;
         private const string assemblyMarrySocket = "MarrySocket";
         private const string assemblyNetworkObjects = "NetworkObjects";
+        public const string PROGRAMM_NAME = "RemoHelpDesk";
 
         [STAThreadAttribute()]
         public static void Main()

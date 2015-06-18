@@ -15,9 +15,11 @@
         private Dispatcher dispatcher;
         private Dictionary<int, IHandlePacket> clientPacketIds;
         private Logger logger;
+        private Server server;
 
-        public HandlePacket(ClientViewModelContainer clientViewModelContainer, Dispatcher dispatcher, Logger logger)
+        public HandlePacket(ClientViewModelContainer clientViewModelContainer, Dispatcher dispatcher, Logger logger, Server server)
         {
+            this.server = server;
             this.clientViewModelContainer = clientViewModelContainer;
             this.dispatcher = dispatcher;
             this.clientPacketIds = new Dictionary<int, IHandlePacket>();
@@ -31,9 +33,7 @@
             this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
             this.clientPacketIds.Add(PacketId.RUN, new HandleRemoteShell());
             this.clientPacketIds.Add(PacketId.CHAT, new HandleChat());
-        
-        
-        
+       
         }
 
         public void Handle(int packetId, object receivedClass, ClientViewModel clientViewModel)
@@ -41,7 +41,7 @@
             if (clientPacketIds.ContainsKey(packetId))
             {
                 clientViewModel.NotifyInTrafficChanged();
-                this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel);
+                this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel, this.server);
             }
             else
             {

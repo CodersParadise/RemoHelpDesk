@@ -6,7 +6,7 @@
     public class HandleComputerInfo : IHandlePacket
     {
 
-        public void Handle(object receivedClass, ClientViewModel clientViewModel)
+        public void Handle(object receivedClass, ClientViewModel clientViewModel, Server server)
         {
             ComputerInfo computerInfo = (ComputerInfo)receivedClass;
 
