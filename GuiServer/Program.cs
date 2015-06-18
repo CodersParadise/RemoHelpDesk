@@ -1,7 +1,8 @@
 ﻿namespace GuiServer
 {
-    using GuiServer.ViewImplementation;
+    using GuiServer.View;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Reflection;
 
@@ -10,6 +11,7 @@
         private static MainWindow mainWindow;
         private const string assemblyMarrySocket = "MarrySocket";
         private const string assemblyNetworkObjects = "NetworkObjects";
+        public const string PROGRAMM_NAME = "RemoHelpDesk";
 
         [STAThreadAttribute()]
         public static void Main()
@@ -31,9 +33,7 @@
             }
             else
             {
-                Console.WriteLine("Missing Assembly:" + args.Name);
-                Console.ReadKey();
-                Environment.Exit(0);
+                Debug.WriteLine("Missing Assembly:" + args.Name);
             }
             return assembly;
         }

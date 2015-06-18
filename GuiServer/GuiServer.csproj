@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GuiServer</RootNamespace>
     <AssemblyName>GuiServer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -28,6 +28,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,6 +53,9 @@
   <PropertyGroup>
     <StartupObject>GuiServer.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MarrySocket">
       <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
@@ -63,6 +68,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -72,46 +78,60 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="ServerImplementation\ViewModel\LogViewModelContainer.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleScreenShot.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleComputerInfo.cs" />
-    <Compile Include="ServerImplementation\Handle\IHandlePacket.cs" />
-    <Compile Include="ServerImplementation\ViewModel\ClientViewModelContainer.cs" />
-    <Compile Include="ServerImplementation\ViewModel\ClientViewModel.cs" />
-    <Compile Include="ServerImplementation\HandlePacket.cs" />
-    <Compile Include="ServerImplementation\Handle\HandleRemoteShell.cs" />
-    <Compile Include="ServerImplementation\ViewModel\LogViewModel.cs" />
-    <Compile Include="ServerImplementation\Server.cs" />
-    <Compile Include="ServerImplementation\ViewModel\CommandHandler.cs" />
-    <Compile Include="ViewImplementation\Presenter\MainPresenter.cs" />
-    <Compile Include="ViewImplementation\Presenter\RemoteShellPresenter.cs" />
-    <Compile Include="ViewImplementation\Presenter\ScreenShotPresenter.cs" />
-    <Compile Include="ViewImplementation\Windows\RemoteShellWindow.xaml.cs">
+    <Compile Include="Server\Events\DisplayTrayBalloonEventArgs.cs" />
+    <Compile Include="Server\Handle\HandleChat.cs" />
+    <Compile Include="View\Presenter\ChatPresenter.cs" />
+    <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
+    <Compile Include="Server\Handle\HandleScreenShot.cs" />
+    <Compile Include="Server\Handle\HandleComputerInfo.cs" />
+    <Compile Include="Server\Handle\IHandlePacket.cs" />
+    <Compile Include="View\ViewModel\ClientViewModelContainer.cs" />
+    <Compile Include="View\ViewModel\ClientViewModel.cs" />
+    <Compile Include="Server\HandlePacket.cs" />
+    <Compile Include="Server\Handle\HandleRemoteShell.cs" />
+    <Compile Include="View\ViewModel\LogViewModel.cs" />
+    <Compile Include="Server\Server.cs" />
+    <Compile Include="View\ViewModel\CommandHandler.cs" />
+    <Compile Include="View\Presenter\MainPresenter.cs" />
+    <Compile Include="View\Presenter\RemoteShellPresenter.cs" />
+    <Compile Include="View\Presenter\ScreenShotPresenter.cs" />
+    <Compile Include="View\Windows\ChatWindow.xaml.cs">
+      <DependentUpon>ChatWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\RemoteShellWindow.xaml.cs">
       <DependentUpon>RemoteShellWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewImplementation\Windows\ScreenShotWindow.xaml.cs">
+    <Compile Include="View\Windows\ScreenShotWindow.xaml.cs">
       <DependentUpon>ScreenShotWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewImplementation\Windows\TextInputWindow.xaml.cs">
+    <Compile Include="View\Windows\TextInputWindow.xaml.cs">
       <DependentUpon>TextInputWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="ViewImplementation\Windows\MainWindow.xaml">
+    <Page Include="View\ControlTemplate\RemoScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ViewImplementation\Windows\MainWindow.xaml.cs">
+    <Page Include="View\Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ViewImplementation\Windows\RemoteShellWindow.xaml">
+    <Page Include="View\Windows\ChatWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\RemoteShellWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewImplementation\Windows\ScreenShotWindow.xaml">
+    <Page Include="View\Windows\ScreenShotWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewImplementation\Windows\TextInputWindow.xaml">
+    <Page Include="View\Windows\TextInputWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,7 +187,6 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="..\Output\NetworkObjects.dll">
       <Link>NetworkObjects.dll</Link>
@@ -175,6 +194,9 @@
     <EmbeddedResource Include="..\Solution Items\MarrySocket.dll">
       <Link>MarrySocket.dll</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,4 @@
-﻿namespace ConsoleClient.Packets
+﻿namespace ClientCore.Packets
 {
     using MarrySocket.MClient;
 

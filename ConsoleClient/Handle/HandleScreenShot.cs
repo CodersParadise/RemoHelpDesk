@@ -1,7 +1,7 @@
-﻿namespace ConsoleClient.Handle
+﻿namespace ClientCore.Handle
 {
-    using ConsoleClient.Packets;
-    using ConsoleClient.Tools;
+    using ClientCore.Packets;
+    using ClientCore.Tools;
     using MarrySocket.MClient;
 
 

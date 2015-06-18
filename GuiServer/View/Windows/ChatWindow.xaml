@@ -1,0 +1,33 @@
+﻿<Window x:Class="GuiServer.View.Windows.ChatWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
+        
+        WindowStyle="ToolWindow" Title="SupportChat" Height="300" Width="300">
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../ControlTemplate/RemoScrollViewer.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Cyan" Offset="0"/>
+            <GradientStop Color="White" Offset="0.487"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="30"/>
+		</Grid.RowDefinitions>
+		<ScrollViewer  Style="{StaticResource RemoScrollViewer}" x:Name="scrollViewerOutput" HorizontalScrollBarVisibility="Visible" Margin="5" Grid.Row="0">
+	
+			<TextBlock x:Name="textblockChat" TextWrapping="Wrap" FontFamily="Consolas"/>
+		</ScrollViewer>
+		<TextBox x:Name="textboxInput" Margin="5" Grid.Row="1"/>
+	</Grid>
+</Window>

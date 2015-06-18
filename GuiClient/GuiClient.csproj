@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GuiClient</RootNamespace>
     <AssemblyName>GuiClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,19 +26,21 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <ExpressionBlendVersion>12.0.50429.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Output\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,11 +50,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MarrySocket">
-      <HintPath>..\Solution Items\MarrySocket.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -69,24 +70,26 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ViewImplementation\Windows\MainWindow.xaml">
+    <Page Include="View\ControlTemplate\RemoScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ClientImplementation\Client.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleDownloadExec.cs" />
-    <Compile Include="ClientImplementation\Handle\HandlePacket.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleRun.cs" />
-    <Compile Include="ClientImplementation\Handle\HandleScreenShot.cs" />
-    <Compile Include="ClientImplementation\Handle\IHandlePacket.cs" />
-    <Compile Include="ClientImplementation\Packets\ISendPacket.cs" />
-    <Compile Include="ClientImplementation\Packets\SendComputerInfo.cs" />
-    <Compile Include="ClientImplementation\Packets\SendScreenshot.cs" />
-    <Compile Include="ClientImplementation\Tools\InputController.cs" />
-    <Compile Include="ClientImplementation\ViewModel\ViewModel.cs" />
+    <Page Include="View\Windows\ChatWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="View\ViewModel\ClientViewModel.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ViewImplementation\Presenter\MainPresenter.cs" />
-    <Compile Include="ViewImplementation\Windows\MainWindow.xaml.cs">
+    <Compile Include="View\Presenter\ChatPresenter.cs" />
+    <Compile Include="View\Presenter\MainPresenter.cs" />
+    <Compile Include="View\Windows\ChatWindow.xaml.cs">
+      <DependentUpon>ChatWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -136,18 +139,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
-      <Link>NetworkObjects.dll</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Solution Items\MarrySocket.dll">
-      <Link>ClientImplementation\Handle\MarrySocket.dll</Link>
-    </EmbeddedResource>
+    <ProjectReference Include="..\ConsoleClient\ClientCore.csproj">
+      <Project>{438ddf05-16e7-4335-b9ec-52c4c4e65c04}</Project>
+      <Name>ClientCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
-      <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
-      <Name>NetworkObjects</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="..\Output\ClientCore.dll">
+      <Link>ClientCore.dll</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -593,7 +593,7 @@
             Connect to server.
             </summary>
         </member>
-        <member name="M:MarrySocket.MClient.MarryClient.Disconnect(System.String)">
+        <member name="M:MarrySocket.MClient.MarryClient.Disconnect">
             <summary>
             Close connection.
             </summary>
