@@ -1,6 +1,6 @@
 ﻿namespace GuiServer.View.ViewModel
 {
-    using MarrySocket.MServer;
+
     using System.Collections.ObjectModel;
 using System.Windows.Controls;
 

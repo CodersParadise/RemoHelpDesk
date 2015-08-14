@@ -1,8 +1,9 @@
 ﻿namespace ClientCore.Handle
 {
+    using Arrowgene.Services.Network.MarrySocket.MClient;
     using ClientCore.Packets;
     using ClientCore.Tools;
-    using MarrySocket.MClient;
+
 
 
     public class HandleScreenshot : IHandlePacket

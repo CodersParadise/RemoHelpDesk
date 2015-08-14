@@ -1,12 +1,14 @@
 ﻿namespace GuiServer.Server
 {
+    using Arrowgene.Services.Logging;
+    using Arrowgene.Services.Network;
+    using Arrowgene.Services.Network.MarrySocket.MServer;
     using GuiServer.Server.Events;
-using GuiServer.View.ViewModel;
-using MarrySocket.MExtra.Logging;
-using MarrySocket.MServer;
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
+    using GuiServer.View.ViewModel;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Net;
+    using System.Windows.Threading;
 
     public class Server
     {
@@ -19,7 +21,7 @@ using System.Windows.Threading;
         public Server(ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
-            ServerConfig config = new ServerConfig();
+            ServerConfig config = new ServerConfig(IPAddress.IPv6Any, 2345);
             config.BufferSize = 2 * 1024 * 1024;
             this.MarryServer = new MarryServer(config);
             this.MarryServer.ReceivedPacket += marryServer_ReceivedPacket;
@@ -70,7 +72,7 @@ using System.Windows.Threading;
 
         private void marryServer_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
         {
-            ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ServerSocket);
+            ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
             this.handlePacket.Handle(e.PacketId, e.MyObject, clientViewModel);
        
         }

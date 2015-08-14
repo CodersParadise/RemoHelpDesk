@@ -1,6 +1,7 @@
 ﻿namespace ClientCore.Handle
 {
-    using MarrySocket.MClient;
+    using Arrowgene.Services.Network.MarrySocket.MClient;
+
 
     public interface IHandlePacket
     {

@@ -9,7 +9,7 @@
     public static class Program
     {
         private static MainWindow mainWindow;
-        private const string assemblyMarrySocket = "MarrySocket";
+        private const string assemblyMarrySocket = "Arrowgene.Services";
         private const string assemblyNetworkObjects = "NetworkObjects";
         public const string PROGRAMM_NAME = "RemoHelpDesk";
 

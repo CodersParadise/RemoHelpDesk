@@ -1,6 +1,6 @@
 ﻿namespace ClientCore.Handle
 {
-    using MarrySocket.MClient;
+    using Arrowgene.Services.Network.MarrySocket.MClient;
     using NetworkObjects;
     using System;
     using System.ComponentModel;

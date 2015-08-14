@@ -115,7 +115,7 @@
             {
                 this.ToggleTray(true);
             }
-            else
+            else if(this.mainWindow.WindowState == WindowState.Normal)
             {
                 this.ToggleTray(false);
             }

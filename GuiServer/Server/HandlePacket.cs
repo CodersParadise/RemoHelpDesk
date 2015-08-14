@@ -1,9 +1,9 @@
 ﻿namespace GuiServer.Server
 {
+    using Arrowgene.Services.Logging;
     using GuiServer.Handle;
     using GuiServer.Server.Handle;
     using GuiServer.View.ViewModel;
-    using MarrySocket.MExtra.Logging;
     using NetworkObjects;
     using System;
     using System.Collections.Generic;

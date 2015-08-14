@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiServer", "GuiServer\GuiServer.csproj", "{F2E4A21A-C0EF-4BED-B810-7B04A5702763}"
 EndProject
@@ -12,9 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCore", "ConsoleClient
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24B6E6EC-357F-4645-9C50-1B02B1BC754A}"
 	ProjectSection(SolutionItems) = preProject
-		Solution Items\MarrySocket.dll = Solution Items\MarrySocket.dll
-		Solution Items\MarrySocket.pdb = Solution Items\MarrySocket.pdb
-		Solution Items\MarrySocket.XML = Solution Items\MarrySocket.XML
+		Solution Items\Arrowgene.Services.dll = Solution Items\Arrowgene.Services.dll
+		Solution Items\Arrowgene.Services.pdb = Solution Items\Arrowgene.Services.pdb
+		Solution Items\Arrowgene.Services.xml = Solution Items\Arrowgene.Services.xml
+		Solution Items\icon.ico = Solution Items\icon.ico
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkObjects", "NetworkObjects\NetworkObjects.csproj", "{74CD888F-BB60-4A75-9C8D-F4473C54D2B0}"

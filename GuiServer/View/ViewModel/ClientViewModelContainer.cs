@@ -1,8 +1,8 @@
 ﻿namespace GuiServer.View.ViewModel
 {
-    using MarrySocket.MServer;
+    using Arrowgene.Services.Network.MarrySocket.MServer;
     using System.Collections.ObjectModel;
-using System.Windows.Controls;
+    using System.Windows.Controls;
 
     public class ClientViewModelContainer
     {

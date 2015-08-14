@@ -1,9 +1,10 @@
 ﻿namespace ClientCore
 {
+
+    using Arrowgene.Services.Network;
+    using Arrowgene.Services.Network.MarrySocket.MClient;
     using ClientCore.Handle;
     using ClientCore.Packets;
-    using MarrySocket.MClient;
-    using MarrySocket.MExtra;
     using NetworkObjects;
     using System;
     using System.Diagnostics;
@@ -13,7 +14,7 @@
 
     public class CoreClient
     {
-        private const string assemblyMarrySocket = "MarrySocket";
+        private const string assemblyMarrySocket = "Arrowgene.Services";
         private const string assemblyNetworkObjects = "NetworkObjects";
 
         private HandlePacket handlePacket;
@@ -36,7 +37,7 @@
 
         public void Init()
         {
-            this.clientConfig = new ClientConfig();
+            this.clientConfig = new ClientConfig(AGSocket.IPAddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
 
             this.marryClient = new MarryClient(this.clientConfig);
             this.marryClient.ReceivedPacket += client_ReceivedPacket;
@@ -61,7 +62,7 @@
 
         public void SetHost(string ipAddress, int port)
         {
-            this.SetHost(Maid.IPAddressLookup(ipAddress), port);
+            this.SetHost(AGSocket.IPAddressLookup(ipAddress), port);
         }
 
         public void Connect()

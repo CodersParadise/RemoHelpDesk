@@ -1,6 +1,7 @@
 ﻿namespace ClientCore.Packets
 {
-    using MarrySocket.MClient;
+    using Arrowgene.Services.Network.MarrySocket.MClient;
+
 
     public interface ISendPacket
     {

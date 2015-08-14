@@ -1,6 +1,6 @@
 ﻿namespace GuiServer.View.ViewModel
 {
-    using MarrySocket.MExtra.Logging;
+    using Arrowgene.Services.Logging;
     using System;
     using System.ComponentModel;
     using System.Windows.Input;

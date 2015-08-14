@@ -1,9 +1,9 @@
 ﻿namespace GuiServer.View.ViewModel
 {
+    using Arrowgene.Services.Common;
+    using Arrowgene.Services.Network.MarrySocket.MServer;
     using GuiServer.View.Presenter;
     using GuiServer.View.Windows;
-    using MarrySocket.MExtra;
-    using MarrySocket.MServer;
     using NetworkObjects;
     using System;
     using System.ComponentModel;
@@ -51,7 +51,7 @@
         public string UserPath { get { return this.GenerateUserPath(); } }
         public string OutTraffic { get { return this.GetFancyTrafficName(this.clientSocket.OutTraffic); } }
         public string InTraffic { get { return this.GetFancyTrafficName(this.clientSocket.InTraffic); } }
-        public Maid.OsVersion OsVersion { get { if (this.computerInfo != null) return (Maid.OsVersion)this.computerInfo.OsVersion; else return Maid.OsVersion.UNKNOWN; } }
+        public OS.OsVersion OsVersion { get { if (this.computerInfo != null) return (OS.OsVersion)this.computerInfo.OsVersion; else return OS.OsVersion.UNKNOWN; } }
 
         public ICommand CmdDisconnect { get; private set; }
         public ICommand CmdScreenshot { get; private set; }
