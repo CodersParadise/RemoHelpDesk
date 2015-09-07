@@ -4,7 +4,17 @@
         Title="MainWindow" 
         Height="350" 
         Width="780"
-        Icon="../../icon.ico">
+        Icon="../../icon.ico"
+          >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ControlTemplate/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -19,7 +29,16 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Horizontal">
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Name="btnListen" Height="20" Content="Listen" Background="#FFEF9999"/>
+            <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnListen" Height="20" Content="Listen" Width="133" Foreground="Black" >
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF3F3F3"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            </Button>
         </StackPanel>
 
         <ListView  Name="lvClients" Grid.Column="1" Grid.Row="1" Margin="0,4,0,1" Grid.RowSpan="2">

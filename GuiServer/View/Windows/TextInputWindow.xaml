@@ -4,37 +4,47 @@
         Height="130"
         Width="300"
         ResizeMode="NoResize"
-        WindowStyle="ToolWindow">
-	<Window.Background>
-		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-			<GradientStop Color="Cyan" Offset="0"/>
-			<GradientStop Color="White" Offset="1"/>
-		</LinearGradientBrush>
-	</Window.Background>
+        WindowStyle="ToolWindow" Background="White">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ControlTemplate/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Name="textblockInfo" Margin="20,10,20,5"/>
+            <TextBlock Name="textblockInfo" Margin="20,10,20,5">
+                <TextBlock.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Background>
+            </TextBlock>
             <TextBox Name="textboxInput" Margin="20,0,20,0"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="buttonAccept" Content="Accept" Width="80" Margin="5">
-                	<Button.Background>
-                		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                			<GradientStop Color="#FFF3F3F3" Offset="0"/>
-                			<GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-                			<GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-                			<GradientStop Color="Cyan" Offset="1"/>
-                		</LinearGradientBrush>
-                	</Button.Background>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Style="{StaticResource CustomButtonStyle}" Name="buttonAccept" Content="Accept" Width="88" Margin="5" Foreground="Black" Height="20">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFF3F3F3"/>
+                            <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                            <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
                 </Button>
-                <Button Name="buttonCancel" Content="Cancel" Width="80" Margin="5">
-                	<Button.Background>
-                		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                			<GradientStop Color="#FFF3F3F3" Offset="0"/>
-                			<GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-                			<GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-                			<GradientStop Color="Cyan" Offset="1"/>
-                		</LinearGradientBrush>
-                	</Button.Background>
+                <Button Style="{StaticResource CustomButtonStyle}"  Name="buttonCancel" Content="Cancel" Width="88" Margin="5" Foreground="Black" Height="21">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                            <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                            <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
                 </Button>
             </StackPanel>
         </StackPanel>

@@ -6,32 +6,45 @@
         Width="231" 
        
         WindowStyle="ToolWindow" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize">
-	<Window.Background>
-		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-			<GradientStop Color="Cyan" Offset="0"/>
-			<GradientStop Color="White" Offset="1"/>
-			<GradientStop Color="#FFECFFFF" Offset="0.323"/>
-		</LinearGradientBrush>
-	</Window.Background>
-	<StackPanel HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="195" Margin="10,10,0,0">
-		<TextBox x:Name="txtIp" Text="127.0.0.1" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White"/>
-		<Button x:Name="btnConnect" Content="Connect" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-			<Button.Background>
-				<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-					<GradientStop Color="White" Offset="0.392"/>
-					<GradientStop Color="Cyan" Offset="1"/>
-					<GradientStop Color="White"/>
-				</LinearGradientBrush>
-			</Button.Background>
-		</Button>
-		<Button x:Name="btnChat" Content="Open Chat" Width="175" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-			<Button.Background>
-				<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-					<GradientStop Color="White"/>
-					<GradientStop Color="Cyan" Offset="1"/>
-					<GradientStop Color="LightCyan" Offset="0.397"/>
-				</LinearGradientBrush>
-			</Button.Background>
-		</Button>
-	</StackPanel>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ControlTemplate/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+            <GradientStop Color="White" Offset="0.323"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <StackPanel HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="195" Margin="10,10,0,0">
+        <TextBox x:Name="txtIp" Text="127.0.0.1" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White"/>
+        <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnConnect" Content="Connect" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black">
+            <Button.Background>
+
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF3F3F3"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
+        <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnChat" Content="Open Chat" Width="175" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="Black">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF3F3F3"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+    </StackPanel>
 </Window>
