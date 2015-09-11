@@ -2,6 +2,7 @@
 {
 
     using Arrowgene.Services.Network;
+    using Arrowgene.Services.Network.Broadcast;
     using Arrowgene.Services.Network.MarrySocket.MClient;
     using ClientCore.Handle;
     using ClientCore.Packets;
@@ -14,16 +15,22 @@
 
     public class CoreClient
     {
+        private const int CLIENT_BC_PORT = 7331;
+        private const int SERVER_BC_PORT = 7330;
+
         private const string assemblyMarrySocket = "Arrowgene.Services";
         private const string assemblyNetworkObjects = "NetworkObjects";
 
         private HandlePacket handlePacket;
         private MarryClient marryClient;
         private ClientConfig clientConfig;
+        private UDPBroadcast broadcast;
 
         public delegate void ReceivedChatEventHandler(string foo);
         public event ReceivedChatEventHandler ReceivedChat;
 
+        public delegate void DiscoveredServerEventHandler(IPAddress ipAddress, int port);
+        public event DiscoveredServerEventHandler DiscoveredServer;
 
         public CoreClient()
         {
@@ -35,9 +42,39 @@
             get { return this.marryClient.IsConnected; }
         }
 
+        public void Discover()
+        {
+            UDPBroadcast broadcast = new UDPBroadcast(CoreClient.SERVER_BC_PORT);
+            broadcast.Send(System.Text.Encoding.UTF8.GetBytes("HELLO?"));
+        }
+
+        private void broadcast_ReceivedBroadcast(object sender, Arrowgene.Services.Network.Discovery.ReceivedUDPBroadcastPacketEventArgs e)
+        {
+            string msg = System.Text.Encoding.UTF8.GetString(e.Payload.GetBytes());
+
+            if (msg.Contains("|"))
+            {
+                string[] epInfo = msg.Split('|');
+
+                IPAddress serverIp = null;
+                IPAddress.TryParse(epInfo[0], out serverIp);
+                int serverPort = 0;
+                int.TryParse(epInfo[1], out serverPort);
+
+                if (serverPort != 0 && serverIp != null)
+                {
+                    this.OnDiscoveredServer(serverIp, serverPort);
+                }
+            }
+        }
+
         public void Init()
         {
-            this.clientConfig = new ClientConfig(AGSocket.IPAddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
+            this.clientConfig = new ClientConfig(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
+
+            this.broadcast = new UDPBroadcast(CoreClient.CLIENT_BC_PORT);
+            this.broadcast.ReceivedBroadcast += broadcast_ReceivedBroadcast;
+            this.broadcast.Listen();
 
             this.marryClient = new MarryClient(this.clientConfig);
             this.marryClient.ReceivedPacket += client_ReceivedPacket;
@@ -54,6 +91,14 @@
             }
         }
 
+        protected void OnDiscoveredServer(IPAddress ipAddress, int port)
+        {
+            if (this.DiscoveredServer != null)
+            {
+                this.DiscoveredServer(ipAddress, port);
+            }
+        }
+
         public void SetHost(IPAddress ipAddress, int port)
         {
             this.clientConfig.ServerIP = ipAddress;
@@ -62,16 +107,18 @@
 
         public void SetHost(string ipAddress, int port)
         {
-            this.SetHost(AGSocket.IPAddressLookup(ipAddress), port);
+            this.SetHost(IP.AddressLookup(ipAddress), port);
         }
 
         public void Connect()
         {
+            this.broadcast.Stop();
             this.marryClient.Connect();
         }
 
         public void Disconnect()
         {
+            this.broadcast.Stop();
             this.marryClient.Disconnect();
         }
 

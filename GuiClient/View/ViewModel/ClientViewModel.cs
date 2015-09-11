@@ -16,6 +16,12 @@
             this.coreClient.ReceivedChat += coreClient_ReceivedChat;
         }
 
+        public event CoreClient.DiscoveredServerEventHandler DiscoveredServer
+        {
+            add { this.coreClient.DiscoveredServer += value; }
+            remove { this.coreClient.DiscoveredServer -= value; }
+        }
+
         private void coreClient_ReceivedChat(string message)
         {
             if (this.chatPresenter != null)
@@ -51,6 +57,11 @@
             this.coreClient.SendChat(message);
         }
 
+
+        public void StartDiscover()
+        {
+            this.coreClient.Discover();
+        }
     }
 
 }

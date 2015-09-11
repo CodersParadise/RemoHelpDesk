@@ -106,6 +106,10 @@
     <Compile Include="View\Windows\TextInputWindow.xaml.cs">
       <DependentUpon>TextInputWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\ControlTemplate\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\ControlTemplate\RemoScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
