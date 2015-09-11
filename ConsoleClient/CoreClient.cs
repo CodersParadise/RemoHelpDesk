@@ -72,15 +72,20 @@
         {
             this.clientConfig = new ClientConfig(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
 
-            this.broadcast = new UDPBroadcast(CoreClient.CLIENT_BC_PORT);
-            this.broadcast.ReceivedBroadcast += broadcast_ReceivedBroadcast;
-            this.broadcast.Listen();
+            this.InitBroadcast();
 
             this.marryClient = new MarryClient(this.clientConfig);
             this.marryClient.ReceivedPacket += client_ReceivedPacket;
             this.marryClient.Connected += marryClient_Connected;
 
             this.handlePacket = new HandlePacket(this.marryClient.Logger);
+        }
+
+        private void InitBroadcast()
+        {
+            this.broadcast = new UDPBroadcast(CoreClient.CLIENT_BC_PORT);
+            this.broadcast.ReceivedBroadcast += broadcast_ReceivedBroadcast;
+            this.broadcast.Listen();
         }
 
         protected void OnReceivedChat(string message)
@@ -105,11 +110,6 @@
             this.clientConfig.ServerPort = port;
         }
 
-        public void SetHost(string ipAddress, int port)
-        {
-            this.SetHost(IP.AddressLookup(ipAddress), port);
-        }
-
         public void Connect()
         {
             this.broadcast.Stop();
@@ -118,7 +118,7 @@
 
         public void Disconnect()
         {
-            this.broadcast.Stop();
+            this.broadcast.Listen(); //TODO
             this.marryClient.Disconnect();
         }
 

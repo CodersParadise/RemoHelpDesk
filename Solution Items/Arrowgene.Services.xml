@@ -29,20 +29,6 @@
             Dealing with OS
             </summary>
         </member>
-        <member name="M:Arrowgene.Services.Common.OS.GetOperatingSystemVersion">
-            <summary>
-            Returns version of OS.
-            </summary>
-            <returns>
-            Returns <see cref="T:Arrowgene.Services.Common.OS.OsVersion"/>.
-            </returns>
-            <remarks>
-            In order to detect cetain windows versions,
-            it is necessary to add a custom .manifest file to the project.
-            https://msdn.microsoft.com/en-us/library/windows/desktop/dn481241%28v=vs.85%29.aspx
-            Otherwise win 8.1 will be reconized as win 8.0 for example.
-            </remarks>
-        </member>
         <member name="T:Arrowgene.Services.Common.OS.OsVersion">
             <summary>
             TODO SUMMARY
@@ -111,6 +97,20 @@
         <member name="F:Arrowgene.Services.Common.OS.OsVersion.MAX_OSX">
             <summary>MAX_OSX</summary>
         </member>
+        <member name="M:Arrowgene.Services.Common.OS.GetOperatingSystemVersion">
+            <summary>
+            Returns version of OS.
+            </summary>
+            <returns>
+            Returns <see cref="T:Arrowgene.Services.Common.OS.OsVersion"/>.
+            </returns>
+            <remarks>
+            In order to detect cetain windows versions,
+            it is necessary to add a custom .manifest file to the project.
+            https://msdn.microsoft.com/en-us/library/windows/desktop/dn481241%28v=vs.85%29.aspx
+            Otherwise win 8.1 will be reconized as win 8.0 for example.
+            </remarks>
+        </member>
         <member name="M:Arrowgene.Services.Common.Search.Find(System.Byte[],System.Byte[],System.Int32)">
             <summary>
             Find subarray in the source array.
@@ -143,6 +143,116 @@
         </member>
         <member name="F:Arrowgene.Services.Logging.LogType.PACKET">
             <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="T:Arrowgene.Services.Logging.LogWriteEventArgs">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.LogWriteEventArgs.#ctor(Arrowgene.Services.Logging.Log)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Logging.LogWriteEventArgs.Log">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="T:Arrowgene.Services.Logging.Log">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Log.#ctor(System.String)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Log.#ctor(System.String,Arrowgene.Services.Logging.LogType)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Logging.Log.Id">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Logging.Log.Text">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Logging.Log.LogType">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Logging.Log.DateTime">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="T:Arrowgene.Services.Logging.Logger">
+            <summary>
+            Logging Class</summary>
+            <remarks>
+            Logs message combined with id and type as <see cref="T:Arrowgene.Services.Logging.Log"/>
+            Events for log writings, will only occur if its declared as safe</remarks>
+        </member>
+        <member name="E:Arrowgene.Services.Logging.Logger.LogWrite">
+            <summary>
+            Notifies when a <see cref="T:Arrowgene.Services.Logging.Log"/> write occured.
+            Don't block this Action by the UI thread, use Dispatcher.BeginInvoke.</summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.#ctor(System.String)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Logging.Logger.WriteDebug">
+            <summary>
+            Write Logs to Debug output.
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Clear">
+            <summary>
+            Clears all stored <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Remove(System.Int32)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Write(Arrowgene.Services.Logging.Log)">
+            <summary>
+            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+            <param name="log"><see cref="T:Arrowgene.Services.Logging.Log"/></param>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String,System.Object,Arrowgene.Services.Logging.LogType)">
+            <summary>
+            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+            <param name="log">Message {0}</param>
+            <param name="arg0">Argument</param>
+            <param name="logType">Log Category</param>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String,System.Object,System.Object,Arrowgene.Services.Logging.LogType)">
+            <summary>
+            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+            <param name="log">Message {0}</param>
+            <param name="arg0">Argument</param>
+            <param name="arg1">Argument</param>
+            <param name="logType">Log Category</param>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String,Arrowgene.Services.Logging.LogType)">
+            <summary>
+            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+            <param name="log">Message</param>
+            <param name="logType">Log Category</param>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String)">
+            <summary>
+            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+            <param name="log">Message</param>
+        </member>
+        <member name="M:Arrowgene.Services.Logging.Logger.GetLogs">
+            <summary>
+            Receive all <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
+            <returns>
+            Dictionary containing id associated by <see cref="T:Arrowgene.Services.Logging.Log"/></returns>
         </member>
         <member name="T:Arrowgene.Services.Network.IP">
             <summary>
@@ -217,6 +327,16 @@
             <param name="connections">Simultaneous connections</param>
             <param name="timeoutMs">Time to wait for a response, before a port counts as closed</param>
         </member>
+        <member name="E:Arrowgene.Services.Network.PortScan.PortScanner.PortScanCompleted">
+            <summary>
+            Scan Completed
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.PortScan.PortScanner.Connections">
+            <summary>
+            Simultaneous connections.
+            </summary>
+        </member>
         <member name="M:Arrowgene.Services.Network.PortScan.PortScanner.Scan(System.Net.IPAddress,System.UInt16,System.UInt16)">
             <summary>
             Scan a given <see cref="T:System.Net.IPAddress"/> for a port range.
@@ -231,16 +351,6 @@
             </summary>
             <param name="ipAddressPool"></param>
             <param name="port"></param>
-        </member>
-        <member name="E:Arrowgene.Services.Network.PortScan.PortScanner.PortScanCompleted">
-            <summary>
-            Scan Completed
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.PortScan.PortScanner.Connections">
-            <summary>
-            Simultaneous connections.
-            </summary>
         </member>
         <member name="T:Arrowgene.Services.Network.PortScan.PortScannerCompletedEventArgs">
             <summary>
@@ -272,12 +382,61 @@
             TODO SUMMARY
             </summary>
         </member>
+        <member name="T:Arrowgene.Services.Network.Http.Server.HttpServer">
+            <summary>
+            Http Server needs admin priveleges
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.Http.Server.HttpServer.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:Arrowgene.Services.Network.Http.Server.HttpServer.HttpHandleEvent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.Http.Server.HttpServer.Initialize(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="port"></param>
+        </member>
+        <member name="M:Arrowgene.Services.Network.Http.Server.HttpServer.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.Http.Client.HttpRequest.Request">
+            <summary>
+            Starts a Blocking WebRequest
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Arrowgene.Services.Network.Http.Client.HttpRequest.RequestAsync">
+            <summary>
+            Starts a new Thread to receive the response.
+            Subscripe to AsyncResponse in order to get the result.
+            </summary>
+            <param name="url"></param>
+        </member>
         <member name="T:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket">
             <summary>
             TODO SUMMARY
             </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket.#ctor(System.Net.Sockets.Socket,Arrowgene.Services.Logging.Logger,Arrowgene.Services.Network.MarrySocket.Serialization.ISerialization)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket.InTraffic">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket.OutTraffic">
             <summary>
             TODO SUMMARY
             </summary>
@@ -293,16 +452,6 @@
             </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket.Error(System.String)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket.InTraffic">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.MBase.BaseSocket.OutTraffic">
             <summary>
             TODO SUMMARY
             </summary>
@@ -410,17 +559,88 @@
             TODO SUMMARY
             </summary>
         </member>
-        <member name="T:Arrowgene.Services.Logging.LogWriteEventArgs">
+        <member name="T:Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig">
             <summary>
             TODO SUMMARY
             </summary>
         </member>
-        <member name="M:Arrowgene.Services.Logging.LogWriteEventArgs.#ctor(Arrowgene.Services.Logging.Log)">
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig.#ctor(System.Net.IPAddress,System.Int32,Arrowgene.Services.Network.MarrySocket.Serialization.ISerialization)">
             <summary>
             TODO SUMMARY
             </summary>
         </member>
-        <member name="P:Arrowgene.Services.Logging.LogWriteEventArgs.Log">
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig.#ctor(System.Net.IPAddress,System.Int32)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="T:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient">
+            <summary>
+            Managed client, for making connections.
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.#ctor(Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient"/> class.
+            </summary>
+            <param name="clientConfig">Configuration for the client.</param>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.ServerSocket">
+            <summary>
+            Socket to send packets.
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.ClientConfig">
+            <summary>
+            Configuration of the client.
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Logger">
+            <summary>
+            Logging of client events.
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.IsConnected">
+            <summary>
+            Connection status.
+            </summary>
+        </member>
+        <member name="E:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Connected">
+            <summary>
+            Connection established.
+            </summary>
+        </member>
+        <member name="E:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.ReceivedPacket">
+            <summary>
+            Packet arrived.
+            </summary>
+        </member>
+        <member name="E:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Disconnected">
+            <summary>
+            Connection lost.
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Connect">
+            <summary>
+            Connect to server.
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Disconnect">
+            <summary>
+            Close connection.
+            </summary>
+        </member>
+        <member name="T:Arrowgene.Services.Network.MarrySocket.MClient.ServerSocket">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ServerSocket.#ctor(System.Net.Sockets.Socket,Arrowgene.Services.Logging.Logger,Arrowgene.Services.Network.MarrySocket.Serialization.ISerialization)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ServerSocket.Error(System.String)">
             <summary>
             TODO SUMMARY
             </summary>
@@ -430,10 +650,55 @@
             TODO SUMMARY
             </summary>
         </member>
-        <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.PacketCrafter">
+        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.CraftPacket.#ctor(System.Int32,System.Type,System.Byte[])">
             <summary>
             TODO SUMMARY
             </summary>
+        </member>
+        <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_SIZE">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_PACKET_LENGTH">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_ID_LENGTH">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_TYPE_LENGTH">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_SERIALIZED_CLASS_LENGTH">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.CreateInstance(System.Byte[])">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.PacketId">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.PacketSize">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.TypeNameSize">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.SerializedClassSize">
+            <summary>TODO SUMMARY</summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.DataSize">
+            <summary>TODO SUMMARY</summary>
         </member>
         <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.PacketBase">
             <summary>
@@ -459,6 +724,11 @@
             </summary>
         </member>
         <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketBase.BufferSize">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.PacketCrafter">
             <summary>
             TODO SUMMARY
             </summary>
@@ -553,56 +823,6 @@
             TODO SUMMARY
             </summary>
         </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.CraftPacket.#ctor(System.Int32,System.Type,System.Byte[])">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_SIZE">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_PACKET_LENGTH">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_ID_LENGTH">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_TYPE_LENGTH">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.HEADER_SERIALIZED_CLASS_LENGTH">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.CreateInstance(System.Byte[])">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.PacketId">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.PacketSize">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.TypeNameSize">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.SerializedClassSize">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader.DataSize">
-            <summary>TODO SUMMARY</summary>
-        </member>
         <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.PacketReader">
             <summary>
             TODO SUMMARY
@@ -658,7 +878,42 @@
             TODO SUMMARY
             </summary>
         </member>
+        <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.#ctor(Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader,System.Byte[])">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.PacketHeader">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.Type">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.SerializedClass">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
         <member name="T:Arrowgene.Services.Network.MarrySocket.Serialization.BinaryFormatterSerializer">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.Serialization.BinaryFormatterSerializer.Serialize(System.Object,Arrowgene.Services.Logging.Logger)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.Serialization.BinaryFormatterSerializer.Deserialize(System.Byte[],Arrowgene.Services.Logging.Logger)">
             <summary>
             TODO SUMMARY
             </summary>
@@ -674,102 +929,6 @@
             </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.MarrySocket.Serialization.ISerialization.Deserialize(System.Byte[],Arrowgene.Services.Logging.Logger)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.Serialization.BinaryFormatterSerializer.Serialize(System.Object,Arrowgene.Services.Logging.Logger)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.Serialization.BinaryFormatterSerializer.Deserialize(System.Byte[],Arrowgene.Services.Logging.Logger)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="T:Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig.#ctor(System.Net.IPAddress,System.Int32,Arrowgene.Services.Network.MarrySocket.Serialization.ISerialization)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig.#ctor(System.Net.IPAddress,System.Int32)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="T:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient">
-            <summary>
-            Managed client, for making connections.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.#ctor(Arrowgene.Services.Network.MarrySocket.MClient.ClientConfig)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient"/> class.
-            </summary>
-            <param name="clientConfig">Configuration for the client.</param>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Connect">
-            <summary>
-            Connect to server.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Disconnect">
-            <summary>
-            Close connection.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.ServerSocket">
-            <summary>
-            Socket to send packets.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.ClientConfig">
-            <summary>
-            Configuration of the client.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Logger">
-            <summary>
-            Logging of client events.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.IsConnected">
-            <summary>
-            Connection status.
-            </summary>
-        </member>
-        <member name="E:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Connected">
-            <summary>
-            Connection established.
-            </summary>
-        </member>
-        <member name="E:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.ReceivedPacket">
-            <summary>
-            Packet arrived.
-            </summary>
-        </member>
-        <member name="E:Arrowgene.Services.Network.MarrySocket.MClient.MarryClient.Disconnected">
-            <summary>
-            Connection lost.
-            </summary>
-        </member>
-        <member name="T:Arrowgene.Services.Network.MarrySocket.MClient.ServerSocket">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ServerSocket.#ctor(System.Net.Sockets.Socket,Arrowgene.Services.Logging.Logger,Arrowgene.Services.Network.MarrySocket.Serialization.ISerialization)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MClient.ServerSocket.Error(System.String)">
             <summary>
             TODO SUMMARY
             </summary>
@@ -824,21 +983,6 @@
             TODO SUMMARY
             </summary>
         </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Close">
-            <summary>
-            Close the socket connection.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Disconnect">
-            <summary>
-            Internal socket close handeling.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Error(System.String)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
         <member name="P:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Id">
             <summary>
             TODO SUMMARY
@@ -854,32 +998,20 @@
             TODO SUMMARY
             </summary>
         </member>
-        <member name="T:Arrowgene.Services.Logging.Log">
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Close">
+            <summary>
+            Close the socket connection.
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Disconnect">
+            <summary>
+            Internal socket close handeling.
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.ClientSocket.Error(System.String)">
             <summary>
             TODO SUMMARY
             </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Log.#ctor(System.String)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Log.#ctor(System.String,Arrowgene.Services.Logging.LogType)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Logging.Log.Id">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Logging.Log.Text">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Logging.Log.LogType">
-            <summary>TODO SUMMARY</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Logging.Log.DateTime">
-            <summary>TODO SUMMARY</summary>
         </member>
         <member name="T:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer">
             <summary>
@@ -891,16 +1023,6 @@
             Initializes a new instance of the <see cref="T:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer"/> class.
             </summary>
             <param name="serverConfig">Configuration for the server.</param>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer.Start">
-            <summary>
-            Starts the server.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer.Stop">
-            <summary>
-            Stops the server.
-            </summary>
         </member>
         <member name="P:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer.ServerConfig">
             <summary>
@@ -932,29 +1054,14 @@
             Occurs when a client disconnected.
             </summary>
         </member>
-        <member name="T:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket">
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer.Start">
             <summary>
-            TODO SUMMARY
+            Starts the server.
             </summary>
         </member>
-        <member name="M:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.#ctor(Arrowgene.Services.Network.MarrySocket.Packet.PacketHeader,System.Byte[])">
+        <member name="M:Arrowgene.Services.Network.MarrySocket.MServer.MarryServer.Stop">
             <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.PacketHeader">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.Type">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.MarrySocket.Packet.ReadPacket.SerializedClass">
-            <summary>
-            TODO SUMMARY
+            Stops the server.
             </summary>
         </member>
         <member name="T:Arrowgene.Services.Network.MarrySocket.MServer.ClientDisconnectedEventArgs">
@@ -1054,74 +1161,6 @@
             Sets the <see cref="T:System.Net.Sockets.SocketOptionLevel"/>(27) "USE_IPV6_ONLY" to false.
             </summary>
         </member>
-        <member name="T:Arrowgene.Services.Logging.Logger">
-            <summary>
-            Logging Class</summary>
-            <remarks>
-            Logs message combined with id and type as <see cref="T:Arrowgene.Services.Logging.Log"/>
-            Events for log writings, will only occur if its declared as safe</remarks>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.#ctor(System.String)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Clear">
-            <summary>
-            Clears all stored <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Remove(System.Int32)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Write(Arrowgene.Services.Logging.Log)">
-            <summary>
-            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-            <param name="log"><see cref="T:Arrowgene.Services.Logging.Log"/></param>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String,System.Object,Arrowgene.Services.Logging.LogType)">
-            <summary>
-            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-            <param name="log">Message {0}</param>
-            <param name="arg0">Argument</param>
-            <param name="logType">Log Category</param>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String,System.Object,System.Object,Arrowgene.Services.Logging.LogType)">
-            <summary>
-            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-            <param name="log">Message {0}</param>
-            <param name="arg0">Argument</param>
-            <param name="arg1">Argument</param>
-            <param name="logType">Log Category</param>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String,Arrowgene.Services.Logging.LogType)">
-            <summary>
-            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-            <param name="log">Message</param>
-            <param name="logType">Log Category</param>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.Write(System.String)">
-            <summary>
-            Writes a new <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-            <param name="log">Message</param>
-        </member>
-        <member name="M:Arrowgene.Services.Logging.Logger.GetLogs">
-            <summary>
-            Receive all <see cref="T:Arrowgene.Services.Logging.Log"/></summary>
-            <returns>
-            Dictionary containing id associated by <see cref="T:Arrowgene.Services.Logging.Log"/></returns>
-        </member>
-        <member name="E:Arrowgene.Services.Logging.Logger.LogWrite">
-            <summary>
-            Notifies when a <see cref="T:Arrowgene.Services.Logging.Log"/> write occured.
-            Don't block this Action by the UI thread, use Dispatcher.BeginInvoke.</summary>
-        </member>
-        <member name="P:Arrowgene.Services.Logging.Logger.WriteDebug">
-            <summary>
-            Write Logs to Debug output.
-            </summary>
-        </member>
         <member name="T:Arrowgene.Services.Network.Proxy.ReceivedProxyPacketEventArgs">
             <summary>
             TODO SUMMARY
@@ -1136,45 +1175,6 @@
             <summary>
             TODO SUMMARY
             </summary>
-        </member>
-        <member name="T:Arrowgene.Services.Network.Http.Server.HttpServer">
-            <summary>
-            Http Server needs admin priveleges
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Http.Server.HttpServer.#ctor">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Http.Server.HttpServer.Initialize(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="port"></param>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Http.Server.HttpServer.Stop">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="E:Arrowgene.Services.Network.Http.Server.HttpServer.HttpHandleEvent">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Http.Client.HttpRequest.Request">
-            <summary>
-            Starts a Blocking WebRequest
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Http.Client.HttpRequest.RequestAsync">
-            <summary>
-            Starts a new Thread to receive the response.
-            Subscripe to AsyncResponse in order to get the result.
-            </summary>
-            <param name="url"></param>
         </member>
         <member name="T:Arrowgene.Services.Network.Broadcast.UDPBroadcast">
             <summary>
@@ -1192,6 +1192,11 @@
             Initialize with given port
             </summary>
             <param name="port"></param>
+        </member>
+        <member name="E:Arrowgene.Services.Network.Broadcast.UDPBroadcast.ReceivedBroadcast">
+            <summary>
+            Notifies broadcast received
+            </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.Broadcast.UDPBroadcast.Listen">
             <summary>
@@ -1211,28 +1216,10 @@
             </summary>
             <param name="data"></param>
         </member>
-        <member name="E:Arrowgene.Services.Network.Broadcast.UDPBroadcast.ReceivedBroadcast">
-            <summary>
-            Notifies broadcast received
-            </summary>
-        </member>
         <member name="T:Arrowgene.Services.Network.AGSocket">
             <summary>
             
             </summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.AGSocket.USE_IPV6_ONLY">
-             <summary>
-            https://msdn.microsoft.com/en-us/library/system.net.sockets.socketoptionname.aspx
-             IPv6Only	
-             Indicates if a socket created for the AF_INET6 address family is restricted to IPv6 communications only.
-             Sockets created for the AF_INET6 address family may be used for both IPv6 and IPv4 communications.
-             Some applications may want to restrict their use of a socket created for the AF_INET6 address family to IPv6 communications only.
-             When this value is non-zero (the default on Windows), a socket created for the AF_INET6 address family can be used to send and receive IPv6 packets only.
-             When this value is zero, a socket created for the AF_INET6 address family can be used to send and receive packets to and from an IPv6 address or an IPv4 address.
-             Note that the ability to interact with an IPv4 address requires the use of IPv4 mapped addresses.
-             This socket option is supported on Windows Vista or later.
-             </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.AGSocket.CreateServerSocket(System.Net.IPEndPoint,System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType,System.Boolean)">
             <summary>
@@ -1279,6 +1266,19 @@
             <param name="port">Port</param>
             <param name="timeout">timeout</param>
         </member>
+        <member name="F:Arrowgene.Services.Network.AGSocket.USE_IPV6_ONLY">
+             <summary>
+            https://msdn.microsoft.com/en-us/library/system.net.sockets.socketoptionname.aspx
+             IPv6Only	
+             Indicates if a socket created for the AF_INET6 address family is restricted to IPv6 communications only.
+             Sockets created for the AF_INET6 address family may be used for both IPv6 and IPv4 communications.
+             Some applications may want to restrict their use of a socket created for the AF_INET6 address family to IPv6 communications only.
+             When this value is non-zero (the default on Windows), a socket created for the AF_INET6 address family can be used to send and receive IPv6 packets only.
+             When this value is zero, a socket created for the AF_INET6 address family can be used to send and receive packets to and from an IPv6 address or an IPv4 address.
+             Note that the ability to interact with an IPv4 address requires the use of IPv4 mapped addresses.
+             This socket option is supported on Windows Vista or later.
+             </summary>
+        </member>
         <member name="M:Arrowgene.Services.Network.AGSocket.#ctor">
             <summary>
             Creates a new instance.
@@ -1292,6 +1292,21 @@
         <member name="M:Arrowgene.Services.Network.AGSocket.Close">
             <summary>
             Closes the <see cref="T:System.Net.Sockets.Socket"/> connection and releases all associated resources.
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.AGSocket.Connected">
+            <summary>
+            Gets a value that indicates whether a <see cref="T:System.Net.Sockets.Socket"/> is connected to a remote host as of the last Send or Receive operation.
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.AGSocket.IsBound">
+            <summary>
+            Gets a value that indicates whether the <see cref="T:System.Net.Sockets.Socket"/> is bound to a specific local port.
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.AGSocket.EnableBroadcast">
+            <summary>
+            Gets or sets a Boolean value that specifies whether the Socket can send or receive broadcast packets.
             </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.AGSocket.Send(System.Byte[])">
@@ -1339,21 +1354,6 @@
         <member name="M:Arrowgene.Services.Network.AGSocket.Accept">
             <summary>
             Creates a new <see cref="T:System.Net.Sockets.Socket"/> for a newly created connection.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.AGSocket.Connected">
-            <summary>
-            Gets a value that indicates whether a <see cref="T:System.Net.Sockets.Socket"/> is connected to a remote host as of the last Send or Receive operation.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.AGSocket.IsBound">
-            <summary>
-            Gets a value that indicates whether the <see cref="T:System.Net.Sockets.Socket"/> is bound to a specific local port.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.AGSocket.EnableBroadcast">
-            <summary>
-            Gets or sets a Boolean value that specifies whether the Socket can send or receive broadcast packets.
             </summary>
         </member>
         <member name="T:Arrowgene.Services.Provider.IniFile">

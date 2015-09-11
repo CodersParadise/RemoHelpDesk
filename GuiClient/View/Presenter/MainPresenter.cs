@@ -15,8 +15,8 @@
         private Button buttonChat;
         private TextBox textBoxIp;
         private Button buttonDiscover;
-        private bool buttonConnectIsConnected;
         private int port = 2345;
+        private IPAddress ipAddress;
 
         public MainPresenter(MainWindow mainWindow)
         {
@@ -42,11 +42,6 @@
             this.buttonDiscover.Click += buttonDiscover_Click;
         }
 
-        private void buttonDiscover_Click(object sender, RoutedEventArgs e)
-        {
-            this.StartDiscover();
-        }
-
         private void PrepareContent()
         {
             this.chatPresenter = new ChatPresenter();
@@ -54,36 +49,37 @@
             this.clientViewModel.DiscoveredServer += clientViewModel_DiscoveredServer;
             this.clientViewModel.SetChatPresenter(this.chatPresenter);
             this.mainWindow.DataContext = this;
-            this.buttonConnectIsConnected = false;
             this.buttonConnect.Content = "Connect";
+            this.ipAddress = null;
+            this.buttonChat.IsEnabled = false;
         }
 
-        private void clientViewModel_DiscoveredServer(IPAddress ipAddress, int port)
+        private void buttonDiscover_Click(object sender, RoutedEventArgs e)
         {
-            Program.DispatchIfNecessary(() =>
-            {
-                this.textBoxIp.IsEnabled = false;
-                this.textBoxIp.Text = ipAddress.ToString();
-            });
-            this.port = port;
-
-            this.StartClient();
+            this.StartDiscover();
         }
-
 
         private void btnChat_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             this.chatPresenter.Show(this.clientViewModel);
         }
 
-        void mainWindow_Closed(object sender, System.EventArgs e)
+        private void mainWindow_Closed(object sender, System.EventArgs e)
         {
             this.StopClient();
         }
 
-        void btnConnect_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void clientViewModel_DiscoveredServer(IPAddress ipAddress, int port)
         {
-            if (this.buttonConnectIsConnected)
+            this.port = port;
+            this.ipAddress = ipAddress;
+            this.StartClient();
+        }
+
+        private void btnConnect_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.ipAddress = null;
+            if (this.clientViewModel.IsConnected)
             {
                 this.StopClient();
             }
@@ -100,43 +96,60 @@
 
         private void StartClient()
         {
-            string ip = null;
-            Program.DispatchIfNecessary(() =>
+            if (!this.clientViewModel.IsConnected)
             {
-                this.buttonConnect.Content = "Disconnect";
-                ip = this.textBoxIp.Text;
-            });
+                if (this.ipAddress == null)
+                {
+                    string ip = this.textBoxIp.Text;
+                    this.ipAddress = IPAddress.Parse(ip);
+                }
 
-            this.buttonConnectIsConnected = true;
-
-            if (!this.clientViewModel.IsConnected && ip != null)
-            {
-                this.clientViewModel.SetHost(ip, this.port);
+                this.clientViewModel.SetHost(this.ipAddress, this.port);
                 this.clientViewModel.Connect();
+            }
+
+            if (this.clientViewModel.IsConnected)
+            {
+                Program.DispatchIfNecessary(() =>
+                {
+                    this.buttonConnect.Content = "Disconnect";
+                    this.textBoxIp.IsEnabled = false;
+                    this.textBoxIp.Text = this.ipAddress.ToString();
+                    this.buttonDiscover.IsEnabled = false;
+                    this.buttonChat.IsEnabled = true;
+                });
+            }
+            else
+            {
+                Program.DispatchIfNecessary(() =>
+                {
+                    MessageBox.Show("Verbindung fehlgeschlafen");
+                });
             }
         }
 
+
         private void StopClient()
         {
-            this.buttonConnect.Content = "Connect";
-            this.buttonConnectIsConnected = false;
+            if (this.clientViewModel.IsConnected)
+            {
 
-            //     if (this.clientViewModel.IsConnected)
-            //    {
-            this.clientViewModel.Disconnect();
-            //   }
+                this.clientViewModel.Disconnect();
+                Program.DispatchIfNecessary(() =>
+                {
+                    this.buttonConnect.Content = "Connect";
+                    this.textBoxIp.IsEnabled = true;
+                    this.buttonDiscover.IsEnabled = true;
+                    this.buttonChat.IsEnabled = false;
+                });
+
+            }
         }
 
         private void StartDiscover()
         {
             this.clientViewModel.StartDiscover();
         }
-
-        private void StopDiscovery()
-        {
-
-        }
-
 
     }
 }

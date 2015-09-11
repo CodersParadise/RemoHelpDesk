@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RemoHelpDesk Connector" 
-        Height="109" 
+        Height="130" 
         Width="231" 
        
         WindowStyle="ToolWindow" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize">
@@ -22,10 +22,10 @@
             <GradientStop Color="White" Offset="0.323"/>
         </LinearGradientBrush>
     </Window.Background>
-    <StackPanel HorizontalAlignment="Left" Height="77" VerticalAlignment="Top" Width="195" Margin="10,10,0,0">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBox x:Name="txtIp" Text="127.0.0.1" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="White"/>
       
-           <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnDiscover" Content="Discover" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black">
+           <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnDiscover" Content="Discover" Width="175" Margin="10,0,0,0" Height="20" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black">
             <Button.Background>
 
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -38,7 +38,7 @@
         </Button>
 
         
-        <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnConnect" Content="Connect" Width="175" Margin="10,0,0,0" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black">
+        <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnConnect" Content="Connect" Width="175" Margin="10,0,0,0" Height="20" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black">
             <Button.Background>
 
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -50,7 +50,7 @@
             </Button.Background>
         </Button>
 
-        <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnChat" Content="Open Chat" Width="175" Height="19.96" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="Black">
+        <Button   Style="{StaticResource CustomButtonStyle}" x:Name="btnChat" Content="Open Chat" Width="175" Height="20" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="Black">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#FFF3F3F3"/>

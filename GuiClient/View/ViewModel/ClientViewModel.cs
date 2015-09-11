@@ -1,5 +1,6 @@
 ﻿namespace GuiClient.ViewModel
 {
+    using System.Net;
     using ClientCore;
     using GuiClient.View.Presenter;
 
@@ -47,7 +48,7 @@
             this.coreClient.Disconnect();
         }
 
-        public void SetHost(string ipAddress, int port)
+        public void SetHost(IPAddress ipAddress, int port)
         {
             this.coreClient.SetHost(ipAddress, port);
         }

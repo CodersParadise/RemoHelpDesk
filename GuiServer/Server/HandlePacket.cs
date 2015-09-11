@@ -40,8 +40,15 @@
         {
             if (clientPacketIds.ContainsKey(packetId))
             {
-                clientViewModel.NotifyInTrafficChanged();
-                this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel, this.server);
+                if (clientViewModel != null)
+                {
+                    clientViewModel.NotifyInTrafficChanged();
+                    this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel, this.server);
+                }
+                else
+                {
+                    logger.Write(String.Format("Could not handle packet: {0} (ViewModel is Null)", packetId), LogType.PACKET);
+                }
             }
             else
             {
