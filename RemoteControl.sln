@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiServer", "GuiServer\GuiServer.csproj", "{F2E4A21A-C0EF-4BED-B810-7B04A5702763}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCore", "ConsoleClient\ClientCore.csproj", "{438DDF05-16E7-4335-B9EC-52C4C4E65C04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCore", "ClientCore\ClientCore.csproj", "{438DDF05-16E7-4335-B9EC-52C4C4E65C04}"
 	ProjectSection(ProjectDependencies) = postProject
 		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0} = {74CD888F-BB60-4A75-9C8D-F4473C54D2B0}
 	EndProjectSection
