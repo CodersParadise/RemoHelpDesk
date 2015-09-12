@@ -14,3 +14,16 @@ Beim Starten des Clients kann eine IP Adresse angegeben werden, alterantiv kann 
 Der Server besteht aus einem Fenster mit einer Liste von Clients und deren Eigenschaften. Die Clients können per Rechtsklick angesteuert und eine Fernwartungsfunktion aufgerufen werden (Bildschirmfoto, Maushilfe, etc.).
 Außerdem kann ein Chatfenster für zusätzliche Kommunikation geöffnet werden.
 Dem Mitarbeiter ist es somit möglich den Fehler schnell zu erfassen und erste Maßnahmen zur Behebung des Problems durchzuführen.
+
+# ClientCore (Net 2.0)
+Dynamic Link Library, has all the function to establish a connection to the server.
+This .dll is compiled against Net 2.0 to allow it to be integrated into a far range of projects (Android/IOS Xamarin Projects, Old Clients, etc.)
+
+# GuiClient (Net 4.0)
+A Graphical User Interface wrapper for the ClientCore, this runs on all Net 4.0 supported machines.
+
+# GuiServer (Net 4.0)
+Server Interface to manage the client connections.
+
+# NetworkObjects
+A Shared Library between server and client, includes the Objects they can send over the wire.
