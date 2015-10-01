@@ -26,10 +26,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <ScrollViewer  Style="{StaticResource RemoScrollViewer}" x:Name="scrollViewerOutput" HorizontalScrollBarVisibility="Visible" Margin="5" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer  Style="{StaticResource RemoScrollViewer}" x:Name="scrollViewerOutput" HorizontalScrollBarVisibility="Visible" Margin="5" Grid.Row="0" Grid.ColumnSpan="2">
 
             <TextBlock x:Name="textblockChat" TextWrapping="Wrap" FontFamily="Consolas" Background="White"/>
         </ScrollViewer>
         <TextBox x:Name="textboxInput" Margin="5" Grid.Row="1"/>
+        <Button Name="buttonPushToTalk" Margin="5" Width="50" Grid.Row="1" Grid.Column="1" Content="TALK"/>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿namespace GuiClient.ViewModel
 {
+    using System;
     using System.Net;
     using ClientCore;
     using GuiClient.View.Presenter;
@@ -22,6 +23,13 @@
             add { this.coreClient.DiscoveredServer += value; }
             remove { this.coreClient.DiscoveredServer -= value; }
         }
+
+        public event CoreClient.ReceivedVoiceEventHandler ReceivedVoice
+        {
+            add { this.coreClient.ReceivedVoice += value; }
+            remove { this.coreClient.ReceivedVoice -= value; }
+        }
+
 
         private void coreClient_ReceivedChat(string message)
         {
@@ -63,6 +71,10 @@
         {
             this.coreClient.Discover();
         }
-    }
 
+        internal void SendVoice(byte[] buffer, int bytesRecorded)
+        {
+            this.coreClient.SendVoice(buffer);
+        }
+    }
 }

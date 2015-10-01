@@ -115,7 +115,7 @@
             {
                 this.ToggleTray(true);
             }
-            else if(this.mainWindow.WindowState == WindowState.Normal)
+            else if (this.mainWindow.WindowState == WindowState.Normal)
             {
                 this.ToggleTray(false);
             }
@@ -123,6 +123,11 @@
 
         private void mainWindow_Closed(object sender, System.EventArgs e)
         {
+            foreach (ClientViewModel clientViewModel in this.clientViewModelContainer.ClientViewModels)
+            {
+                clientViewModel.Dispose();
+            }
+
             this.StopServer();
             this.DisposeTrayIcon();
         }

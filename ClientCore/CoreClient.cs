@@ -2,7 +2,7 @@
 {
 
     using Arrowgene.Services.Network;
-    using Arrowgene.Services.Network.Broadcast;
+    using Arrowgene.Services.Network.UDP;
     using Arrowgene.Services.Network.MarrySocket.MClient;
     using ClientCore.Handle;
     using ClientCore.Packets;
@@ -15,8 +15,8 @@
 
     public class CoreClient
     {
-        private const int CLIENT_BC_PORT = 7331;
         private const int SERVER_BC_PORT = 7330;
+        private const int CLIENT_BC_PORT = 7331;
 
         private const string assemblyMarrySocket = "Arrowgene.Services";
         private const string assemblyNetworkObjects = "NetworkObjects";
@@ -24,13 +24,15 @@
         private HandlePacket handlePacket;
         private MarryClient marryClient;
         private ClientConfig clientConfig;
-        private UDPBroadcast broadcast;
+      //  private UDPSocket broadcast;
 
         public delegate void ReceivedChatEventHandler(string foo);
         public event ReceivedChatEventHandler ReceivedChat;
 
         public delegate void DiscoveredServerEventHandler(IPAddress ipAddress, int port);
+        public delegate void ReceivedVoiceEventHandler(byte[] buffer, int length);
         public event DiscoveredServerEventHandler DiscoveredServer;
+        public event ReceivedVoiceEventHandler ReceivedVoice;
 
         public CoreClient()
         {
@@ -44,13 +46,12 @@
 
         public void Discover()
         {
-            UDPBroadcast broadcast = new UDPBroadcast(CoreClient.SERVER_BC_PORT);
-            broadcast.Send(System.Text.Encoding.UTF8.GetBytes("HELLO?"));
+          //  UDPClient.SendBroadcast(System.Text.Encoding.UTF8.GetBytes("HELLO?"), SERVER_BC_PORT);
         }
 
-        private void broadcast_ReceivedBroadcast(object sender, Arrowgene.Services.Network.Discovery.ReceivedUDPBroadcastPacketEventArgs e)
+        private void Broadcast_ReceivedPacket(object sender, ReceivedUDPPacketEventArgs e)
         {
-            string msg = System.Text.Encoding.UTF8.GetString(e.Payload.GetBytes());
+            string msg = System.Text.Encoding.UTF8.GetString(e.ReadableBuffer.GetBytes());
 
             if (msg.Contains("|"))
             {
@@ -72,20 +73,15 @@
         {
             this.clientConfig = new ClientConfig(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
 
-            this.InitBroadcast();
+        //    this.broadcast = new UDPServer(CLIENT_BC_PORT);
+         //   this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
+        //    this.broadcast.Listen();
 
             this.marryClient = new MarryClient(this.clientConfig);
             this.marryClient.ReceivedPacket += client_ReceivedPacket;
             this.marryClient.Connected += marryClient_Connected;
 
             this.handlePacket = new HandlePacket(this.marryClient.Logger);
-        }
-
-        private void InitBroadcast()
-        {
-            this.broadcast = new UDPBroadcast(CoreClient.CLIENT_BC_PORT);
-            this.broadcast.ReceivedBroadcast += broadcast_ReceivedBroadcast;
-            this.broadcast.Listen();
         }
 
         protected void OnReceivedChat(string message)
@@ -104,6 +100,14 @@
             }
         }
 
+        protected void OnReceivedVoice(byte[] buffer, int length)
+        {
+            if (this.ReceivedVoice != null)
+            {
+                this.ReceivedVoice(buffer, length);
+            }
+        }
+
         public void SetHost(IPAddress ipAddress, int port)
         {
             this.clientConfig.ServerIP = ipAddress;
@@ -112,19 +116,24 @@
 
         public void Connect()
         {
-            this.broadcast.Stop();
+          //  this.broadcast.Stop();
             this.marryClient.Connect();
         }
 
         public void Disconnect()
         {
-            this.broadcast.Listen(); //TODO
+          //  this.broadcast.Stop();
             this.marryClient.Disconnect();
         }
 
         public void SendChat(string message)
         {
             this.marryClient.ServerSocket.SendObject(PacketId.CHAT, message);
+        }
+
+        public void SendVoice(byte[] buffer)
+        {
+            this.marryClient.ServerSocket.SendObject(PacketId.VOICE, buffer);
         }
 
         private void marryClient_Connected(object sender, ConnectedEventArgs e)
@@ -140,6 +149,12 @@
                     {
                         string message = e.MyObject as string;
                         this.OnReceivedChat(message);
+                        break;
+                    }
+                case PacketId.VOICE:
+                    {
+                        byte[] buffer = e.MyObject as byte[];
+                        this.OnReceivedVoice(buffer, buffer.Length);
                         break;
                     }
                 default:

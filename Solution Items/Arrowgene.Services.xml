@@ -254,6 +254,42 @@
             <returns>
             Dictionary containing id associated by <see cref="T:Arrowgene.Services.Logging.Log"/></returns>
         </member>
+        <member name="F:Arrowgene.Services.Network.UDP.UDPSocket.MAX_PAYLOAD_SIZE_BYTES">
+            <summary>
+            Defines the maximum size to be received,
+            drops send requests exceeding this limit.
+            </summary>
+        </member>
+        <member name="T:Arrowgene.Services.Network.UDP.ReceivedUDPPacketEventArgs">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="M:Arrowgene.Services.Network.UDP.ReceivedUDPPacketEventArgs.#ctor(System.Int32,System.Byte[],System.Net.IPEndPoint)">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.UDP.ReceivedUDPPacketEventArgs.ReadableBuffer">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.UDP.ReceivedUDPPacketEventArgs.RemoteIPEndPoint">
+            <summary>
+            TODO SUMMARY
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.UDP.ReceivedUDPPacketEventArgs.Received">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Arrowgene.Services.Network.UDP.ReceivedUDPPacketEventArgs.Size">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Arrowgene.Services.Network.IP">
             <summary>
             Helps with IPAddress
@@ -363,21 +399,6 @@
             </summary>
         </member>
         <member name="P:Arrowgene.Services.Network.PortScan.PortScannerCompletedEventArgs.PortScanResults">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="T:Arrowgene.Services.Network.Discovery.ReceivedUDPBroadcastPacketEventArgs">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Discovery.ReceivedUDPBroadcastPacketEventArgs.#ctor(Arrowgene.Services.Provider.ByteBuffer)">
-            <summary>
-            TODO SUMMARY
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.Discovery.ReceivedUDPBroadcastPacketEventArgs.Payload">
             <summary>
             TODO SUMMARY
             </summary>
@@ -1176,65 +1197,17 @@
             TODO SUMMARY
             </summary>
         </member>
-        <member name="T:Arrowgene.Services.Network.Broadcast.UDPBroadcast">
-            <summary>
-            Listen or Send a Broadcast
-            </summary>
-        </member>
-        <member name="F:Arrowgene.Services.Network.Broadcast.UDPBroadcast.MAX_PAYLOAD_SIZE_BYTES">
-            <summary>
-            Defines the maximum size to be received,
-            drops send requests exceeding this limit.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Broadcast.UDPBroadcast.#ctor(System.Int32)">
-            <summary>
-            Initialize with given port
-            </summary>
-            <param name="port"></param>
-        </member>
-        <member name="E:Arrowgene.Services.Network.Broadcast.UDPBroadcast.ReceivedBroadcast">
-            <summary>
-            Notifies broadcast received
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Broadcast.UDPBroadcast.Listen">
-            <summary>
-            Listen for broadcast messages
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Broadcast.UDPBroadcast.Send(System.Byte[],System.Net.IPAddress)">
-            <summary>
-            Send a broadcast message, to a given <see cref="T:System.Net.IPAddress"/>
-            </summary>
-            <param name="data"></param>
-            <param name="ip"></param>
-        </member>
-        <member name="M:Arrowgene.Services.Network.Broadcast.UDPBroadcast.Send(System.Byte[])">
-            <summary>
-            Send a broadcast message to <see cref="F:System.Net.IPAddress.Broadcast"/>
-            </summary>
-            <param name="data"></param>
-        </member>
         <member name="T:Arrowgene.Services.Network.AGSocket">
             <summary>
             
             </summary>
         </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.CreateServerSocket(System.Net.IPEndPoint,System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType,System.Boolean)">
+        <member name="M:Arrowgene.Services.Network.AGSocket.CreateBoundServerSocket(System.Net.IPEndPoint,System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType)">
             <summary>
             Creates a <see cref="T:System.Net.Sockets.Socket"/> bound to a specified <see cref="T:System.Net.IPEndPoint"/>.
             </summary>
             <param name="localEndPoint"></param>
-            <param name="socketType"></param>
-            <param name="protocolType"></param>
-            <param name="IPv4v6AgnosticSocket"></param>
             <returns></returns>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.CreateServerSocket(System.Net.IPEndPoint)">
-            <summary>
-            Associates a default <see cref="T:System.Net.Sockets.Socket"/> (TCP, Stream) with a local <see cref="T:System.Net.IPEndPoint"/>.
-            </summary>
         </member>
         <member name="M:Arrowgene.Services.Network.AGSocket.CreateSocket(System.Net.IPEndPoint,System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType)">
             <summary>
@@ -1244,12 +1217,6 @@
             <param name="socketType"></param>
             <param name="protocolType"></param>
             <returns></returns>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.CreateSocket(System.Net.IPEndPoint)">
-            <summary>
-            Associates a default <see cref="T:System.Net.Sockets.Socket"/> (TCP, Stream) with a local <see cref="T:System.Net.IPEndPoint"/>.
-            </summary>
-            <param name="localEndPoint"></param>
         </member>
         <member name="M:Arrowgene.Services.Network.AGSocket.ConnectTest(System.Net.IPEndPoint,System.TimeSpan)">
             <summary>
@@ -1278,83 +1245,6 @@
              Note that the ability to interact with an IPv4 address requires the use of IPv4 mapped addresses.
              This socket option is supported on Windows Vista or later.
              </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.#ctor">
-            <summary>
-            Creates a new instance.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.#ctor(System.Net.Sockets.Socket)">
-            <summary>
-            Creates a new instance with an existing <see cref="T:System.Net.Sockets.Socket"/>.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Close">
-            <summary>
-            Closes the <see cref="T:System.Net.Sockets.Socket"/> connection and releases all associated resources.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.AGSocket.Connected">
-            <summary>
-            Gets a value that indicates whether a <see cref="T:System.Net.Sockets.Socket"/> is connected to a remote host as of the last Send or Receive operation.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.AGSocket.IsBound">
-            <summary>
-            Gets a value that indicates whether the <see cref="T:System.Net.Sockets.Socket"/> is bound to a specific local port.
-            </summary>
-        </member>
-        <member name="P:Arrowgene.Services.Network.AGSocket.EnableBroadcast">
-            <summary>
-            Gets or sets a Boolean value that specifies whether the Socket can send or receive broadcast packets.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Send(System.Byte[])">
-            <summary>
-            Sends data to a connected <see cref="T:System.Net.Sockets.Socket"/>.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Poll(System.Int32,System.Net.Sockets.SelectMode)">
-            <summary>
-            Determines the status of the <see cref="T:System.Net.Sockets.Socket"/>.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Receive(System.Byte[],System.Int32,System.Int32,System.Net.Sockets.SocketFlags)">
-            <summary>
-            Receives data from a bound <see cref="T:System.Net.Sockets.Socket"/> into a receive buffer.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Connect(System.Net.IPEndPoint)">
-            <summary>
-            Establishes a connection to a remote host.
-            Creates a new <see cref="T:System.Net.Sockets.Socket"/> if none provided.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Connect(System.Net.IPEndPoint,System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType)">
-            <summary>
-            Establishes a connection to a remote host. 
-            Always creates a new <see cref="T:System.Net.Sockets.Socket"/>.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Bind(System.Net.IPEndPoint,System.Net.Sockets.SocketType,System.Net.Sockets.ProtocolType,System.Boolean)">
-            <summary>
-            Associates a new <see cref="T:System.Net.Sockets.Socket"/> with a local endpoint.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Bind(System.Net.IPEndPoint)">
-            <summary>
-            Associates a default Socket (TCP, Stream) with a local endpoint.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Listen(System.Int32)">
-            <summary>
-            Places a <see cref="T:System.Net.Sockets.Socket"/> in a listening state.
-            </summary>
-        </member>
-        <member name="M:Arrowgene.Services.Network.AGSocket.Accept">
-            <summary>
-            Creates a new <see cref="T:System.Net.Sockets.Socket"/> for a newly created connection.
-            </summary>
         </member>
         <member name="T:Arrowgene.Services.Provider.IniFile">
             <summary>

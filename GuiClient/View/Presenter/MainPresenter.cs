@@ -22,8 +22,8 @@
         {
             this.mainWindow = mainWindow;
             this.AssignControls();
-            this.AssignEvents();
             this.PrepareContent();
+            this.AssignEvents();
         }
 
         private void AssignControls()
@@ -32,14 +32,6 @@
             this.textBoxIp = this.mainWindow.txtIp;
             this.buttonChat = this.mainWindow.btnChat;
             this.buttonDiscover = this.mainWindow.btnDiscover;
-        }
-
-        private void AssignEvents()
-        {
-            this.mainWindow.Closed += mainWindow_Closed;
-            this.buttonConnect.Click += btnConnect_Click;
-            this.buttonChat.Click += btnChat_Click;
-            this.buttonDiscover.Click += buttonDiscover_Click;
         }
 
         private void PrepareContent()
@@ -53,6 +45,17 @@
             this.ipAddress = null;
             this.buttonChat.IsEnabled = false;
         }
+
+
+        private void AssignEvents()
+        {
+            this.mainWindow.Closed += mainWindow_Closed;
+            this.buttonConnect.Click += btnConnect_Click;
+            this.buttonChat.Click += btnChat_Click;
+            this.buttonDiscover.Click += buttonDiscover_Click;
+        }
+
+ 
 
         private void buttonDiscover_Click(object sender, RoutedEventArgs e)
         {
@@ -131,9 +134,6 @@
 
         private void StopClient()
         {
-            if (this.clientViewModel.IsConnected)
-            {
-
                 this.clientViewModel.Disconnect();
                 Program.DispatchIfNecessary(() =>
                 {
@@ -142,8 +142,6 @@
                     this.buttonDiscover.IsEnabled = true;
                     this.buttonChat.IsEnabled = false;
                 });
-
-            }
         }
 
         private void StartDiscover()

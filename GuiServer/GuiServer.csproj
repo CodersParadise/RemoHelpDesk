@@ -63,6 +63,10 @@
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -78,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Server\Events\DisplayTrayBalloonEventArgs.cs" />
+    <Compile Include="Server\Handle\HandleVoice.cs" />
     <Compile Include="Server\Handle\HandleChat.cs" />
     <Compile Include="View\Presenter\ChatPresenter.cs" />
     <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
@@ -202,6 +207,11 @@
     <EmbeddedResource Include="..\Solution Items\Arrowgene.Services.dll">
       <Link>Arrowgene.Services.dll</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Solution Items\NAudio.dll">
+      <Link>NAudio.dll</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

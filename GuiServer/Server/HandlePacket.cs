@@ -33,7 +33,21 @@
             this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
             this.clientPacketIds.Add(PacketId.RUN, new HandleRemoteShell());
             this.clientPacketIds.Add(PacketId.CHAT, new HandleChat());
-       
+            this.clientPacketIds.Add(PacketId.VOICE, new HandleVoice());
+
+        }
+
+        public string GetPacketName(int id)
+        {
+            switch (id)
+            {
+                case PacketId.COMPUTER_INFO: return "COMPUTER_INFO";
+                case PacketId.SCREEN_SHOT: return "SCREEN_SHOT";
+                case PacketId.RUN: return "RUN";
+                case PacketId.CHAT: return "CHAT";
+                case PacketId.VOICE: return "VOICE";
+                default: return string.Format("UNKNOWN_ID_{0}", id);
+            }
         }
 
         public void Handle(int packetId, object receivedClass, ClientViewModel clientViewModel)
@@ -44,15 +58,16 @@
                 {
                     clientViewModel.NotifyInTrafficChanged();
                     this.clientPacketIds[packetId].Handle(receivedClass, clientViewModel, this.server);
+                    logger.Write(String.Format("Handle packet: {0}", this.GetPacketName(packetId)), LogType.PACKET);
                 }
                 else
                 {
-                    logger.Write(String.Format("Could not handle packet: {0} (ViewModel is Null)", packetId), LogType.PACKET);
+                    logger.Write(String.Format("Could not handle packet: {0} (ViewModel is Null)", this.GetPacketName(packetId)), LogType.PACKET);
                 }
             }
             else
             {
-                logger.Write(String.Format("Could not handle packet: {0}", packetId), LogType.PACKET);
+                logger.Write(String.Format("Could not handle packet: {0}", this.GetPacketName(packetId)), LogType.PACKET);
             }
         }
 

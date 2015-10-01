@@ -2,8 +2,8 @@
 {
     using Arrowgene.Services.Logging;
     using Arrowgene.Services.Network;
-    using Arrowgene.Services.Network.Broadcast;
     using Arrowgene.Services.Network.MarrySocket.MServer;
+    using Arrowgene.Services.Network.UDP;
     using GuiServer.Server.Events;
     using GuiServer.View.ViewModel;
     using System;
@@ -14,14 +14,13 @@
 
     public class Server
     {
-        private const int CLIENT_BC_PORT = 7331;
         private const int SERVER_BC_PORT = 7330;
 
         private LogViewModelContainer logViewModelContainer;
         private HandlePacket handlePacket;
         private ClientViewModelContainer clientViewModelContainer;
         private Dispatcher dispatcher;
-        private UDPBroadcast broadcast;
+       // private UDPSocket broadcast;
         private ServerConfig serverConfig;
         public EventHandler<DisplayTrayBalloonEventArgs> DisplayTrayBalloon;
 
@@ -38,11 +37,11 @@
             this.clientViewModelContainer = clientViewModelContainer;
             this.logViewModelContainer = logViewModelContainer;
             this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.MarryServer.Logger, this);
-            this.broadcast = new UDPBroadcast(Server.SERVER_BC_PORT);
-            this.broadcast.ReceivedBroadcast += broadcast_ReceivedBroadcast;
+          //  this.broadcast = new UDPServer(SERVER_BC_PORT);
+         //   this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
         }
 
-        private void broadcast_ReceivedBroadcast(object sender, Arrowgene.Services.Network.Discovery.ReceivedUDPBroadcastPacketEventArgs e)
+        private void Broadcast_ReceivedPacket(object sender, ReceivedUDPPacketEventArgs e)
         {
             string msg = string.Empty;
             IPEndPoint ep = IP.QueryRoutingInterface(IPAddress.Broadcast);
@@ -56,21 +55,20 @@
                 msg = "CAN_NOT";
             }
 
-            UDPBroadcast broadcast = new UDPBroadcast(Server.CLIENT_BC_PORT);
-            broadcast.Send(System.Text.Encoding.UTF8.GetBytes(msg));
+         //   this.broadcast.SendTo(System.Text.Encoding.UTF8.GetBytes(msg), e.RemoteIPEndPoint);
         }
 
         public MarryServer MarryServer;
 
         public void Start()
         {
-            this.broadcast.Listen();
+         //   this.broadcast.Listen();
             this.MarryServer.Start();
         }
 
         public void Stop()
         {
-            this.broadcast.Stop();
+          //  this.broadcast.Stop();
             this.MarryServer.Stop();
         }
 
@@ -87,6 +85,7 @@
             this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
                 ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
+                clientViewModel.Dispose();
                 this.clientViewModelContainer.Remove(clientViewModel);
             }));
         }
