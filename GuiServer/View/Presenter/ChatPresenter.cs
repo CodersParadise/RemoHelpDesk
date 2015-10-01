@@ -144,8 +144,8 @@
 
         public void PlayVoice(byte[] buffer)
         {
-            waveOut.Play();
-            waveProvider.AddSamples(buffer, 0, buffer.Length);
+        //    waveOut.Play();
+          //  waveProvider.AddSamples(buffer, 0, buffer.Length);
         }
     }
 }
