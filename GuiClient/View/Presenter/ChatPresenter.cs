@@ -20,6 +20,7 @@
         private WaveIn waveIn;
         private WaveOut waveOut;
         private BufferedWaveProvider waveProvider;
+        private CheckBox checkBoxVoiceActive;
 
         public ChatPresenter()
         {
@@ -49,14 +50,17 @@
             this.textboxInput = this.chatWindow.textboxInput;
             this.buttonPushToTalk = this.chatWindow.buttonPushToTalk;
             this.scrollViewerOutput = this.chatWindow.scrollViewerOutput;
+            this.checkBoxVoiceActive = this.chatWindow.checkBoxActive;
 
+            this.buttonPushToTalk.IsEnabled = false;
             this.textboxInput.KeyDown += textboxInput_KeyDown;
             this.buttonPushToTalk.PreviewMouseLeftButtonDown += ButtonPushToTalk_MouseDown;
             this.buttonPushToTalk.PreviewMouseLeftButtonUp += ButtonPushToTalk_MouseUp;
             this.waveIn.DataAvailable += WaveIn_DataAvailable;
             this.clientViewModel.ReceivedVoice += ClientViewModel_ReceivedVoice;
             this.chatWindow.Closed += ChatWindow_Closed;
-
+            this.checkBoxVoiceActive.Checked += CheckBoxVoiceActive_Checked;
+            this.checkBoxVoiceActive.Unchecked += CheckBoxVoiceActive_Checked;
 
             Program.DispatchIfNecessary(() =>
             {
@@ -65,6 +69,20 @@
                     this.textblockChat.Text += chatLine + Environment.NewLine;
                 }
             });
+        }
+
+        private void CheckBoxVoiceActive_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (this.checkBoxVoiceActive.IsChecked == true)
+            {
+                this.buttonPushToTalk.IsEnabled = true;
+                waveOut.Play();
+            }
+            else
+            {
+                this.buttonPushToTalk.IsEnabled = false;
+                waveOut.Stop();
+            }
         }
 
         private void ChatWindow_Closed(object sender, EventArgs e)
@@ -85,12 +103,10 @@
         private void ButtonPushToTalk_MouseUp(object sender, MouseButtonEventArgs e)
         {
             waveIn.StopRecording();
-            waveOut.Play();
         }
 
         private void ButtonPushToTalk_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            waveOut.Stop();
             waveIn.StartRecording();
         }
 

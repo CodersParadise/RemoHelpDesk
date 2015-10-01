@@ -21,12 +21,15 @@
         private WaveOut waveOut;
         private BufferedWaveProvider waveProvider;
         private Button buttonPushToTalk;
+        private CheckBox checkBoxVoiceActive;
+   
 
         public ChatPresenter(ClientViewModel clientViewModel)
         {
             this.clientViewModel = clientViewModel;
             this.clientViewModel.CanChat = true;
             this.chatHistory = new List<string>();
+   
 
             WaveFormat waveFormat = new WaveFormat(8000, 16, 1);
             waveProvider = new BufferedWaveProvider(waveFormat);
@@ -54,7 +57,9 @@
             this.textblockChat = this.chatWindow.textblockChat;
             this.textboxInput = this.chatWindow.textboxInput;
             this.buttonPushToTalk = this.chatWindow.buttonPushToTalk;
+            this.checkBoxVoiceActive = this.chatWindow.checkBoxActive;
 
+            this.buttonPushToTalk.IsEnabled = false;
             this.chatWindow.Closed += chatWindow_Closed;
             this.textboxInput.KeyDown += textboxInput_KeyDown;
             this.scrollViewerOutput = this.chatWindow.scrollViewerOutput;
@@ -62,6 +67,8 @@
             this.buttonPushToTalk.PreviewMouseLeftButtonDown += ButtonPushToTalk_PreviewMouseLeftButtonDown;
             this.buttonPushToTalk.PreviewMouseLeftButtonUp += ButtonPushToTalk_PreviewMouseLeftButtonUp;
             this.waveIn.DataAvailable += WaveIn_DataAvailable;
+            this.checkBoxVoiceActive.Checked += CheckBoxVoiceActive_Checked;
+            this.checkBoxVoiceActive.Unchecked += CheckBoxVoiceActive_Checked;
 
             Program.DispatchIfNecessary(() =>
             {
@@ -72,6 +79,20 @@
             });
         }
 
+        private void CheckBoxVoiceActive_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (this.checkBoxVoiceActive.IsChecked == true)
+            {
+                this.buttonPushToTalk.IsEnabled = true;
+                waveOut.Play();
+            }
+            else
+            {
+                this.buttonPushToTalk.IsEnabled = false;
+                waveOut.Stop();
+            }
+        }
+
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             this.clientViewModel.SendVoice(e.Buffer, e.BytesRecorded);
@@ -80,12 +101,10 @@
         private void ButtonPushToTalk_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             waveIn.StopRecording();
-            waveOut.Play();
         }
 
         private void ButtonPushToTalk_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            waveOut.Stop();
             waveIn.StartRecording();
         }
 
@@ -144,8 +163,8 @@
 
         public void PlayVoice(byte[] buffer)
         {
-        //    waveOut.Play();
-          //  waveProvider.AddSamples(buffer, 0, buffer.Length);
+            waveOut.Play();
+            waveProvider.AddSamples(buffer, 0, buffer.Length);
         }
     }
 }
