@@ -72,7 +72,7 @@
         public void Init()
         {
             this.clientConfig = new ClientConfig(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
-            this.clientConfig.BufferSize = 20000;
+            this.clientConfig.BufferSize = 2000;
         //    this.broadcast = new UDPServer(CLIENT_BC_PORT);
          //   this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
         //    this.broadcast.Listen();

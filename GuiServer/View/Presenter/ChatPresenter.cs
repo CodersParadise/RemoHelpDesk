@@ -93,6 +93,7 @@
             }
         }
 
+
         private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
             this.clientViewModel.SendVoice(e.Buffer, e.BytesRecorded);

@@ -56,10 +56,10 @@
     <Reference Include="Arrowgene.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\Arrowgene.Services.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="NetworkObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Output\NetworkObjects.dll</HintPath>
+    <Reference Include="NetworkObjects">
+      <HintPath>..\Output\NetworkObjects\NetworkObjects.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -96,13 +96,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
-      <Link>NetworkObjects.dll</Link>
+    <EmbeddedResource Include="..\Solution Items\Arrowgene.Services.dll">
+      <Link>Arrowgene.Services.dll</Link>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Solution Items\Arrowgene.Services.dll">
-      <Link>Arrowgene.Services.dll</Link>
+    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
+      <Link>NetworkObjects.dll</Link>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

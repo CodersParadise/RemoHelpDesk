@@ -6,21 +6,25 @@
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
+    using NAudio;
 
     public static class Program
     {
         private static MainWindow mainWindow;
         private const string assemblyClientCore = "ClientCore";
+        public const string assemblyNAudio = "NAudio";
 
         [STAThreadAttribute()]
         public static void Main()
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+           
             Run();
         }
 
         private static void Run()
         {
+            NAudio.FileFormats.Map.CakewalkDrumMapping a;
             mainWindow = new MainWindow();
             MainPresenter mainPresenter = new MainPresenter(mainWindow);
             mainPresenter.ShowWindow();
@@ -47,13 +51,17 @@
             return Path.GetDirectoryName(path);
         }
 
-        
+
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             Assembly assembly = null;
             if (args.Name.Contains(assemblyClientCore))
             {
                 assembly = LoadAssembly(assemblyClientCore);
+            }
+            else if (args.Name.Contains(assemblyNAudio))
+            {
+                assembly = LoadAssembly(assemblyNAudio);
             }
             else
             {
@@ -73,9 +81,7 @@
         }
     }
 
-
-
-    }
+}
 
 
 

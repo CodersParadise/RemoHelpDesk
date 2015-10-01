@@ -12,6 +12,7 @@
         private const string assemblyMarrySocket = "Arrowgene.Services";
         private const string assemblyNetworkObjects = "NetworkObjects";
         public const string PROGRAMM_NAME = "RemoHelpDesk";
+        public const string assemblyNAudio = "NAudio";
 
         [STAThreadAttribute()]
         public static void Main()
@@ -30,6 +31,10 @@
             else if (args.Name.Contains(assemblyNetworkObjects))
             {
                 assembly = LoadAssembly(assemblyNetworkObjects);
+            }
+            else if(args.Name.Contains(assemblyNAudio))
+            {
+                assembly = LoadAssembly(assemblyNAudio);
             }
             else
             {

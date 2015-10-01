@@ -59,6 +59,7 @@
   <ItemGroup>
     <Reference Include="Arrowgene.Services">
       <HintPath>..\Solution Items\Arrowgene.Services.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,9 +67,13 @@
     <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Solution Items\NAudio.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NetworkObjects">
+      <HintPath>..\Output\NetworkObjects\NetworkObjects.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -111,11 +116,13 @@
     <Compile Include="View\Windows\TextInputWindow.xaml.cs">
       <DependentUpon>TextInputWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\ControlTemplate\ButtonStyle.xaml">
+    <Page Include="..\Solution Items\ControlTemplates\ButtonStyle.xaml">
+      <Link>View\ControlTemplates\ButtonStyle.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ControlTemplate\RemoScrollViewer.xaml">
+    <Page Include="..\Solution Items\ControlTemplates\RemoScrollViewer.xaml">
+      <Link>View\ControlTemplates\RemoScrollViewer.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -189,18 +196,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetworkObjects\NetworkObjects.csproj">
-      <Project>{74cd888f-bb60-4a75-9c8d-f4473c54d2b0}</Project>
-      <Name>NetworkObjects</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
-      <Link>NetworkObjects.dll</Link>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +204,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Solution Items\NAudio.dll">
+    <EmbeddedResource Include="..\Solution Items\NAudio.dll">
       <Link>NAudio.dll</Link>
-    </Content>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Output\NetworkObjects.dll">
+      <Link>NetworkObjects.dll</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

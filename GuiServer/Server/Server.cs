@@ -28,7 +28,7 @@
         {
             this.dispatcher = dispatcher;
             serverConfig = new ServerConfig(IPAddress.IPv6Any, 2345);
-            serverConfig.BufferSize = 20000;
+            serverConfig.BufferSize = 2000;
             serverConfig.BufferSize = 2 * 1024 * 1024;
             this.MarryServer = new MarryServer(serverConfig);
             this.MarryServer.ReceivedPacket += marryServer_ReceivedPacket;

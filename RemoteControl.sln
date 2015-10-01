@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiServer", "GuiServer\GuiServer.csproj", "{F2E4A21A-C0EF-4BED-B810-7B04A5702763}"
+	ProjectSection(ProjectDependencies) = postProject
+		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0} = {74CD888F-BB60-4A75-9C8D-F4473C54D2B0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCore", "ClientCore\ClientCore.csproj", "{438DDF05-16E7-4335-B9EC-52C4C4E65C04}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -25,7 +28,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkObjects", "NetworkOb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiClient", "GuiClient\GuiClient.csproj", "{2BE365A3-3C66-43AD-BCDE-BBB6A0041A69}"
 	ProjectSection(ProjectDependencies) = postProject
+		{438DDF05-16E7-4335-B9EC-52C4C4E65C04} = {438DDF05-16E7-4335-B9EC-52C4C4E65C04}
 		{74CD888F-BB60-4A75-9C8D-F4473C54D2B0} = {74CD888F-BB60-4A75-9C8D-F4473C54D2B0}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlTemplates", "ControlTemplates", "{F44EA32A-D0F0-46E6-8BAA-560B2CF8D566}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\ControlTemplates\ButtonStyle.xaml = Solution Items\ControlTemplates\ButtonStyle.xaml
+		Solution Items\ControlTemplates\RemoScrollViewer.xaml = Solution Items\ControlTemplates\RemoScrollViewer.xaml
 	EndProjectSection
 EndProject
 Global
@@ -53,5 +63,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F44EA32A-D0F0-46E6-8BAA-560B2CF8D566} = {24B6E6EC-357F-4645-9C50-1B02B1BC754A}
 	EndGlobalSection
 EndGlobal
