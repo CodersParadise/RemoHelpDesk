@@ -7,6 +7,7 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using NAudio.Wave;
+    using System.Windows;
 
     public class ChatPresenter
     {
@@ -107,7 +108,19 @@
 
         private void ButtonPushToTalk_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            waveIn.StartRecording();
+            try
+            {
+                waveIn.StartRecording();
+            }
+            catch (NAudio.MmException ex)
+            {
+                string message = ex.Message;
+                if (ex.Result == NAudio.MmResult.BadDeviceId)
+                {
+                    message = "Microphone not found";
+                }
+                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void textboxInput_KeyDown(object sender, KeyEventArgs e)

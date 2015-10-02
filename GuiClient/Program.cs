@@ -24,7 +24,6 @@
 
         private static void Run()
         {
-            NAudio.FileFormats.Map.CakewalkDrumMapping a;
             mainWindow = new MainWindow();
             MainPresenter mainPresenter = new MainPresenter(mainWindow);
             mainPresenter.ShowWindow();

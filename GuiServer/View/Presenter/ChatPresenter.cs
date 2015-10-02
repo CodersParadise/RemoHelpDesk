@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows;
 
     public class ChatPresenter
     {
@@ -22,14 +23,14 @@
         private BufferedWaveProvider waveProvider;
         private Button buttonPushToTalk;
         private CheckBox checkBoxVoiceActive;
-   
+
 
         public ChatPresenter(ClientViewModel clientViewModel)
         {
             this.clientViewModel = clientViewModel;
             this.clientViewModel.CanChat = true;
             this.chatHistory = new List<string>();
-   
+
 
             WaveFormat waveFormat = new WaveFormat(8000, 16, 1);
             waveProvider = new BufferedWaveProvider(waveFormat);
@@ -106,7 +107,19 @@
 
         private void ButtonPushToTalk_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            waveIn.StartRecording();
+            try
+            {
+                waveIn.StartRecording();
+            }
+            catch (NAudio.MmException ex)
+            {
+                string message = ex.Message;
+                if (ex.Result == NAudio.MmResult.BadDeviceId)
+                {
+                    message = "Microphone not found";
+                }
+                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ChatWindow_Closed(object sender, EventArgs e)
