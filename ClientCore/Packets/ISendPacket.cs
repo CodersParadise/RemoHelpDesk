@@ -1,10 +1,9 @@
 ﻿namespace ClientCore.Packets
 {
-    using Arrowgene.Services.Network.MarrySocket.MClient;
-
+    using Arrowgene.Services.Network.ManagedConnection.Client;
 
     public interface ISendPacket
     {
-        void Send(ServerSocket serverSocket);
+        void Send(ClientSocket clientSocket);
     }
 }

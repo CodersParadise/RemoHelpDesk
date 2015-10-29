@@ -1,8 +1,9 @@
 ﻿namespace GuiServer.Server
 {
+    using Arrowgene.Services.Common;
     using Arrowgene.Services.Logging;
     using Arrowgene.Services.Network;
-    using Arrowgene.Services.Network.MarrySocket.MServer;
+    using Arrowgene.Services.Network.ManagedConnection.Server;
     using Arrowgene.Services.Network.UDP;
     using GuiServer.Server.Events;
     using GuiServer.View.ViewModel;
@@ -14,33 +15,35 @@
 
     public class Server
     {
-        private const int SERVER_BC_PORT = 7330;
+        private const int BC_PORT = 7330;
 
         private LogViewModelContainer logViewModelContainer;
         private HandlePacket handlePacket;
         private ClientViewModelContainer clientViewModelContainer;
         private Dispatcher dispatcher;
-       // private UDPSocket broadcast;
-        private ServerConfig serverConfig;
+        private UDPSocket broadcast;
+
         public EventHandler<DisplayTrayBalloonEventArgs> DisplayTrayBalloon;
 
         public Server(ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
-            serverConfig = new ServerConfig(IPAddress.IPv6Any, 2345);
-            serverConfig.BufferSize = 2000;
-            serverConfig.BufferSize = 2 * 1024 * 1024;
-            this.MarryServer = new MarryServer(serverConfig);
-            this.MarryServer.ReceivedPacket += marryServer_ReceivedPacket;
-            this.MarryServer.ClientConnected += marryServer_ClientConnected;
-            this.MarryServer.ClientDisconnected += marryServer_ClientDisconnected;
-            this.MarryServer.Logger.LogWrite += Logger_LogWrite;
+            this.ManagedServer = new ManagedServer(IPAddress.IPv6Any, 2345);
+            this.ManagedServer.BufferSize = 2 * 1024 * 1024;
+
+            this.ManagedServer.ReceivedPacket += ManagedServer_ReceivedPacket;
+            this.ManagedServer.ClientConnected += ManagedServer_ClientConnected;
+            this.ManagedServer.ClientDisconnected += ManagedServer_ClientDisconnected;
+            this.ManagedServer.Logger.LogWrite += Logger_LogWrite;
             this.clientViewModelContainer = clientViewModelContainer;
             this.logViewModelContainer = logViewModelContainer;
-            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.MarryServer.Logger, this);
-          //  this.broadcast = new UDPServer(SERVER_BC_PORT);
-         //   this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
+            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.ManagedServer.Logger, this);
+
+            this.broadcast = new UDPSocket();
+            this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
         }
+
+
 
         private void Broadcast_ReceivedPacket(object sender, ReceivedUDPPacketEventArgs e)
         {
@@ -49,28 +52,28 @@
 
             if (ep.Address != null)
             {
-                msg = ep.Address.ToString() + "|" + this.serverConfig.ServerPort.ToString();
+                msg = ep.Address.ToString() + "|" + this.ManagedServer.Port.ToString();
             }
             else
             {
                 msg = "CAN_NOT";
             }
 
-         //   this.broadcast.SendTo(System.Text.Encoding.UTF8.GetBytes(msg), e.RemoteIPEndPoint);
+            this.broadcast.Send(System.Text.Encoding.UTF8.GetBytes(msg), e.RemoteIPEndPoint);
         }
 
-        public MarryServer MarryServer;
+        public ManagedServer ManagedServer { get; private set; }
 
         public void Start()
         {
-         //   this.broadcast.Listen();
-            this.MarryServer.Start();
+            this.broadcast.StartListen(new IPEndPoint(IPAddress.Any, BC_PORT));
+            this.ManagedServer.Start();
         }
 
         public void Stop()
         {
-          //  this.broadcast.Stop();
-            this.MarryServer.Stop();
+            this.broadcast.StopReceive();
+            this.ManagedServer.Stop();
         }
 
         private void Logger_LogWrite(object sender, LogWriteEventArgs e)
@@ -81,7 +84,7 @@
             }));
         }
 
-        private void marryServer_ClientDisconnected(object sender, ClientDisconnectedEventArgs e)
+        private void ManagedServer_ClientDisconnected(object sender, Arrowgene.Services.Network.ManagedConnection.Event.DisconnectedEventArgs e)
         {
             this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
@@ -91,7 +94,7 @@
             }));
         }
 
-        private void marryServer_ClientConnected(object sender, ClientConnectedEventArgs e)
+        private void ManagedServer_ClientConnected(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ConnectedEventArgs e)
         {
             this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
@@ -99,12 +102,12 @@
             }));
         }
 
-        private void marryServer_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
+        private void ManagedServer_ReceivedPacket(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ReceivedPacketEventArgs e)
         {
             ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
-            this.handlePacket.Handle(e.PacketId, e.MyObject, clientViewModel);
-
+            this.handlePacket.Handle(e.PacketId, e.Packet.Object, clientViewModel);
         }
+
 
         private void addLog(LogViewModel logViewModel)
         {
@@ -115,7 +118,7 @@
 
         private bool CanClearAllLog()
         {
-            if (this.MarryServer.Logger.Count > 0)
+            if (this.ManagedServer.Logger.Count > 0)
                 return true;
             else
                 return false;
@@ -123,7 +126,7 @@
 
         private void ClearAllLog()
         {
-            this.MarryServer.Logger.Clear();
+            this.ManagedServer.Logger.Clear();
             this.logViewModelContainer.Clear();
         }
 
@@ -136,7 +139,7 @@
         {
             if (logViewModel != null)
             {
-                this.MarryServer.Logger.Remove(logViewModel.Id);
+                this.ManagedServer.Logger.Remove(logViewModel.Id);
                 this.logViewModelContainer.Remove(logViewModel);
             }
         }

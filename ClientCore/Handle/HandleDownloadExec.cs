@@ -1,6 +1,6 @@
 ﻿namespace ClientCore.Handle
 {
-    using Arrowgene.Services.Network.MarrySocket.MClient;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
     using NetworkObjects;
     using System;
     using System.Diagnostics;
@@ -8,7 +8,7 @@
 
     public class HandleDownloadExec : IHandlePacket
     {
-        public void Handle(object receivedClass, ServerSocket serverSocket)
+        public void Handle(object receivedClass, ClientSocket serverSocket)
         {
             string downloadExec = (string)receivedClass;
 

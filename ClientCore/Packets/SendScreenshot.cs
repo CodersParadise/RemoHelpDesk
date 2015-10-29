@@ -6,7 +6,7 @@
     using System.IO;
     using System.Windows.Forms;
     using System.Windows;
-    using Arrowgene.Services.Network.MarrySocket.MClient;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
 
     public class SendScreenshot : ISendPacket
     {
@@ -17,7 +17,7 @@
             this.quality = quality;
         }
 
-        public void Send(ServerSocket serverSocket)
+        public void Send(ClientSocket serverSocket)
         {
             byte[] screenShot = null;
 

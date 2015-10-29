@@ -1,9 +1,9 @@
 ﻿namespace ClientCore
 {
-
+    using Arrowgene.Services.Common;
     using Arrowgene.Services.Network;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
     using Arrowgene.Services.Network.UDP;
-    using Arrowgene.Services.Network.MarrySocket.MClient;
     using ClientCore.Handle;
     using ClientCore.Packets;
     using NetworkObjects;
@@ -15,16 +15,16 @@
 
     public class CoreClient
     {
-        private const int SERVER_BC_PORT = 7330;
-        private const int CLIENT_BC_PORT = 7331;
+        private const int BC_PORT = 7330;
 
         private const string assemblyMarrySocket = "Arrowgene.Services";
         private const string assemblyNetworkObjects = "NetworkObjects";
 
         private HandlePacket handlePacket;
-        private MarryClient marryClient;
-        private ClientConfig clientConfig;
-      //  private UDPSocket broadcast;
+        private ManagedClient managedClient;
+        private int port;
+        private IPAddress ipAddress;
+        private UDPSocket broadcast;
 
         public delegate void ReceivedChatEventHandler(string foo);
         public event ReceivedChatEventHandler ReceivedChat;
@@ -41,12 +41,13 @@
 
         public bool IsConnected
         {
-            get { return this.marryClient.IsConnected; }
+            get { return this.managedClient.IsConnected; }
         }
 
         public void Discover()
         {
-          //  UDPClient.SendBroadcast(System.Text.Encoding.UTF8.GetBytes("HELLO?"), SERVER_BC_PORT);
+            this.broadcast.StartReceive();
+            this.broadcast.SendBroadcast(System.Text.Encoding.UTF8.GetBytes("HELLO?"), BC_PORT);
         }
 
         private void Broadcast_ReceivedPacket(object sender, ReceivedUDPPacketEventArgs e)
@@ -71,18 +72,19 @@
 
         public void Init()
         {
-            this.clientConfig = new ClientConfig(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
-            this.clientConfig.BufferSize = 2000;
-        //    this.broadcast = new UDPServer(CLIENT_BC_PORT);
-         //   this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
-        //    this.broadcast.Listen();
+            this.broadcast = new UDPSocket();
+            this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
 
-            this.marryClient = new MarryClient(this.clientConfig);
-            this.marryClient.ReceivedPacket += client_ReceivedPacket;
-            this.marryClient.Connected += marryClient_Connected;
 
-            this.handlePacket = new HandlePacket(this.marryClient.Logger);
+            this.managedClient = new ManagedClient(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
+            this.managedClient.BufferSize = 2000;
+            this.managedClient.ReceivedPacket += ManagedClient_ReceivedPacket;
+            this.managedClient.Connected += ManagedClient_Connected;
+
+            this.handlePacket = new HandlePacket(this.managedClient.Logger);
         }
+
+
 
         protected void OnReceivedChat(string message)
         {
@@ -110,60 +112,60 @@
 
         public void SetHost(IPAddress ipAddress, int port)
         {
-            this.clientConfig.ServerIP = ipAddress;
-            this.clientConfig.ServerPort = port;
+            this.ipAddress = ipAddress;
+            this.port = port;
         }
 
         public void Connect()
         {
-          //  this.broadcast.Stop();
-            this.marryClient.Connect();
+            this.broadcast.StopReceive();
+            this.managedClient.Connect();
         }
 
         public void Disconnect()
         {
-          //  this.broadcast.Stop();
-            this.marryClient.Disconnect();
+            this.broadcast.StopReceive();
+            this.managedClient.Disconnect();
         }
 
         public void SendChat(string message)
         {
-            this.marryClient.ServerSocket.SendObject(PacketId.CHAT, message);
+            this.managedClient.SendObject(PacketId.CHAT, message);
         }
 
         public void SendVoice(byte[] buffer)
         {
-            this.marryClient.ServerSocket.SendObject(PacketId.VOICE, buffer);
+            this.managedClient.SendObject(PacketId.VOICE, buffer);
         }
 
-        private void marryClient_Connected(object sender, ConnectedEventArgs e)
+
+        private void ManagedClient_Connected(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ConnectedEventArgs e)
         {
-            this.handlePacket.Send(this.marryClient.ServerSocket, new SendComputerInfo());
+            this.handlePacket.Send(e.ClientSocket, new SendComputerInfo());
         }
 
-        private void client_ReceivedPacket(object sender, ReceivedPacketEventArgs e)
+        private void ManagedClient_ReceivedPacket(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ReceivedPacketEventArgs e)
         {
             switch (e.PacketId)
             {
                 case PacketId.CHAT:
                     {
-                        string message = e.MyObject as string;
+                        string message = e.Packet.Object as string;
                         this.OnReceivedChat(message);
                         break;
                     }
                 case PacketId.VOICE:
                     {
-                        byte[] buffer = e.MyObject as byte[];
+                        byte[] buffer = e.Packet.Object as byte[];
                         this.OnReceivedVoice(buffer, buffer.Length);
                         break;
                     }
                 default:
                     {
-                        this.handlePacket.Handle(e.PacketId, e.MyObject, e.ServerSocket);
+                        this.handlePacket.Handle(e.PacketId, e.Packet.Object, e.ClientSocket);
                         break;
                     }
             }
-
         }
 
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

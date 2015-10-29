@@ -1,6 +1,6 @@
 ﻿namespace ClientCore.Handle
 {
-    using Arrowgene.Services.Network.MarrySocket.MClient;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
     using NetworkObjects;
     using System;
     using System.ComponentModel;
@@ -11,7 +11,7 @@
 
     public class HandleRun : IHandlePacket
     {
-        private ServerSocket serverSocket;
+        private ClientSocket serverSocket;
         private Process shellProcess;
 
         public HandleRun()
@@ -19,7 +19,7 @@
 
         }
 
-        public void Handle(object receivedClass, ServerSocket serverSocket)
+        public void Handle(object receivedClass, ClientSocket serverSocket)
         {
             this.serverSocket = serverSocket;
             string cmd = receivedClass as string;

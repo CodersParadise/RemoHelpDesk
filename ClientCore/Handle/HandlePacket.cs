@@ -1,7 +1,7 @@
 ﻿namespace ClientCore.Handle
 {
     using Arrowgene.Services.Logging;
-    using Arrowgene.Services.Network.MarrySocket.MClient;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
     using ClientCore.Packets;
     using NetworkObjects;
     using System;
@@ -27,7 +27,7 @@
             this.clientPacketIds.Add(PacketId.RUN, new HandleRun());
         }
 
-        public void Handle(int packetId, object receivedClass, ServerSocket serverSocket)
+        public void Handle(int packetId, object receivedClass, ClientSocket serverSocket)
         {
             if (clientPacketIds.ContainsKey(packetId))
             {
@@ -39,7 +39,7 @@
             }
         }
 
-        public void Send(ServerSocket serverSocket, ISendPacket iSendPacket)
+        public void Send(ClientSocket serverSocket, ISendPacket iSendPacket)
         {
             iSendPacket.Send(serverSocket);
         }

@@ -1,10 +1,11 @@
 ﻿namespace ClientCore.Handle
 {
-    using Arrowgene.Services.Network.MarrySocket.MClient;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
+
 
 
     public interface IHandlePacket
     {
-        void Handle(object receivedClass, ServerSocket serverSocket);
+        void Handle(object receivedClass, ClientSocket clientSocket);
     }
 }

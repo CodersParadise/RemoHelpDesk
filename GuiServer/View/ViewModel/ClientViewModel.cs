@@ -1,7 +1,7 @@
 ﻿namespace GuiServer.View.ViewModel
 {
     using Arrowgene.Services.Common;
-    using Arrowgene.Services.Network.MarrySocket.MServer;
+    using Arrowgene.Services.Network.ManagedConnection.Client;
     using GuiServer.View.Presenter;
     using GuiServer.View.Windows;
     using NetworkObjects;
@@ -41,7 +41,7 @@
         public Guid UniqueId { get; private set; }
         public int Id { get { return this.id; } set { this.id = value; NotifyPropertyChanged("Id"); } }
         public ComputerInfo ComputerInfo { get { return this.computerInfo; } set { this.computerInfo = value; NotifyPropertyChanged("ComputerInfo"); NotifyPropertyChanged("OsVersion"); } }
-        public string Ip { get { return this.clientSocket.Ip; } }
+        public string Ip { get { string ip = "Unknown"; if (this.clientSocket.RemoteIPAddress != null) { ip = this.clientSocket.RemoteIPAddress.ToString(); } return ip; } }
         public string FullName { get { return string.Format("{0}@{1}", this.id, this.Ip); } }
         public bool CanScreenshot { get { return this.canScreenshot; } set { this.canScreenshot = value; NotifyPropertyChanged("CanScreenshot"); } }
         public bool CanDisconnect { get { return this.canDisconnect; } set { this.canDisconnect = value; NotifyPropertyChanged("CanDisconnect"); } }
