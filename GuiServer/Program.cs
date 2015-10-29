@@ -14,6 +14,8 @@
         public const string PROGRAMM_NAME = "RemoHelpDesk";
         public const string assemblyNAudio = "NAudio";
 
+        public const string deploy_AssemblySqlLite = "sqlite3";
+
         [STAThreadAttribute()]
         public static void Main()
         {
@@ -32,7 +34,7 @@
             {
                 assembly = LoadAssembly(assemblyNetworkObjects);
             }
-            else if(args.Name.Contains(assemblyNAudio))
+            else if (args.Name.Contains(assemblyNAudio))
             {
                 assembly = LoadAssembly(assemblyNAudio);
             }
@@ -41,6 +43,23 @@
                 Debug.WriteLine("Missing Assembly:" + args.Name);
             }
             return assembly;
+        }
+
+        private static void DeploySqLite()
+        {
+            if (!File.Exists(deploy_AssemblySqlLite + ".dll"))
+            {
+                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GuiServer." + deploy_AssemblySqlLite + ".dll"))
+                {
+                    byte[] assemblyData = new byte[stream.Length];
+                    stream.Read(assemblyData, 0, assemblyData.Length);
+
+                    using (Stream file = File.Create(deploy_AssemblySqlLite + ".dll"))
+                    {
+                        file.Write(assemblyData, 0, assemblyData.Length);
+                    }
+                }
+            }
         }
 
         private static Assembly LoadAssembly(string name)
@@ -55,6 +74,8 @@
 
         private static void Run()
         {
+            DeploySqLite();
+
             mainWindow = new MainWindow();
             MainPresenter mainPresenter = new MainPresenter(mainWindow);
             mainPresenter.ShowWindow();
