@@ -29,7 +29,7 @@
 
         private void InitPacketIds()
         {
-            this.clientPacketIds.Add(PacketId.COMPUTER_INFO, new HandleComputerInfo());
+            this.clientPacketIds.Add(PacketId.COMPUTER_INFO, new HandleComputerInfo(this.clientViewModelContainer));
             this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
             this.clientPacketIds.Add(PacketId.RUN, new HandleRemoteShell());
             this.clientPacketIds.Add(PacketId.CHAT, new HandleChat());

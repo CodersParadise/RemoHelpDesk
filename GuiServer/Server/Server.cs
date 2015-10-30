@@ -5,13 +5,16 @@
     using Arrowgene.Services.Network;
     using Arrowgene.Services.Network.ManagedConnection.Server;
     using Arrowgene.Services.Network.UDP;
+    using Database;
     using GuiServer.Server.Events;
+    using Http;
     using GuiServer.View.ViewModel;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Net;
     using System.Windows.Threading;
+    using System.Threading;
 
     public class Server
     {
@@ -22,12 +25,21 @@
         private ClientViewModelContainer clientViewModelContainer;
         private Dispatcher dispatcher;
         private UDPSocket broadcast;
+        private RemoHttpServer remoHttp;
 
         public EventHandler<DisplayTrayBalloonEventArgs> DisplayTrayBalloon;
 
         public Server(ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
+
+            DatabaseManager dbManager = DatabaseManager.Instance;
+            dbManager.CreatDatabase();
+            dbManager.CreatTables();
+
+            this.remoHttp = new RemoHttpServer();
+            this.remoHttp.Start();
+
             this.ManagedServer = new ManagedServer(IPAddress.IPv6Any, 2345);
             this.ManagedServer.BufferSize = 2 * 1024 * 1024;
 
@@ -88,6 +100,7 @@
             this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
                 ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
+                DatabaseManager.Instance.InsertClient(clientViewModel);
                 clientViewModel.Dispose();
                 this.clientViewModelContainer.Remove(clientViewModel);
             }));
@@ -95,7 +108,7 @@
 
         private void ManagedServer_ClientConnected(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ConnectedEventArgs e)
         {
-            this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            this.dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
             {
                 this.clientViewModelContainer.Add(new ClientViewModel(e.ClientSocket));
             }));

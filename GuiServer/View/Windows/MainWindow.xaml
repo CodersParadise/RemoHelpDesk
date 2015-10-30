@@ -30,14 +30,14 @@
 
         <StackPanel Grid.Column="0" Orientation="Horizontal">
             <Button Style="{StaticResource CustomButtonStyle}" x:Name="btnListen" Height="20" Content="Listen" Width="133" Foreground="Black" >
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                    <GradientStop Color="#FFF3F3F3"/>
-                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF3F3F3"/>
+                        <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                        <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
             </Button>
         </StackPanel>
 
@@ -60,16 +60,21 @@
                             </ContextMenu>
                         </Setter.Value>
                     </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFromDatabase}" Value="true" >
+                            <Setter Property="Foreground" Value="Gray" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="50"/>
                     <GridViewColumn Header="Ip" DisplayMemberBinding="{Binding Ip}" Width="100"/>
-                    <GridViewColumn Header="Device" DisplayMemberBinding="{Binding ComputerInfo.Device}" Width="180"/>
+                    <GridViewColumn Header="Device" DisplayMemberBinding="{Binding Device}" Width="180"/>
                     <GridViewColumn Header="OS Version" DisplayMemberBinding="{Binding OsVersion}" Width="80"/>
-                    <GridViewColumn Header="Host" DisplayMemberBinding="{Binding ComputerInfo.HostName}" Width="90"/>
-                    <GridViewColumn Header="Logon Name" DisplayMemberBinding="{Binding ComputerInfo.LogonName}" Width="90"/>
+                    <GridViewColumn Header="Host" DisplayMemberBinding="{Binding HostName}" Width="90"/>
+                    <GridViewColumn Header="Logon Name" DisplayMemberBinding="{Binding LogonName}" Width="90"/>
                     <GridViewColumn Header="In Traffic" DisplayMemberBinding="{Binding InTraffic}" Width="70"/>
                     <GridViewColumn Header="Out Traffic" DisplayMemberBinding="{Binding OutTraffic}" Width="70"/>
                 </GridView>

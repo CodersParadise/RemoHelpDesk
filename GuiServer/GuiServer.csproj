@@ -89,9 +89,12 @@
       <Link>SQLite.cs</Link>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="Server\Database\DatabaseManager.cs" />
+    <Compile Include="Server\Database\Tables\ClientTable.cs" />
     <Compile Include="Server\Events\DisplayTrayBalloonEventArgs.cs" />
     <Compile Include="Server\Handle\HandleVoice.cs" />
     <Compile Include="Server\Handle\HandleChat.cs" />
+    <Compile Include="Server\Http\RemoHttpServer.cs" />
     <Compile Include="View\Presenter\ChatPresenter.cs" />
     <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
     <Compile Include="Server\Handle\HandleScreenShot.cs" />

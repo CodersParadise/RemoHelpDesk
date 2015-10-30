@@ -1,6 +1,7 @@
 ﻿namespace GuiServer.View
 {
     using GuiServer.Server;
+    using Server.Database;
     using GuiServer.Server.Events;
     using GuiServer.View.ViewModel;
     using System;
@@ -33,6 +34,17 @@
             this.InitializeFields();
             this.AssignView();
             this.InitTrayIcon();
+            this.LoadClientsFromDatabase();
+        }
+
+        private void LoadClientsFromDatabase()
+        {
+            DatabaseManager dbManager = DatabaseManager.Instance;
+
+            foreach (ClientViewModel clientViewModel in dbManager.SelectAllClients())
+            {
+                this.clientViewModelContainer.Add(clientViewModel);
+            }
         }
 
         private void AssignFields()

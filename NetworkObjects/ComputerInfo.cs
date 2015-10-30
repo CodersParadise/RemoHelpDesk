@@ -15,5 +15,6 @@
         public string LogonName { get; set; }
         public int LogonCount { get; set; }
         public int OsVersion { get; set; }
+        public string IdentityName { get; set; }
     }
 }
