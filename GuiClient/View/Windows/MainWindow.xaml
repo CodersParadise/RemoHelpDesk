@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="RemoHelpDesk Connector" 
         Height="130" 
-        Width="231" 
-       
-        WindowStyle="ToolWindow" HorizontalAlignment="Center" VerticalAlignment="Center" ResizeMode="NoResize">
+        Width="250" 
+        Icon="../../icon.ico"
+        HorizontalAlignment="Center" 
+        VerticalAlignment="Center" 
+        ResizeMode="NoResize">
 
     <Window.Resources>
         <ResourceDictionary>

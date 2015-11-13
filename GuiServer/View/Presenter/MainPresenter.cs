@@ -11,6 +11,8 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Threading;
+    using System.Net;
+    using Arrowgene.Services.Common;
 
     public class MainPresenter
     {
@@ -27,7 +29,8 @@
         public MainPresenter(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
-            this.mainWindow.Title = Program.PROGRAMM_NAME;
+
+            this.SetTitle();
 
             this.AssignFields();
             this.InitializeViewEvents();
@@ -35,6 +38,19 @@
             this.AssignView();
             this.InitTrayIcon();
             this.LoadClientsFromDatabase();
+        }
+
+        private void SetTitle()
+        {
+            string title = Program.PROGRAMM_NAME;
+
+            IPEndPoint ep = IP.QueryRoutingInterface(IPAddress.Broadcast);
+            if (ep.Address != null)
+            {
+                title += " [" + ep.Address.ToString() + "]";
+            }
+
+            this.mainWindow.Title = title;
         }
 
         private void LoadClientsFromDatabase()
