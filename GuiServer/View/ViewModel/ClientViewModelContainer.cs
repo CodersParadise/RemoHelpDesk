@@ -1,6 +1,7 @@
 ﻿namespace GuiServer.View.ViewModel
 {
     using Arrowgene.Services.Network.ManagedConnection.Client;
+    using Server.Database;
     using System.Collections.ObjectModel;
     using System.Windows.Controls;
 
@@ -51,6 +52,16 @@
         {
             lock (myLock)
             {
+                if (!clientViewModel.IsFromDatabase)
+                {
+                    // Not from database, check if we have a database model visible, and remove if necessary.
+                    ClientViewModel databaseClientViewModel = this.GetClientViewModel(clientViewModel.IdentityName);
+                    if (databaseClientViewModel != null)
+                    {
+                        this.Remove(databaseClientViewModel);
+                    }
+                }
+
                 this.clientViewModels.Add(clientViewModel);
             }
             this.lvClients.ScrollIntoView(clientViewModel);
@@ -60,6 +71,17 @@
         {
             lock (myLock)
             {
+                if (!clientViewModel.IsFromDatabase)
+                {
+                    // Not from database, check if we have a database model to display.
+                    ClientViewModel databaseClientViewModel = DatabaseManager.Instance.SelectClient(clientViewModel.IdentityName);
+                    if (databaseClientViewModel != null)
+                    {
+                        this.Add(databaseClientViewModel);
+                    }
+                }
+
+
                 this.clientViewModels.Remove(clientViewModel);
             }
         }

@@ -62,7 +62,7 @@
                 }
                 else
                 {
-                    logger.Write(String.Format("Could not handle packet: {0} (ViewModel is Null)", this.GetPacketName(packetId)), LogType.PACKET);
+                    logger.Write(String.Format("Could not handle packet: {0} (ViewModel is Null, no fast?)", this.GetPacketName(packetId)), LogType.PACKET);
                 }
             }
             else

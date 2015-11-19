@@ -43,9 +43,9 @@
             this.connection.CreateTable<ClientTable>();
         }
 
-        public ClientViewModel SelectClient(int id)
+        public ClientViewModel SelectClient(string identityName)
         {
-            TableQuery<ClientTable> query = connection.Table<ClientTable>().Where(cli => cli.Id.Equals(id));
+            TableQuery<ClientTable> query = connection.Table<ClientTable>().Where(cli => cli.IdentityName.Equals(identityName));
 
             ClientTable table = query.FirstOrDefault();
             ClientViewModel viewModel = new ClientViewModel(table);

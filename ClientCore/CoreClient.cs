@@ -142,8 +142,6 @@
 
         private void ManagedClient_Connected(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ConnectedEventArgs e)
         {
-            // Let the server some time to process the new connection.
-            Thread.Sleep(200);
             this.handlePacket.Send(e.ClientSocket, new SendComputerInfo());
         }
 
