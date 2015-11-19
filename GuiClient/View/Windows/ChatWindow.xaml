@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../ControlTemplates/RemoScrollViewer.xaml"/>
                 <ResourceDictionary Source="../ControlTemplates/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="../ControlTemplates/CheckboxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -43,7 +44,7 @@
                 </TextBlock.Background>
             </TextBlock>
         </ScrollViewer>
-        <CheckBox Name="checkBoxActive" Grid.Row="1" Grid.Column="2" Content="On"/>
+        <CheckBox Style="{StaticResource CustomCheckboxStyle}" Name="checkBoxActive" Grid.Row="1" Grid.Column="2" Content="On"/>
         <TextBox Name="textboxInput" Margin="5" Grid.Row="2"/>
         <Button  Style="{StaticResource CustomButtonStyle}" Name="buttonPushToTalk" Margin="0,5,5,5" Width="50" Grid.Row="2" Grid.Column="1" Content="TALK" Height="Auto"/>
     </Grid>
