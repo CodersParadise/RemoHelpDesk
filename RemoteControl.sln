@@ -36,6 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlTemplates", "ControlTemplates", "{F44EA32A-D0F0-46E6-8BAA-560B2CF8D566}"
 	ProjectSection(SolutionItems) = preProject
 		Solution Items\ControlTemplates\ButtonStyle.xaml = Solution Items\ControlTemplates\ButtonStyle.xaml
+		Solution Items\ControlTemplates\CheckboxStyle.xaml = Solution Items\ControlTemplates\CheckboxStyle.xaml
 		Solution Items\ControlTemplates\RemoScrollViewer.xaml = Solution Items\ControlTemplates\RemoScrollViewer.xaml
 	EndProjectSection
 EndProject

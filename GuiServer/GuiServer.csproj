@@ -127,12 +127,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\Solution Items\ControlTemplates\RemoScrollViewer.xaml">
-      <Link>View\ControlTemplates\RemoScrollViewer.xaml</Link>
+    <Page Include="..\Solution Items\ControlTemplates\CheckboxStyle.xaml">
+      <Link>View\ControlTemplates\CheckboxStyle.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ControlTemplates\CheckboxStyle.xaml">
+    <Page Include="..\Solution Items\ControlTemplates\RemoScrollViewer.xaml">
+      <Link>View\ControlTemplates\RemoScrollViewer.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
