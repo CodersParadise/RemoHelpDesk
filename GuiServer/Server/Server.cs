@@ -16,6 +16,7 @@
     using System.Windows.Threading;
     using System.Threading;
     using Database.Tables;
+    using NetworkObjects;
 
     public class Server
     {
@@ -101,24 +102,46 @@
             this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
                 ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
-                DatabaseManager.Instance.InsertClient(clientViewModel);
-                clientViewModel.Dispose();
-                this.clientViewModelContainer.Remove(clientViewModel);
+                if (clientViewModel != null)
+                {
+                    DatabaseManager.Instance.InsertClient(clientViewModel);
+                    clientViewModel.Dispose();
+                    this.clientViewModelContainer.Remove(clientViewModel);
+                }
+
             }));
         }
 
         private void ManagedServer_ClientConnected(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ConnectedEventArgs e)
         {
-            this.dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
-            {
-                this.clientViewModelContainer.Add(new ClientViewModel(e.ClientSocket));
-            }));
+
         }
 
         private void ManagedServer_ReceivedPacket(object sender, Arrowgene.Services.Network.ManagedConnection.Event.ReceivedPacketEventArgs e)
         {
-            ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
-            this.handlePacket.Handle(e.PacketId, e.Packet.Object, clientViewModel);
+            if (e.PacketId == PacketId.COMPUTER_INFO)
+            {
+                // special case, we only allow clients with valid computer info
+                ComputerInfo computerInfo = e.Packet.GetObject<ComputerInfo>();
+
+                if (computerInfo != null)
+                {
+                    this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        ClientViewModel clientViewModel = new ClientViewModel(e.ClientSocket, computerInfo);
+                        this.clientViewModelContainer.Add(clientViewModel);
+                    }));
+                }
+                else
+                {
+                    e.ClientSocket.Close();
+                }
+            }
+            else
+            {
+                ClientViewModel clientViewModel = this.clientViewModelContainer.GetClientViewModel(e.ClientSocket);
+                this.handlePacket.Handle(e.PacketId, e.Packet.Object, clientViewModel);
+            }
         }
 
 

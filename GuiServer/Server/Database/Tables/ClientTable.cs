@@ -3,33 +3,35 @@
     using View.ViewModel;
     using SQLite;
     using System;
+    using Arrowgene.Services.Common;
 
     public class ClientTable
     {
         public static ClientTable Create(ClientViewModel clientViewModel)
         {
             ClientTable table = new ClientTable();
-            table.Id = clientViewModel.Id;
             table.Ip = clientViewModel.Ip;
-            table.InTraffic = clientViewModel.ClientSocket.InTraffic;
-            table.OutTraffic = clientViewModel.ClientSocket.OutTraffic;
             table.Device = clientViewModel.Device;
             table.LogonName = clientViewModel.LogonName;
             table.HostName = clientViewModel.HostName;
             table.IdentityName = clientViewModel.IdentityName;
+            table.MacAddress = clientViewModel.MacAddress;
+            table.UniqueHash = clientViewModel.UniqueHash;
+            table.OsVersion = clientViewModel.OsVersion;
             return table;
         }
 
 
-        [PrimaryKey MaxLength(36)]
-        public string IdentityName { get; internal set; }
-        public int Id { get; set; }
+        [PrimaryKey MaxLength(32)]
+        public string UniqueHash { get; set; }
+        public string IdentityName { get; set; }
         public string Ip { get; set; }
         public long InTraffic { get; set; }
         public long OutTraffic { get; set; }
-        public string Device { get; internal set; }
-        public string LogonName { get; internal set; }
-        public string HostName { get; internal set; }
-
+        public string Device { get; set; }
+        public string LogonName { get; set; }
+        public string HostName { get; set; }
+        public string MacAddress { get; set; }
+        public OS.OsVersion OsVersion { get; set; }
     }
 }

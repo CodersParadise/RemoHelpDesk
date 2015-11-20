@@ -16,5 +16,6 @@
         public int LogonCount { get; set; }
         public int OsVersion { get; set; }
         public string IdentityName { get; set; }
+        public string MacAddress { get; set; }
     }
 }

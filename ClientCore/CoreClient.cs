@@ -77,7 +77,7 @@
             this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
 
 
-            this.managedClient = new ManagedClient(IP.AddressLocalhost(System.Net.Sockets.AddressFamily.InterNetworkV6), 2345);
+            this.managedClient = new ManagedClient();
             this.managedClient.BufferSize = 2000;
             this.managedClient.ReceivedPacket += ManagedClient_ReceivedPacket;
             this.managedClient.Connected += ManagedClient_Connected;
@@ -120,7 +120,7 @@
         public void Connect()
         {
             this.broadcast.StopReceive();
-            this.managedClient.Connect();
+            this.managedClient.Connect(this.ipAddress, this.port);
         }
 
         public void Disconnect()

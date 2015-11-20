@@ -34,7 +34,7 @@
 
         public void CreatDatabase()
         {
-            this.connection = new SQLiteConnection("RemoControl");
+            this.connection = new SQLiteConnection("RemoControl.sqlite3");
         }
 
 
@@ -43,15 +43,26 @@
             this.connection.CreateTable<ClientTable>();
         }
 
-        public ClientViewModel SelectClient(string identityName)
+        public ClientViewModel SelectClient(string UniqueHash)
         {
-            TableQuery<ClientTable> query = connection.Table<ClientTable>().Where(cli => cli.IdentityName.Equals(identityName));
+            ClientViewModel viewModel = null;
 
-            ClientTable table = query.FirstOrDefault();
-            ClientViewModel viewModel = new ClientViewModel(table);
+            ClientTable table = this.SelectClientTable(UniqueHash);
+            if (table != null)
+            {
+                viewModel = new ClientViewModel(table);
+            }
 
             return viewModel;
         }
+
+        public ClientTable SelectClientTable(string UniqueHash)
+        {
+            TableQuery<ClientTable> query = connection.Table<ClientTable>().Where(cli => cli.UniqueHash.Equals(UniqueHash));
+            ClientTable table = query.FirstOrDefault();
+            return table;
+        }
+
 
         public List<ClientViewModel> SelectAllClients()
         {
@@ -70,7 +81,13 @@
         {
             ClientTable table = ClientTable.Create(clientViewModel);
 
-            TableQuery<ClientTable> query = connection.Table<ClientTable>().Where(cli => cli.IdentityName.Equals(table.IdentityName));
+            TableQuery<ClientTable> query = connection.Table<ClientTable>().Where(cli => cli.UniqueHash.Equals(table.UniqueHash));
+
+            if (clientViewModel.ClientSocket != null && clientViewModel.ClientTable != null)
+            {
+                table.InTraffic = clientViewModel.ClientTable.InTraffic + clientViewModel.ClientSocket.InTraffic;
+                table.OutTraffic = clientViewModel.ClientTable.OutTraffic + clientViewModel.ClientSocket.OutTraffic;
+            }
 
             if (query.Count() > 0)
             {

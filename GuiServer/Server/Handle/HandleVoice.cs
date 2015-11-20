@@ -9,7 +9,7 @@
         {
             byte[] buffer = receivedClass as byte[];
             clientViewModel.PlayVoice(buffer);
-            server.RaiseDisplayTrayBalloon("New Voice from:", clientViewModel.UniqueId.ToString());
+            server.RaiseDisplayTrayBalloon("New Voice from:", clientViewModel.IdentityName);
         }
     }
 }

@@ -11,16 +11,17 @@
 
         public void Send(ClientSocket serverSocket)
         {
-
             ComputerInfo computerInfo = new ComputerInfo(Environment.MachineName);
             computerInfo.Device = Environment.OSVersion.ToString();
             computerInfo.LogonName = Environment.UserName.ToString();
             computerInfo.OsVersion = (int)OS.GetOperatingSystemVersion();
-
+            computerInfo.MacAddress = IP.GetMacAddress();
 
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            computerInfo.IdentityName = identity.Name;
-
+            if (identity != null)
+            {
+                computerInfo.IdentityName = identity.Name;
+            }
 
             serverSocket.SendObject(PacketId.COMPUTER_INFO, computerInfo);
         }

@@ -69,14 +69,16 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                    <GridViewColumn Header="IdentityName" DisplayMemberBinding="{Binding IdentityName}" Width="50"/>
+                    <GridViewColumn Header="MacAddress" DisplayMemberBinding="{Binding MacAddress}" Width="50"/>
                     <GridViewColumn Header="Ip" DisplayMemberBinding="{Binding Ip}" Width="100"/>
                     <GridViewColumn Header="Device" DisplayMemberBinding="{Binding Device}" Width="180"/>
                     <GridViewColumn Header="OS Version" DisplayMemberBinding="{Binding OsVersion}" Width="80"/>
                     <GridViewColumn Header="Host" DisplayMemberBinding="{Binding HostName}" Width="90"/>
                     <GridViewColumn Header="Logon Name" DisplayMemberBinding="{Binding LogonName}" Width="90"/>
-                    <GridViewColumn Header="In Traffic" DisplayMemberBinding="{Binding InTraffic}" Width="70"/>
-                    <GridViewColumn Header="Out Traffic" DisplayMemberBinding="{Binding OutTraffic}" Width="70"/>
+                    <GridViewColumn Header="Inc Traffic (Session/Total)" DisplayMemberBinding="{Binding InTraffic}" Width="70"/>
+                    <GridViewColumn Header="Out Traffic (Session/Total)" DisplayMemberBinding="{Binding OutTraffic}" Width="70"/>
+                    <GridViewColumn Header="UniqueHash" DisplayMemberBinding="{Binding UniqueHashForDisplayOnly}" Width="50"/>
                 </GridView>
             </ListView.View>
         </ListView>

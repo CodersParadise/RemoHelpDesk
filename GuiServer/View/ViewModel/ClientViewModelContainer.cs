@@ -27,8 +27,10 @@
             {
                 foreach (ClientViewModel cViewModel in this.clientViewModels)
                 {
-                    if (cViewModel.Id == clientSocket.Id)
+                    if (cViewModel.ClientSocket != null && cViewModel.ClientSocket.Id == clientSocket.Id)
+                    {
                         clientViewModel = cViewModel;
+                    }
                 }
             }
             return clientViewModel;
@@ -58,13 +60,14 @@
                     ClientViewModel databaseClientViewModel = this.GetClientViewModel(clientViewModel.IdentityName);
                     if (databaseClientViewModel != null)
                     {
-                        this.Remove(databaseClientViewModel);
+                        this.clientViewModels.Remove(databaseClientViewModel);
                     }
                 }
 
                 this.clientViewModels.Add(clientViewModel);
+                this.lvClients.ScrollIntoView(clientViewModel);
             }
-            this.lvClients.ScrollIntoView(clientViewModel);
+
         }
 
         public void Remove(ClientViewModel clientViewModel)
@@ -74,13 +77,12 @@
                 if (!clientViewModel.IsFromDatabase)
                 {
                     // Not from database, check if we have a database model to display.
-                    ClientViewModel databaseClientViewModel = DatabaseManager.Instance.SelectClient(clientViewModel.IdentityName);
+                    ClientViewModel databaseClientViewModel = DatabaseManager.Instance.SelectClient(clientViewModel.UniqueHash);
                     if (databaseClientViewModel != null)
                     {
-                        this.Add(databaseClientViewModel);
+                        this.clientViewModels.Add(databaseClientViewModel);
                     }
                 }
-
 
                 this.clientViewModels.Remove(clientViewModel);
             }

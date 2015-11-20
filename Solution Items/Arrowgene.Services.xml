@@ -128,6 +128,19 @@
             <param name="ipAddress"></param>
             <returns></returns>
         </member>
+        <member name="M:Arrowgene.Services.Common.IP.GetMacAddress(System.Net.IPAddress)">
+            <summary>
+            Try to get mac for ip, if not possible get the next best mac.
+            </summary>
+            <param name="ipAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Arrowgene.Services.Common.IP.GetMacAddress">
+            <summary>
+            Try to get the next best mac
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Arrowgene.Services.Common.IP.AddressLookup(System.String)">
             <summary>
             Returns IP Address for given hostname.

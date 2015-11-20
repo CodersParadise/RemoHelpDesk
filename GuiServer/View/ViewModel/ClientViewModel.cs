@@ -11,11 +11,14 @@
     using System.IO;
     using System.Windows.Input;
     using System.Windows.Media.Imaging;
+    using System.Security.Cryptography;
+    using System.Text;
+    using Server.Database;
+    using System.Globalization;
 
     public class ClientViewModel : INotifyPropertyChanged
     {
         public const string USER_FOLDER_NAME = "user";
-
 
         private ComputerInfo computerInfo;
         private RemoteShellPresenter remoteShellPresenter;
@@ -23,42 +26,76 @@
         private ChatPresenter chatPresenter;
         private ClientTable clientTable;
 
-        private int id;
+
         private bool canScreenshot;
         private bool canDisconnect;
         private bool canDownload;
         private bool canRemoteShell;
         private bool canChat;
 
-        public ClientViewModel(ClientSocket clientSocket)
+
+        public ClientViewModel(ClientSocket clientSocket, ComputerInfo computerInfo)
         {
             this.IsFromDatabase = false;
-            this.UniqueId = new Guid();
             this.ClientSocket = clientSocket;
+            this.computerInfo = computerInfo;
+            this.UniqueHash = GenerateUniqueHash();
+            this.LoadTableData();
             this.Init();
+        }
+
+        private void LoadTableData()
+        {
+            this.clientTable = DatabaseManager.Instance.SelectClientTable(this.UniqueHash);
         }
 
         public ClientViewModel(ClientTable table)
         {
             this.IsFromDatabase = true;
             this.clientTable = table;
-            this.id = table.Id;
         }
 
+        private string GenerateUniqueHash()
+        {
+            string uniqueHash = null;
+            if (this.computerInfo != null)
+            {
+                string hashBase = this.computerInfo.IdentityName + this.ComputerInfo.MacAddress;
+                MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] md5Hash = md5.ComputeHash(ASCIIEncoding.Default.GetBytes(hashBase));
+                uniqueHash = BitConverter.ToString(md5Hash);
+                uniqueHash = uniqueHash.Replace("-", "");
+            }
+            else
+            {
+                uniqueHash = GenerateRandomHash();
+            }
+            return uniqueHash;
+        }
+
+        private string GenerateRandomHash()
+        {
+            Guid guid = Guid.NewGuid();
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] md5Hash = md5.ComputeHash(ASCIIEncoding.Default.GetBytes(guid.ToString()));
+            string unknownIdentityName = BitConverter.ToString(md5Hash);
+            return unknownIdentityName;
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ClientSocket ClientSocket { get; set; }
-        public Guid UniqueId { get; private set; }
-        public int Id { get { return this.id; } set { this.id = value; NotifyPropertyChanged("Id"); } }
-        public string FullName { get { return string.Format("{0}@{1}", this.id, this.Ip); } }
+        public string FullName { get { return string.Format("{0}@{1}", this.IdentityName, this.Ip); } }
         public bool CanScreenshot { get { return this.canScreenshot; } set { this.canScreenshot = value; NotifyPropertyChanged("CanScreenshot"); } }
         public bool CanDisconnect { get { return this.canDisconnect; } set { this.canDisconnect = value; NotifyPropertyChanged("CanDisconnect"); } }
         public bool CanDownload { get { return this.canDownload; } set { this.canDownload = value; NotifyPropertyChanged("CanDownload"); } }
         public bool CanRemoteShell { get { return this.canRemoteShell; } set { this.canRemoteShell = value; NotifyPropertyChanged("CanRemoteShell"); } }
         public bool CanChat { get { return this.canChat; } set { this.canChat = value; NotifyPropertyChanged("CanChat"); } }
         public string UserPath { get { return this.GenerateUserPath(); } }
+        public string UniqueHash { get; set; }
+
+        public ClientTable ClientTable { get { return this.clientTable; } }
 
         public ComputerInfo ComputerInfo
         {
@@ -72,8 +109,27 @@
                 NotifyPropertyChanged("ComputerInfo");
                 NotifyPropertyChanged("OsVersion");
                 NotifyPropertyChanged("Device");
-                NotifyPropertyChanged("HostName"); 
+                NotifyPropertyChanged("HostName");
                 NotifyPropertyChanged("LogonName");
+            }
+        }
+
+        public string UniqueHashForDisplayOnly
+        {
+            get
+            {
+                string uniqueHashForDisplayOnly = "unknown";
+
+                if (!string.IsNullOrEmpty(this.UniqueHash))
+                {
+                    uniqueHashForDisplayOnly = this.UniqueHash;
+                }
+                else if (this.clientTable != null)
+                {
+                    uniqueHashForDisplayOnly = this.clientTable.UniqueHash;
+                }
+
+                return uniqueHashForDisplayOnly;
             }
         }
 
@@ -81,7 +137,7 @@
         {
             get
             {
-                string identityName = "Unknown";
+                string identityName = "unknown";
 
                 if (this.computerInfo != null)
                 {
@@ -93,6 +149,25 @@
                 }
 
                 return identityName;
+            }
+        }
+
+        public string MacAddress
+        {
+            get
+            {
+                string mac = "unknown";
+
+                if (this.computerInfo != null)
+                {
+                    mac = this.computerInfo.MacAddress;
+                }
+                else if (this.clientTable != null)
+                {
+                    mac = this.clientTable.MacAddress;
+                }
+
+                return mac;
             }
         }
 
@@ -122,35 +197,49 @@
         {
             get
             {
-                string inTraffic = "unknown";
-                if (this.ClientSocket != null)
+                string outTraffic = "unknown";
+
+                if (this.ClientSocket != null && this.clientTable != null)
                 {
-                    inTraffic = this.GetFancyTrafficName(this.ClientSocket.OutTraffic);
+                    outTraffic = string.Format("{0}/{1}", this.GetFancyTrafficName(this.ClientSocket.OutTraffic), this.GetFancyTrafficName(this.clientTable.OutTraffic + this.ClientSocket.OutTraffic));
+                }
+                else if (this.ClientSocket != null)
+                {
+                    outTraffic = string.Format("{0}/{1}", this.GetFancyTrafficName(this.ClientSocket.OutTraffic), this.GetFancyTrafficName(this.ClientSocket.OutTraffic));
                 }
                 else if (this.clientTable != null)
                 {
-                    inTraffic = this.GetFancyTrafficName(this.clientTable.OutTraffic);
+                    outTraffic = string.Format("{0}/{1}", this.GetFancyTrafficName(0), this.GetFancyTrafficName(this.clientTable.OutTraffic));
                 }
-                return inTraffic;
+
+                return outTraffic;
             }
         }
+
 
         public string InTraffic
         {
             get
             {
-                string outTraffic = "unknown";
-                if (this.ClientSocket != null)
+                string inTraffic = "unknown";
+
+                if (this.ClientSocket != null && this.clientTable != null)
                 {
-                    outTraffic = this.GetFancyTrafficName(this.ClientSocket.InTraffic);
+                    inTraffic = string.Format("{0}/{1}", this.GetFancyTrafficName(this.ClientSocket.InTraffic), this.GetFancyTrafficName(this.clientTable.InTraffic + this.ClientSocket.InTraffic));
+                }
+                else if (this.ClientSocket != null)
+                {
+                    inTraffic = string.Format("{0}/{1}", this.GetFancyTrafficName(this.ClientSocket.InTraffic), this.GetFancyTrafficName(this.ClientSocket.InTraffic));
                 }
                 else if (this.clientTable != null)
                 {
-                    outTraffic = this.GetFancyTrafficName(this.clientTable.InTraffic);
+                    inTraffic = string.Format("{0}/{1}", this.GetFancyTrafficName(0), this.GetFancyTrafficName(this.clientTable.InTraffic));
                 }
-                return outTraffic;
+
+                return inTraffic;
             }
         }
+
 
         public string Device
         {
@@ -208,11 +297,17 @@
         {
             get
             {
+                OS.OsVersion osVersion = OS.OsVersion.UNKNOWN;
+
                 if (this.computerInfo != null)
                 {
-                    return (OS.OsVersion)this.computerInfo.OsVersion;
+                    osVersion = (OS.OsVersion)this.computerInfo.OsVersion;
                 }
-                else return OS.OsVersion.UNKNOWN;
+                else if (this.clientTable != null)
+                {
+                    osVersion = this.clientTable.OsVersion;
+                }
+                return osVersion;
             }
         }
 
@@ -226,7 +321,6 @@
 
         private void Init()
         {
-            this.Id = ClientSocket.Id;
             this.canScreenshot = true;
             this.canDisconnect = true;
             this.canDownload = true;
@@ -251,11 +345,11 @@
 
             if (traffic > mbyte)
             {
-                result = String.Format("{0} mByte", traffic / mbyte);
+                result = String.Format(CultureInfo.InvariantCulture, "{0:0.##} mByte", (float)traffic / (float)mbyte);
             }
             else if (traffic > kbyte)
             {
-                result = String.Format("{0} kByte", traffic / kbyte);
+                result = String.Format(CultureInfo.InvariantCulture, "{0:0.##} kByte", (float)traffic / (float)kbyte);
             }
             else
             {
@@ -282,6 +376,12 @@
         {
             this.NotifyPropertyChanged("OutTraffic");
         }
+
+        public void NotifyAll()
+        {
+            this.NotifyPropertyChanged("");
+        }
+
 
         private void Disconnect()
         {
@@ -361,7 +461,7 @@
             }
             else
             {
-                path = Path.Combine(Program.GetApplicationPath(), ClientViewModel.USER_FOLDER_NAME, this.UniqueId.ToString()) + @"\";
+                path = Path.Combine(Program.GetApplicationPath(), ClientViewModel.USER_FOLDER_NAME, this.IdentityName) + @"\";
             }
 
             return path;

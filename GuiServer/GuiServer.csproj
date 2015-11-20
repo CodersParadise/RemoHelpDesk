@@ -98,7 +98,6 @@
     <Compile Include="View\Presenter\ChatPresenter.cs" />
     <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
     <Compile Include="Server\Handle\HandleScreenShot.cs" />
-    <Compile Include="Server\Handle\HandleComputerInfo.cs" />
     <Compile Include="Server\Handle\IHandlePacket.cs" />
     <Compile Include="View\ViewModel\ClientViewModelContainer.cs" />
     <Compile Include="View\ViewModel\ClientViewModel.cs" />
