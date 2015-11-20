@@ -12,12 +12,13 @@
     public class HandlePacket
     {
         private ClientViewModelContainer clientViewModelContainer;
+        ChatViewModelContainer chatViewModelContainer;
         private Dispatcher dispatcher;
         private Dictionary<int, IHandlePacket> clientPacketIds;
         private Logger logger;
         private Server server;
 
-        public HandlePacket(ClientViewModelContainer clientViewModelContainer, Dispatcher dispatcher, Logger logger, Server server)
+        public HandlePacket(ChatViewModelContainer chatViewModelContainer, ClientViewModelContainer clientViewModelContainer, Dispatcher dispatcher, Logger logger, Server server)
         {
             this.server = server;
             this.clientViewModelContainer = clientViewModelContainer;
@@ -31,7 +32,7 @@
         {
             this.clientPacketIds.Add(PacketId.SCREEN_SHOT, new HandleScreenshot());
             this.clientPacketIds.Add(PacketId.RUN, new HandleRemoteShell());
-            this.clientPacketIds.Add(PacketId.CHAT, new HandleChat());
+            this.clientPacketIds.Add(PacketId.CHAT, new HandleChat(this.chatViewModelContainer));
             this.clientPacketIds.Add(PacketId.VOICE, new HandleVoice());
 
         }

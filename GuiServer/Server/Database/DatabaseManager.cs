@@ -41,6 +41,7 @@
         public void CreatTables()
         {
             this.connection.CreateTable<ClientTable>();
+            this.connection.CreateTable<ChatTable>();
         }
 
         public ClientViewModel SelectClient(string UniqueHash)
@@ -99,6 +100,36 @@
             }
         }
 
+
+
+        public List<ChatViewModel> SelectAllChats()
+        {
+            TableQuery<ChatTable> query = connection.Table<ChatTable>();
+
+            List<ChatViewModel> viewModels = new List<ChatViewModel>();
+            foreach (ChatTable table in query)
+            {
+                viewModels.Add(new ChatViewModel(table));
+            }
+
+            return viewModels;
+        }
+
+        public void InsertChat(ChatViewModel chatViewModel)
+        {
+            ChatTable table = ChatTable.Create(chatViewModel);
+
+            TableQuery<ChatTable> query = connection.Table<ChatTable>().Where(cli => cli.UniqueHash.Equals(table.UniqueHash));
+
+            if (query.Count() > 0)
+            {
+                this.connection.Update(table);
+            }
+            else
+            {
+                this.connection.Insert(table);
+            }
+        }
 
     }
 }

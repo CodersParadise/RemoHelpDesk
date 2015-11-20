@@ -23,10 +23,12 @@
         private BufferedWaveProvider waveProvider;
         private Button buttonPushToTalk;
         private CheckBox checkBoxVoiceActive;
+        private ChatViewModelContainer clientViewModelContainer;
 
 
         public ChatPresenter(ClientViewModel clientViewModel)
         {
+            this.clientViewModelContainer = clientViewModel.ChatViewModelContainer;
             this.clientViewModel = clientViewModel;
             this.clientViewModel.CanChat = true;
             this.chatHistory = new List<string>();
@@ -159,7 +161,11 @@
             string input = this.textboxInput.Text;
             if (!string.IsNullOrEmpty(input) && input.Length > 0)
             {
+
                 this.clientViewModel.SendObject(PacketId.CHAT, input);
+
+                ChatViewModel chatViewModel = new ChatViewModel(this.clientViewModel.UniqueHash, ChatViewModel.ChatDirectionType.Server, DateTime.Now, input);
+                this.clientViewModelContainer.Add(chatViewModel);
 
                 Program.DispatchIfNecessary(() =>
                 {

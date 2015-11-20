@@ -21,6 +21,7 @@
         private Server server;
         private ClientViewModelContainer clientViewModelContainer;
         private LogViewModelContainer logViewModelContainer;
+        private ChatViewModelContainer chatViewModelContainer;
         private Dispatcher dispatcher;
         private Button btnListen;
         private ListView lvClients;
@@ -82,7 +83,8 @@
         {
             this.logViewModelContainer = new LogViewModelContainer(this.lvLogs);
             this.clientViewModelContainer = new ClientViewModelContainer(this.lvClients);
-            this.server = new Server(this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
+            this.chatViewModelContainer = new ChatViewModelContainer();
+            this.server = new Server(this.chatViewModelContainer, this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
             this.server.DisplayTrayBalloon += server_displayTrayBalloon;
             this.isListening = false;
         }

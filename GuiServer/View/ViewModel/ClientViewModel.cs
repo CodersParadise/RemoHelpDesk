@@ -25,7 +25,7 @@
         private ScreenshotPresenter screenShotPresenter;
         private ChatPresenter chatPresenter;
         private ClientTable clientTable;
-
+        public ChatViewModelContainer ChatViewModelContainer { get; set; }
 
         private bool canScreenshot;
         private bool canDisconnect;
@@ -34,8 +34,9 @@
         private bool canChat;
 
 
-        public ClientViewModel(ClientSocket clientSocket, ComputerInfo computerInfo)
+        public ClientViewModel(ChatViewModelContainer chatViewModelContainer, ClientSocket clientSocket, ComputerInfo computerInfo)
         {
+            this.ChatViewModelContainer = chatViewModelContainer;
             this.IsFromDatabase = false;
             this.ClientSocket = clientSocket;
             this.computerInfo = computerInfo;
@@ -87,7 +88,7 @@
 
         public ClientSocket ClientSocket { get; set; }
         public string FullName { get { return string.Format("{0}@{1}", this.IdentityName, this.Ip); } }
-         public bool CanScreenshot { get { return this.canScreenshot; } set { this.canScreenshot = value; NotifyPropertyChanged("CanScreenshot"); } }
+        public bool CanScreenshot { get { return this.canScreenshot; } set { this.canScreenshot = value; NotifyPropertyChanged("CanScreenshot"); } }
         public bool CanDisconnect { get { return this.canDisconnect; } set { this.canDisconnect = value; NotifyPropertyChanged("CanDisconnect"); } }
         public bool CanDownloadExecute { get { return this.canDownloadExecute; } set { this.canDownloadExecute = value; NotifyPropertyChanged("CanDownloadExecute"); } }
         public bool CanRemoteShell { get { return this.canRemoteShell; } set { this.canRemoteShell = value; NotifyPropertyChanged("CanRemoteShell"); } }

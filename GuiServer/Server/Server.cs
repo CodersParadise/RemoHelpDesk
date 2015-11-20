@@ -28,10 +28,11 @@
         private Dispatcher dispatcher;
         private UDPSocket broadcast;
         private RemoHttpServer remoHttp;
+        private ChatViewModelContainer chatViewModelContainer;
 
         public EventHandler<DisplayTrayBalloonEventArgs> DisplayTrayBalloon;
 
-        public Server(ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
+        public Server(ChatViewModelContainer chatViewModelContainer, ClientViewModelContainer clientViewModelContainer, LogViewModelContainer logViewModelContainer, Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
 
@@ -50,8 +51,10 @@
             this.ManagedServer.ClientDisconnected += ManagedServer_ClientDisconnected;
             this.ManagedServer.Logger.LogWrite += Logger_LogWrite;
             this.clientViewModelContainer = clientViewModelContainer;
+            this.chatViewModelContainer = chatViewModelContainer;
             this.logViewModelContainer = logViewModelContainer;
-            this.handlePacket = new HandlePacket(this.clientViewModelContainer, this.dispatcher, this.ManagedServer.Logger, this);
+
+            this.handlePacket = new HandlePacket(this.chatViewModelContainer, this.clientViewModelContainer, this.dispatcher, this.ManagedServer.Logger, this);
 
             this.broadcast = new UDPSocket();
             this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
@@ -128,7 +131,7 @@
                 {
                     this.dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                     {
-                        ClientViewModel clientViewModel = new ClientViewModel(e.ClientSocket, computerInfo);
+                        ClientViewModel clientViewModel = new ClientViewModel(this.chatViewModelContainer, e.ClientSocket, computerInfo);
                         this.clientViewModelContainer.Add(clientViewModel);
                     }));
                 }
