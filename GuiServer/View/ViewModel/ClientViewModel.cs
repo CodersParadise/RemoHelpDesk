@@ -29,7 +29,7 @@
 
         private bool canScreenshot;
         private bool canDisconnect;
-        private bool canDownload;
+        private bool canDownloadExecute;
         private bool canRemoteShell;
         private bool canChat;
 
@@ -87,9 +87,9 @@
 
         public ClientSocket ClientSocket { get; set; }
         public string FullName { get { return string.Format("{0}@{1}", this.IdentityName, this.Ip); } }
-        public bool CanScreenshot { get { return this.canScreenshot; } set { this.canScreenshot = value; NotifyPropertyChanged("CanScreenshot"); } }
+         public bool CanScreenshot { get { return this.canScreenshot; } set { this.canScreenshot = value; NotifyPropertyChanged("CanScreenshot"); } }
         public bool CanDisconnect { get { return this.canDisconnect; } set { this.canDisconnect = value; NotifyPropertyChanged("CanDisconnect"); } }
-        public bool CanDownload { get { return this.canDownload; } set { this.canDownload = value; NotifyPropertyChanged("CanDownload"); } }
+        public bool CanDownloadExecute { get { return this.canDownloadExecute; } set { this.canDownloadExecute = value; NotifyPropertyChanged("CanDownloadExecute"); } }
         public bool CanRemoteShell { get { return this.canRemoteShell; } set { this.canRemoteShell = value; NotifyPropertyChanged("CanRemoteShell"); } }
         public bool CanChat { get { return this.canChat; } set { this.canChat = value; NotifyPropertyChanged("CanChat"); } }
         public string UserPath { get { return this.GenerateUserPath(); } }
@@ -323,7 +323,7 @@
         {
             this.canScreenshot = true;
             this.canDisconnect = true;
-            this.canDownload = true;
+            this.canDownloadExecute = true;
             this.canRemoteShell = true;
 
             this.remoteShellPresenter = new RemoteShellPresenter(this);
@@ -332,7 +332,7 @@
 
             this.CmdDisconnect = new CommandHandler(() => this.Disconnect(), this.CanDisconnect);
             this.CmdScreenshot = new CommandHandler(() => this.Screenshot(), this.CanScreenshot);
-            this.CmdDownloadExecute = new CommandHandler(() => this.DownloadExecute(), this.CanDownload);
+            this.CmdDownloadExecute = new CommandHandler(() => this.DownloadExecute(), this.CanDownloadExecute);
             this.CmdRemoteShell = new CommandHandler(() => this.RemoteShell(), this.CanRemoteShell);
             this.CmdChat = new CommandHandler(() => this.Chat(), this.CanChat);
         }
