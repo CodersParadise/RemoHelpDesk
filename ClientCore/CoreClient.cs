@@ -13,6 +13,7 @@
     using System.Net;
     using System.Reflection;
     using System.Threading;
+    using Arrowgene.Services.Network.ManagedConnection.Event;
 
     public class CoreClient
     {
@@ -32,8 +33,12 @@
 
         public delegate void DiscoveredServerEventHandler(IPAddress ipAddress, int port);
         public delegate void ReceivedVoiceEventHandler(byte[] buffer, int length);
+        public delegate void DisconnectedEventHandler();
+
         public event DiscoveredServerEventHandler DiscoveredServer;
         public event ReceivedVoiceEventHandler ReceivedVoice;
+        public event DisconnectedEventHandler DisconnectedServer;
+
 
         public CoreClient()
         {
@@ -76,16 +81,22 @@
             this.broadcast = new UDPSocket();
             this.broadcast.ReceivedPacket += Broadcast_ReceivedPacket;
 
-
             this.managedClient = new ManagedClient();
             this.managedClient.BufferSize = 2000;
             this.managedClient.ReceivedPacket += ManagedClient_ReceivedPacket;
             this.managedClient.Connected += ManagedClient_Connected;
+            this.managedClient.Disconnected += ManagedClient_Disconnected;
 
             this.handlePacket = new HandlePacket(this.managedClient.Logger);
         }
 
-
+        private void ManagedClient_Disconnected(object sender, DisconnectedEventArgs e)
+        {
+            if (this.DisconnectedServer != null)
+            {
+                this.DisconnectedServer();
+            }
+        }
 
         protected void OnReceivedChat(string message)
         {

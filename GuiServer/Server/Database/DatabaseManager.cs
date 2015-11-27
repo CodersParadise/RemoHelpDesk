@@ -118,17 +118,7 @@
         public void InsertChat(ChatViewModel chatViewModel)
         {
             ChatTable table = ChatTable.Create(chatViewModel);
-
-            TableQuery<ChatTable> query = connection.Table<ChatTable>().Where(cli => cli.UniqueHash.Equals(table.UniqueHash));
-
-            if (query.Count() > 0)
-            {
-                this.connection.Update(table);
-            }
-            else
-            {
-                this.connection.Insert(table);
-            }
+            this.connection.Insert(table);
         }
 
     }

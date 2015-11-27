@@ -63,6 +63,8 @@
             this.checkBoxVoiceActive.Checked += CheckBoxVoiceActive_Checked;
             this.checkBoxVoiceActive.Unchecked += CheckBoxVoiceActive_Checked;
 
+            this.textboxInput.Focus();
+
             Program.DispatchIfNecessary(() =>
             {
                 foreach (string chatLine in this.chatHistory)

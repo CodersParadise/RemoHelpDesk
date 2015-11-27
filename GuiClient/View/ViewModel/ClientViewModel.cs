@@ -30,6 +30,11 @@
             remove { this.coreClient.ReceivedVoice -= value; }
         }
 
+        public event CoreClient.DisconnectedEventHandler DisconnectedServer
+        {
+            add { this.coreClient.DisconnectedServer += value; }
+            remove { this.coreClient.DisconnectedServer -= value; }
+        }
 
         private void coreClient_ReceivedChat(string message)
         {

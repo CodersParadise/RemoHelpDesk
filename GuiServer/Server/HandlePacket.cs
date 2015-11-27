@@ -22,6 +22,7 @@
         {
             this.server = server;
             this.clientViewModelContainer = clientViewModelContainer;
+            this.chatViewModelContainer = chatViewModelContainer;
             this.dispatcher = dispatcher;
             this.clientPacketIds = new Dictionary<int, IHandlePacket>();
             this.logger = logger;

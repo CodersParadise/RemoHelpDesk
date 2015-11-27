@@ -16,7 +16,7 @@
             return table;
         }
 
-        [PrimaryKey  MaxLength(32)]
+        [PrimaryKey, AutoIncrement]
         public int id { get; set; }
         public string UniqueHash { get; set; }
         public ChatViewModel.ChatDirectionType ChatDirection { get; set; }

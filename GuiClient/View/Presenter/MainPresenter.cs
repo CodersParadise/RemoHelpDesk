@@ -39,6 +39,7 @@
             this.chatPresenter = new ChatPresenter();
             this.clientViewModel = new ClientViewModel();
             this.clientViewModel.DiscoveredServer += clientViewModel_DiscoveredServer;
+            this.clientViewModel.DisconnectedServer += ClientViewModel_DisconnectedServer;
             this.clientViewModel.SetChatPresenter(this.chatPresenter);
             this.mainWindow.DataContext = this;
             this.buttonConnect.Content = "Connect";
@@ -46,6 +47,10 @@
             this.buttonChat.IsEnabled = false;
         }
 
+        private void ClientViewModel_DisconnectedServer()
+        {
+            this.StopClient();
+        }
 
         private void AssignEvents()
         {
@@ -54,8 +59,6 @@
             this.buttonChat.Click += btnChat_Click;
             this.buttonDiscover.Click += buttonDiscover_Click;
         }
-
- 
 
         private void buttonDiscover_Click(object sender, RoutedEventArgs e)
         {
@@ -126,7 +129,7 @@
             {
                 Program.DispatchIfNecessary(() =>
                 {
-                    MessageBox.Show("Verbindung fehlgeschlafen");
+                    MessageBox.Show("Verbindung fehlgeschlagen");
                 });
             }
         }
@@ -134,14 +137,14 @@
 
         private void StopClient()
         {
-                this.clientViewModel.Disconnect();
-                Program.DispatchIfNecessary(() =>
-                {
-                    this.buttonConnect.Content = "Connect";
-                    this.textBoxIp.IsEnabled = true;
-                    this.buttonDiscover.IsEnabled = true;
-                    this.buttonChat.IsEnabled = false;
-                });
+            this.clientViewModel.Disconnect();
+            Program.DispatchIfNecessary(() =>
+            {
+                this.buttonConnect.Content = "Connect";
+                this.textBoxIp.IsEnabled = true;
+                this.buttonDiscover.IsEnabled = true;
+                this.buttonChat.IsEnabled = false;
+            });
         }
 
         private void StartDiscover()
