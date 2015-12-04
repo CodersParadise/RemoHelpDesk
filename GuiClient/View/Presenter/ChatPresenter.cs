@@ -15,7 +15,7 @@
         private TextBlock textblockChat;
         private TextBox textboxInput;
         private ScrollViewer scrollViewerOutput;
-        private List<string> chatHistory;
+        private List<ChatViewModel> chatHistory;
         private ClientViewModel clientViewModel;
         private Button buttonPushToTalk;
         private WaveIn waveIn;
@@ -25,7 +25,7 @@
 
         public ChatPresenter()
         {
-            this.chatHistory = new List<string>();
+            this.chatHistory = new List<ChatViewModel>();
         }
         public void Show(ClientViewModel clientViewModel)
         {
@@ -67,9 +67,9 @@
 
             Program.DispatchIfNecessary(() =>
             {
-                foreach (string chatLine in this.chatHistory)
+                foreach (ChatViewModel chatLine in this.chatHistory)
                 {
-                    this.textblockChat.Text += chatLine + Environment.NewLine;
+                    this.Update(chatLine);
                 }
             });
         }
@@ -147,7 +147,9 @@
                         this.textboxInput.Text = string.Empty;
                     });
 
-                    this.Update(input);
+                    ChatViewModel chatViewModel = new ChatViewModel(ChatViewModel.ChatDirectionType.Client, DateTime.Now, input);
+
+                    this.Update(chatViewModel);
                     this.clientViewModel.SendChat(input);
                 }
             }
@@ -157,17 +159,17 @@
                 {
                     this.textboxInput.Text = string.Empty;
                 });
-                this.Update("Sie müssen sich erst mit einem Supportmitarbeiter verbinden.");
+                MessageBox.Show("Nicht Verbunden!", "Sie müssen sich erst mit einem Supportmitarbeiter verbinden.", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        public void Update(string message)
+        public void Update(ChatViewModel message)
         {
             if (this.chatWindow != null)
             {
                 Program.DispatchIfNecessary(() =>
                 {
-                    this.textblockChat.Text += message + Environment.NewLine;
+                    this.textblockChat.Text += string.Format("{0} {1} {2}", ChatViewModel.GetChatDirection(message.ChatDirection), message.Message, Environment.NewLine);
                     this.scrollViewerOutput.ScrollToBottom();
                 });
             }

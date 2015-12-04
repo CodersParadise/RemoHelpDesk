@@ -38,9 +38,11 @@
 
         private void coreClient_ReceivedChat(string message)
         {
+            ChatViewModel chatViewModel = new ChatViewModel(ChatViewModel.ChatDirectionType.Server, DateTime.Now, message);
+
             if (this.chatPresenter != null)
             {
-                this.chatPresenter.Update(message);
+                this.chatPresenter.Update(chatViewModel);
             }
         }
 
