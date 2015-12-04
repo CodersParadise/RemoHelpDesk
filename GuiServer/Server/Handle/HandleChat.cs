@@ -21,7 +21,7 @@
             ChatViewModel chatViewModel = new ChatViewModel(clientViewModel.UniqueHash, ChatViewModel.ChatDirectionType.Client, DateTime.Now, message);
             this.chatViewModelContainer.Add(chatViewModel);
 
-            clientViewModel.UpdateChat(message);
+            clientViewModel.UpdateChat(chatViewModel);
             server.RaiseDisplayTrayBalloon("New Message", message);
         }
     }

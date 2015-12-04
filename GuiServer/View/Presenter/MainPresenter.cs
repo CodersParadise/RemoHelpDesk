@@ -83,7 +83,7 @@
         {
             this.logViewModelContainer = new LogViewModelContainer(this.lvLogs);
             this.clientViewModelContainer = new ClientViewModelContainer(this.lvClients);
-            this.chatViewModelContainer = new ChatViewModelContainer();
+            this.chatViewModelContainer = ChatViewModelContainer.Instance;
             this.server = new Server(this.chatViewModelContainer, this.clientViewModelContainer, this.logViewModelContainer, this.dispatcher);
             this.server.DisplayTrayBalloon += server_displayTrayBalloon;
             this.isListening = false;
@@ -174,7 +174,7 @@
             this.server.Stop();
             this.btnListen.Content = "Start Listening";
             this.isListening = false;
-            this.clientViewModelContainer.Clear();
+           
         }
 
         #region tray

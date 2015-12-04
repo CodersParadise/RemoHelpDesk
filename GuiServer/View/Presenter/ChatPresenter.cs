@@ -17,31 +17,34 @@
         private TextBox textboxInput;
         private TextBlock textblockChat;
         private ScrollViewer scrollViewerOutput;
-        private List<string> chatHistory;
+        private List<ChatViewModel> chatHistory;
         private WaveIn waveIn;
         private WaveOut waveOut;
         private BufferedWaveProvider waveProvider;
         private Button buttonPushToTalk;
         private CheckBox checkBoxVoiceActive;
-        private ChatViewModelContainer clientViewModelContainer;
+        private ChatViewModelContainer chatViewModelContainer;
 
 
         public ChatPresenter(ClientViewModel clientViewModel)
         {
-            this.clientViewModelContainer = clientViewModel.ChatViewModelContainer;
+            this.chatViewModelContainer = clientViewModel.ChatViewModelContainer;
             this.clientViewModel = clientViewModel;
             this.clientViewModel.CanChat = true;
-            this.chatHistory = new List<string>();
-
 
             WaveFormat waveFormat = new WaveFormat(8000, 16, 1);
             waveProvider = new BufferedWaveProvider(waveFormat);
 
-            waveOut = new WaveOut();
-            waveOut.Init(waveProvider);
+            if (!clientViewModel.IsFromDatabase)
+            {
+                waveOut = new WaveOut();
+                waveOut.Init(waveProvider);
 
-            waveIn = new WaveIn();
-            waveIn.WaveFormat = waveFormat;
+                waveIn = new WaveIn();
+                waveIn.WaveFormat = waveFormat;
+
+                this.waveIn.DataAvailable += WaveIn_DataAvailable;
+            }
         }
 
         public void Show()
@@ -69,17 +72,21 @@
             this.chatWindow.Closed += ChatWindow_Closed;
             this.buttonPushToTalk.PreviewMouseLeftButtonDown += ButtonPushToTalk_PreviewMouseLeftButtonDown;
             this.buttonPushToTalk.PreviewMouseLeftButtonUp += ButtonPushToTalk_PreviewMouseLeftButtonUp;
-            this.waveIn.DataAvailable += WaveIn_DataAvailable;
+
             this.checkBoxVoiceActive.Checked += CheckBoxVoiceActive_Checked;
             this.checkBoxVoiceActive.Unchecked += CheckBoxVoiceActive_Checked;
 
+
             this.textboxInput.Focus();
+
+            this.chatHistory = this.chatViewModelContainer.GetChatViewModels(this.clientViewModel.UniqueHash);
 
             Program.DispatchIfNecessary(() =>
             {
-                foreach (string chatLine in this.chatHistory)
+                this.textblockChat.Text = string.Empty;
+                foreach (ChatViewModel chatViewModel in this.chatHistory)
                 {
-                    this.textblockChat.Text += chatLine + Environment.NewLine;
+                    this.Update(chatViewModel);
                 }
             });
         }
@@ -133,21 +140,23 @@
 
         public void Dispose()
         {
-            this.waveOut.Dispose();
+            if (waveOut != null)
+            {
+                this.waveOut.Dispose();
+            }
+
         }
 
-        public void Update(string message)
+        public void Update(ChatViewModel message)
         {
-            if (this.chatWindow != null)
+            if (this.chatWindow != null && message != null)
             {
                 Program.DispatchIfNecessary(() =>
                      {
-                         this.textblockChat.Text += message + Environment.NewLine;
+                         this.textblockChat.Text += string.Format("{0} {1} {2}", ChatViewModel.GetChatDirection(message.ChatDirection), message.Message, Environment.NewLine);
                          this.scrollViewerOutput.ScrollToBottom();
                      });
             }
-
-            this.chatHistory.Add(message);
         }
 
         private void textboxInput_KeyDown(object sender, KeyEventArgs e)
@@ -160,22 +169,36 @@
 
         private void AcceptInput()
         {
-            string input = this.textboxInput.Text;
-            if (!string.IsNullOrEmpty(input) && input.Length > 0)
+            if (this.clientViewModel.IsFromDatabase)
             {
-
-                this.clientViewModel.SendObject(PacketId.CHAT, input);
-
-                ChatViewModel chatViewModel = new ChatViewModel(this.clientViewModel.UniqueHash, ChatViewModel.ChatDirectionType.Server, DateTime.Now, input);
-                this.clientViewModelContainer.Add(chatViewModel);
-
                 Program.DispatchIfNecessary(() =>
                 {
                     this.textboxInput.Text = string.Empty;
+                    MessageBox.Show("Nicht verbunden!", "Der Client ist nicht verbunden, das Senden ist nicht möglich.", MessageBoxButton.OK, MessageBoxImage.Error);
                 });
             }
+            else
+            {
+                ChatViewModel chatViewModel = null;
+                string input = this.textboxInput.Text;
+                if (!string.IsNullOrEmpty(input) && input.Length > 0)
+                {
 
-            this.Update(input);
+                    this.clientViewModel.SendObject(PacketId.CHAT, input);
+
+                    chatViewModel = new ChatViewModel(this.clientViewModel.UniqueHash, ChatViewModel.ChatDirectionType.Server, DateTime.Now, input);
+                    this.chatViewModelContainer.Add(chatViewModel);
+
+                    Program.DispatchIfNecessary(() =>
+                    {
+                        this.textboxInput.Text = string.Empty;
+                    });
+                }
+
+                this.Update(chatViewModel);
+            }
+
+
         }
 
         private void chatWindow_Closed(object sender, EventArgs e)

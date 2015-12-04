@@ -52,8 +52,11 @@
 
         public ClientViewModel(ClientTable table)
         {
+            this.UniqueHash = table.UniqueHash;
             this.IsFromDatabase = true;
             this.clientTable = table;
+            this.ChatViewModelContainer = ChatViewModelContainer.Instance;
+            this.Init();
         }
 
         private string GenerateUniqueHash()
@@ -93,6 +96,7 @@
         public bool CanDownloadExecute { get { return this.canDownloadExecute; } set { this.canDownloadExecute = value; NotifyPropertyChanged("CanDownloadExecute"); } }
         public bool CanRemoteShell { get { return this.canRemoteShell; } set { this.canRemoteShell = value; NotifyPropertyChanged("CanRemoteShell"); } }
         public bool CanChat { get { return this.canChat; } set { this.canChat = value; NotifyPropertyChanged("CanChat"); } }
+        
         public string UserPath { get { return this.GenerateUserPath(); } }
         public string UniqueHash { get; set; }
 
@@ -428,7 +432,7 @@
             this.chatPresenter.Show();
         }
 
-        public void UpdateChat(string message)
+        public void UpdateChat(ChatViewModel message)
         {
             this.chatPresenter.Update(message);
         }

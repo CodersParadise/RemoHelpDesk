@@ -98,7 +98,7 @@
     <Compile Include="Server\Http\RemoHttpServer.cs" />
     <Compile Include="View\Presenter\ChatPresenter.cs" />
     <Compile Include="View\ViewModel\ChatViewModel.cs" />
-    <Compile Include="View\ViewModel\ChatViewModelContainer.cs" />
+    <Compile Include="Server\Container\ChatViewModelContainer.cs" />
     <Compile Include="View\ViewModel\LogViewModelContainer.cs" />
     <Compile Include="Server\Handle\HandleScreenShot.cs" />
     <Compile Include="Server\Handle\IHandlePacket.cs" />

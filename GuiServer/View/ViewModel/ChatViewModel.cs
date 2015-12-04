@@ -11,6 +11,21 @@ namespace GuiServer.View.ViewModel
 
     public class ChatViewModel
     {
+        public static string GetChatDirection(ChatViewModel.ChatDirectionType type)
+        {
+            string direction = "-";
+            if (type == ChatDirectionType.Client)
+            {
+                direction = "=>";
+            }
+            else if (type == ChatDirectionType.Server)
+            {
+                direction = "<=";
+            }
+            return direction;
+        }
+
+
         public enum ChatDirectionType
         {
             Unknown = 0,
